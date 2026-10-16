@@ -1753,7 +1753,8 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       '<p class="hint">Schnitt durch die Mitte der Kugel. Je mehr Stücke, desto genauer ist jede Höhe gleich r und desto flacher die Grundfläche.</p>' +
       '<h4 class="sub">Orangen-Experiment: Wie viele Großkreise bedeckt die Schale?</h4>' +
       '<div class="canvas-box"><canvas id="cv-or" aria-label="Die Schale einer Orange füllt vier Kreise mit dem Radius der Orange"></canvas></div>' +
-      '<div class="controls"><label for="or-t">Schale verteilen<input type="range" id="or-t" min="0" max="100" value="0"></label></div>';
+      '<div class="controls"><label for="or-t">Schale abwickeln<input type="range" id="or-t" min="0" max="100" value="0"></label><button class="btn" id="or-play">Abschälen</button></div>' +
+      '<p class="hint">Die Schale wird in 16 Stücke geschnitten, abgeschält und flach in Kreise mit dem Radius der Orange gelegt.</p>';
     var cv = document.getElementById("cv-sp"), nR = document.getElementById("sp-n"), tR = document.getElementById("sp-t");
     var co = document.getElementById("cv-or"), oR = document.getElementById("or-t");
     function drawSp() {
@@ -1785,29 +1786,75 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       ctx.fillText("Grundfläche Gᵢ", s.w - 8, Math.max(16, py - R * Math.sin(w / 2) - 14));
       ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, 2 * Math.PI); ctx.fillStyle = col("--ink"); ctx.fill();
     }
+    var raf = 0, NP = 16;
+    function petal(ctx, x, y, len, wid, ang) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+      ctx.beginPath(); ctx.moveTo(-len / 2, 0);
+      ctx.quadraticCurveTo(0, -wid, len / 2, 0); ctx.quadraticCurveTo(0, wid, -len / 2, 0);
+      ctx.restore();
+    }
     function drawOr() {
-      var s = setupCanvas(co, Math.min(190, host.clientWidth * 0.3 + 70)), ctx = s.ctx;
+      var r = Math.min((co.parentNode.clientWidth - 24) / 11.6, 60);
+      var s = setupCanvas(co, 2.7 * r + 64), ctx = s.ctx;
       ctx.clearRect(0, 0, s.w, s.h);
-      var t = +oR.value / 100;
-      var r = Math.min((s.w - 40) / 11.5, (s.h - 50) / 2), cy = 16 + r;
-      var x0 = (s.w - 11 * r) / 2 + r;
-      // Orange
-      ctx.beginPath(); ctx.arc(x0, cy, r, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 1 - 0.75 * t; ctx.fill(); ctx.globalAlpha = 1;
-      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      var t = +oR.value / 100, cy = s.h - 30 - r;
+      var x0 = (s.w - 11.6 * r) / 2 + r, cxs = [];
+      for (var i = 0; i < 4; i++) cxs.push(x0 + 3 * r + i * 2.2 * r);
+      function prog(j) { return Math.max(0, Math.min(1, (t - j * 0.05) / 0.25)); }
+      // Orange: Fruchtfleisch unter der Schale
+      ctx.beginPath(); ctx.arc(x0, cy, r, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.25; ctx.fill(); ctx.globalAlpha = 1;
+      // noch anhaftende Schalenstücke
+      for (var j = 0; j < NP; j++) {
+        if (prog(j) > 0) continue;
+        var a0 = -Math.PI / 2 + 2 * Math.PI * j / NP;
+        ctx.beginPath(); ctx.moveTo(x0, cy); ctx.arc(x0, cy, r, a0, a0 + 2 * Math.PI / NP); ctx.closePath();
+        ctx.fillStyle = col("--mark"); ctx.fill(); ctx.strokeStyle = col("--paper"); ctx.lineWidth = 1; ctx.stroke();
+      }
+      ctx.beginPath(); ctx.arc(x0, cy, r, 0, 2 * Math.PI); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
       ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-body"); ctx.textAlign = "center";
       ctx.fillText("Orange", x0, cy + r + 20);
-      for (var i = 0; i < 4; i++) {
-        var x = x0 + 3 * r + i * 2.3 * r, f = Math.max(0, Math.min(1, t * 4 - i));
+      // Zielkreise mit gelandeten Viertelstücken
+      for (i = 0; i < 4; i++) {
+        var x = cxs[i];
+        for (var q = 0; q < 4; q++) {
+          if (prog(i * 4 + q) < 1) continue;
+          var b0 = -Math.PI / 2 + q * Math.PI / 2;
+          ctx.beginPath(); ctx.moveTo(x, cy); ctx.arc(x, cy, r, b0, b0 + Math.PI / 2); ctx.closePath();
+          ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.85; ctx.fill(); ctx.globalAlpha = 1;
+          ctx.strokeStyle = col("--paper"); ctx.lineWidth = 1; ctx.stroke();
+        }
         ctx.beginPath(); ctx.arc(x, cy, r, 0, 2 * Math.PI); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
-        if (f > 0) { ctx.beginPath(); ctx.moveTo(x, cy); ctx.arc(x, cy, r, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI * f); ctx.closePath(); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.8; ctx.fill(); ctx.globalAlpha = 1; }
         ctx.fillStyle = col("--muted"); ctx.fillText("πr²", x, cy + r + 20);
       }
-      if (t > 0.99) { ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "right"; ctx.fillText("O = 4 · πr²", s.w - 12, 18); }
+      // fliegende Schalenstücke
+      for (j = 0; j < NP; j++) {
+        var pj = prog(j); if (pj <= 0 || pj >= 1) continue;
+        var am = -Math.PI / 2 + 2 * Math.PI * (j + 0.5) / NP;
+        var sx = x0 + 0.65 * r * Math.cos(am), sy = cy + 0.65 * r * Math.sin(am);
+        var tq = j % 4, bm = -Math.PI / 2 + (tq + 0.5) * Math.PI / 2, tx = cxs[j >> 2] + 0.5 * r * Math.cos(bm), ty = cy + 0.5 * r * Math.sin(bm);
+        var e = pj * pj * (3 - 2 * pj), mx = (sx + tx) / 2, my = Math.max(10, cy - 2.2 * r);
+        var px = (1 - e) * (1 - e) * sx + 2 * (1 - e) * e * mx + e * e * tx, py = (1 - e) * (1 - e) * sy + 2 * (1 - e) * e * my + e * e * ty;
+        var len = r * (0.75 + 0.35 * Math.sin(Math.PI * pj)), wid = r * (0.18 + 0.3 * e);
+        petal(ctx, px, py, len, wid, (1 - e) * am + e * bm + Math.PI / 2);
+        ctx.fillStyle = col("--mark"); ctx.fill(); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1; ctx.stroke();
+      }
+      var narrow = s.w < 520;
+      ctx.textAlign = "left"; ctx.font = "600 " + (narrow ? 12 : 13) + "px " + col("--font-mono");
+      ctx.fillStyle = t >= 1 ? col("--mark") : col("--muted");
+      ctx.fillText(t <= 0 ? "Schale noch auf der Orange" : t < 1 ? (narrow ? "Schale wird abgeschält …" : "Schale wird abgeschält und flach ausgelegt …") : (narrow ? "4 Kreise: O = 4 · πr²" : "Die Schale füllt genau 4 Kreise: O = 4 · πr²"), 8, 18);
     }
     function draw() { drawSp(); drawOr(); }
-    nR.addEventListener("input", drawSp); tR.addEventListener("input", drawSp); oR.addEventListener("input", drawOr);
+    nR.addEventListener("input", drawSp); tR.addEventListener("input", drawSp);
+    oR.addEventListener("input", function () { cancelAnimationFrame(raf); drawOr(); });
+    document.getElementById("or-play").addEventListener("click", function () {
+      cancelAnimationFrame(raf);
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { oR.value = 100; drawOr(); return; }
+      var start = null;
+      function frame(ts) { if (!start) start = ts; var v = Math.min(100, (ts - start) / 50); oR.value = v; drawOr(); if (v < 100) raf = requestAnimationFrame(frame); }
+      raf = requestAnimationFrame(frame);
+    });
     var w = watchRedraw(draw); w.ro.observe(host); draw();
-    return function () { w.stop(); };
+    return function () { cancelAnimationFrame(raf); w.stop(); };
   }
 
   /* ---------- Animation Station 10: Körper-Baukasten ---------- */
