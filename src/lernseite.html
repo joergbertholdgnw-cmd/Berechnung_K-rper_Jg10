@@ -332,10 +332,12 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       intro: "Ein Zylinder ist fast ein Prisma. Wie fast, das zeigt dir ein Prisma mit immer mehr Ecken.",
       goals: ["Ich kann das Zylindervolumen als Grenzfall von Prismen mit n-Eck-Grundfläche erklären.",
               "Ich kann V = πr² · h anwenden."] },
-    { short: "Pyramide, Kegel: O", title: "Pyramide und Kegel: Oberfläche", ready: false,
+    { short: "Pyramide, Kegel: O", title: "Pyramide und Kegel: Oberfläche", ready: true,
+      intro: "Ein Zeltdach, eine Eistüte, ein Turmdach: Wie viel Material braucht man für die Hülle?",
       goals: ["Ich kann Netze von Pyramiden zeichnen und beurteilen.",
               "Ich kann erklären, warum der abgewickelte Kegelmantel ein Kreisausschnitt ist, und M = π · r · s herleiten."] },
-    { short: "Pyramide, Kegel: V", title: "Pyramide und Kegel: Volumen", ready: false,
+    { short: "Pyramide, Kegel: V", title: "Pyramide und Kegel: Volumen", ready: true,
+      intro: "Wie viel passt in eine Pyramide? Ein Würfel verrät dir die Antwort.",
       goals: ["Ich kann begründen, warum eine Pyramide ein Drittel des Prismas mit gleicher Grundfläche und Höhe füllt.",
               "Ich kann V = ⅓ · G · h für Pyramide und Kegel anwenden."] },
     { short: "Kugel: Volumen", title: "Kugel: Volumen", ready: false,
@@ -549,6 +551,78 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
         { kind: "Rückblick", text: true, q: "Erkläre, wie das Volumen des Zylinders mit dem Flächeninhalt des Kreises zusammenhängt.",
           sol: "Die Grundfläche des Zylinders ist ein Kreis mit G = πr². Wie bei jedem Prisma ist das Volumen Grundfläche mal Höhe. Ohne die Kreisflächenformel gäbe es also keine Zylinderformel." }
       ]
+    },
+    6: {
+      anim: "conenet", animTitle: "Netze von Pyramide und Kegel",
+      steps: [
+        "<p><strong>Das Netz der Pyramide.</strong> Klappst du die Seitenflächen einer quadratischen Pyramide nach außen, entsteht ein Netz aus dem Quadrat und vier kongruenten gleichschenkligen Dreiecken. Jedes Dreieck hat die Grundseite a und die Höhe h<sub>s</sub>.</p>",
+        "<p><strong>Oberfläche der Pyramide.</strong> Grundfläche plus vier Dreiecke:</p><div class=\"result\">O = a² + 4 · ½ · a · h<sub>s</sub> = a² + 2a · h<sub>s</sub></div><p>Kennst du nur die Körperhöhe h, hilft Pythagoras: h<sub>s</sub>² = h² + (a/2)².</p>",
+        "<p><strong>Der Kegel rollt ab.</strong> Legst du einen Kegel auf den Tisch und rollst ihn einmal um seine Spitze, überstreicht er einen Kreisausschnitt. Dessen Radius ist die Mantellinie s, denn jeder Punkt des Grundkreises ist s von der Spitze entfernt.</p>",
+        "<p><strong>Der Bogen.</strong> Beim Abrollen läuft der Grundkreis einmal ganz ab. Der Bogen des Ausschnitts ist also so lang wie der Umfang 2πr. Der Ausschnitt ist damit der Anteil 2πr : 2πs = r : s vom Kreis mit Radius s:</p><div class=\"result\">M = r/s · πs² = πr · s</div>",
+        "<p><strong>Oberfläche des Kegels.</strong> Grundkreis plus Mantel:</p><div class=\"result\">O = πr² + πr · s = πr · (r + s)</div><p>Kennst du nur die Höhe, gilt wieder Pythagoras: s² = h² + r².</p>"
+      ],
+      video: { title: "Oberfläche Kegel – Formel Herleitung (Lars Jung)", url: "https://www.youtube.com/watch?v=sfUpOu_VbT0" },
+      quiz: [
+        { q: "Warum ist der abgewickelte Kegelmantel ein Kreisausschnitt?",
+          opts: ["Weil die Grundfläche ein Kreis ist.", "Weil jeder Punkt am Rand des Grundkreises genau s von der Spitze entfernt ist.", "Weil der Kegel rund ist."], correct: 1,
+          fb: ["Die Grundfläche gehört nicht zum Mantel. Es geht um den Abstand zur Spitze.", "Genau. Alle Mantellinien sind gleich lang, also liegt der Rand auf einem Kreis mit Radius s.", "Das ist zu ungenau: Warum ein Ausschnitt und nicht ein ganzer Kreis?"] },
+        { q: "Wie lang ist der Bogen des abgewickelten Kegelmantels?",
+          opts: ["So lang wie der Umfang des Grundkreises, 2πr.", "So lang wie 2πs.", "So lang wie die Mantellinie s."], correct: 0,
+          fb: ["Richtig. Beim Abrollen rollt genau einmal der Grundkreis ab.", "2πs wäre der ganze Kreis mit Radius s. Der Mantel ist nur ein Teil davon.", "s ist der Radius des Ausschnitts, nicht der Bogen."] },
+        { q: "Warum braucht man für die Seitendreiecke der Pyramide h<sub>s</sub> und nicht die Körperhöhe h?",
+          opts: ["Weil h<sub>s</sub> immer kürzer ist.", "Weil für den Dreiecksflächeninhalt die Höhe in diesem Dreieck nötig ist; h liegt gar nicht in der Seitenfläche.", "Weil h und h<sub>s</sub> gleich lang sind."], correct: 1,
+          fb: ["h<sub>s</sub> ist sogar länger als h. Es geht darum, wo die Höhe liegt.", "Genau. h steht senkrecht auf der Grundfläche, h<sub>s</sub> liegt im Seitendreieck.", "Nach Pythagoras ist h<sub>s</sub> länger als h."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Die Dreiecke im Netz einer Pyramide sind immer kongruent zueinander.“",
+              sol: "Die Aussage ist falsch. Bei einer Pyramide mit rechteckiger (nicht quadratischer) Grundfläche gibt es zwei Paare verschiedener Dreiecke, weil die Grundseiten verschieden lang sind. Auch bei einer schiefen Pyramide sind die Dreiecke verschieden. Kongruent sind sie zum Beispiel bei einer geraden Pyramide mit regelmäßigem Vieleck als Grundfläche." },
+      protocol: [
+        { kind: "Aufgabe", q: "Eine quadratische Pyramide hat die Grundkante a = 6 cm und die Höhe der Seitendreiecke h<sub>s</sub> = 5 cm. Berechne ihren Oberflächeninhalt.", round: 0, ans: 96, tol: 0.01, unit: "cm²",
+          hint: "Quadrat a² plus vier Dreiecke mit ½ · a · h<sub>s</sub>.", sol: "O = 6² + 4 · ½ · 6 · 5 = 36 + 60 = 96 cm²" },
+        { kind: "Aufgabe", q: "Ein Kegel hat den Radius r = 3 cm und die Mantellinie s = 7 cm. Berechne seinen Oberflächeninhalt.", round: 2, ans: 94.25, tol: 0.01, unit: "cm²",
+          hint: "O = πr² + πr · s.", sol: "O = π · 3² + π · 3 · 7 = 9π + 21π = 30π ≈ 94,25 cm²" },
+        { kind: "Umkehraufgabe", q: "Die Mantelfläche eines Kegels beträgt 60 cm², sein Radius 4 cm. Wie lang ist die Mantellinie s?", round: 2, ans: 4.77, tol: 0.01, unit: "cm",
+          hint: "Stelle M = πr · s nach s um.", sol: "s = M : (πr) = 60 cm² : (4π cm) ≈ 4,77 cm" },
+        { kind: "Vertiefung", q: "Ein Turmdach hat die Form einer quadratischen Pyramide mit a = 10 m und der Höhe h = 12 m. Wie groß ist die Dachfläche (ohne Boden)?", round: 0, ans: 260, tol: 0.01, unit: "m²",
+          hint: "Berechne zuerst h<sub>s</sub> mit Pythagoras aus h und a/2.", sol: "h<sub>s</sub> = √(12² + 5²) = √169 = 13 m. Dachfläche = 4 · ½ · 10 · 13 = 260 m²" },
+        { kind: "Rückblick", text: true, q: "Erkläre, warum der Mittelpunktswinkel des abgewickelten Kegelmantels größer wird, wenn r im Vergleich zu s größer wird.",
+          sol: "Der Bogen des Ausschnitts ist 2πr lang, der volle Kreis mit Radius s hat den Umfang 2πs. Der Ausschnitt ist also der Anteil r : s, sein Winkel ist α = 360° · r/s. Je größer r im Vergleich zu s, desto größer der Anteil. Bei r = s wäre es der volle Kreis: Der Kegel wäre ganz flach." }
+      ]
+    },
+    7: {
+      anim: "cube3", animTitle: "Drei Pyramiden ergeben einen Würfel",
+      steps: [
+        "<p><strong>Ein Würfel in drei Teilen.</strong> Ein Würfel lässt sich in drei kongruente Pyramiden zerlegen. Alle drei haben dieselbe Spitze, eine Ecke des Würfels. Schiebe den Regler in der Animation auseinander.</p>",
+        "<p><strong>Ein Drittel.</strong> Jede dieser Pyramiden hat eine Würfelfläche als Grundfläche, also G = a², und die Höhe h = a. Weil drei gleiche Pyramiden den Würfel füllen, gilt für jede:</p><div class=\"result\">V = ⅓ · a³ = ⅓ · a² · a = ⅓ · G · h</div>",
+        "<p><strong>Für jede Pyramide.</strong> Der Umschüttversuch zeigt: Eine Pyramide passt genau dreimal in ein Prisma mit gleicher Grundfläche und gleicher Höhe. Begründen lässt es sich mit dem Prinzip von Cavalieri: Pyramiden mit gleicher Grundfläche und Höhe haben in jeder Höhe gleich große Querschnitte und damit dasselbe Volumen.</p><div class=\"result\">V<sub>Pyramide</sub> = ⅓ · G · h</div>",
+        "<p><strong>Der Kegel.</strong> Wie beim Zylinder nähert man den Kegel durch Pyramiden mit regelmäßiger n-Eck-Grundfläche an. Im Grenzfall wird die Grundfläche zur Kreisfläche πr².</p><div class=\"result\">V<sub>Kegel</sub> = ⅓ · πr² · h</div>",
+        "<p><strong>Merke den Zusammenhang.</strong> Spitze Körper haben ein Drittel des Volumens der passenden „geraden“ Körper: Pyramide zu Prisma, Kegel zu Zylinder.</p>"
+      ],
+      video: { title: "Volumen Pyramide – Warum durch 3?", url: "https://www.youtube.com/watch?v=1ONm9XBju8Y" },
+      quiz: [
+        { q: "Warum teilt man beim Pyramidenvolumen durch 3?",
+          opts: ["Weil eine Pyramide drei Seitenflächen hat.", "Weil drei Pyramiden mit gleicher Grundfläche und Höhe genau ein Prisma füllen, zum Beispiel drei Pyramiden einen Würfel.", "Weil die Spitze ein Drittel der Höhe einnimmt."], correct: 1,
+          fb: ["Eine quadratische Pyramide hat sogar vier Seitenflächen.", "Genau das zeigen Würfelzerlegung und Umschüttversuch.", "Die Spitze ist ein Punkt, sie nimmt keinen Teil der Höhe ein."] },
+        { q: "Ein Kegel und ein Zylinder haben denselben Radius und dieselbe Höhe. Wie verhalten sich ihre Volumen?",
+          opts: ["Der Kegel hat die Hälfte des Zylindervolumens.", "Beide sind gleich groß.", "Der Kegel hat ein Drittel des Zylindervolumens."], correct: 2,
+          fb: ["Das passt nicht: Probiere es mit dem Umschüttversuch aus.", "Der Kegel läuft spitz zu, also fehlt Volumen.", "Richtig: ⅓ · πr² · h gegenüber πr² · h."] },
+        { q: "Warum gilt für den Kegel V = ⅓ · πr² · h?",
+          opts: ["Weil der Kegelmantel ein Kreisausschnitt ist.", "Weil der Kegel der Grenzfall von Pyramiden mit immer mehr Ecken ist und für jede V = ⅓ · G · h gilt.", "Weil π ungefähr 3 ist."], correct: 1,
+          fb: ["Das braucht man für die Oberfläche, nicht für das Volumen.", "Genau, dieselbe Idee wie beim Zylinder.", "Zufall: Das ⅓ hat mit π nichts zu tun."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Halbiert man die Grundfläche einer Pyramide und verdoppelt ihre Höhe, so bleibt das Volumen gleich.“",
+              sol: "Die Aussage ist richtig. V = ⅓ · (G/2) · (2h) = ⅓ · G · h. Die Halbierung und die Verdopplung heben sich auf, weil G und h beide nur einfach in der Formel vorkommen." },
+      protocol: [
+        { kind: "Aufgabe", q: "Die Cheops-Pyramide hatte ursprünglich eine quadratische Grundfläche mit a = 230 m und die Höhe h = 147 m. Berechne ihr Volumen.", round: 0, ans: 2592100, tol: 0.5, unit: "m³",
+          hint: "V = ⅓ · a² · h.", sol: "V = ⅓ · 230² · 147 m³ = ⅓ · 52 900 · 147 m³ = 2 592 100 m³" },
+        { kind: "Aufgabe", q: "Ein Kegel hat den Radius r = 4 cm und die Höhe h = 9 cm. Berechne sein Volumen.", round: 2, ans: 150.80, tol: 0.01, unit: "cm³",
+          hint: "V = ⅓ · π · r² · h.", sol: "V = ⅓ · π · 4² · 9 cm³ = 48π cm³ ≈ 150,80 cm³" },
+        { kind: "Umkehraufgabe", q: "Ein Kegel soll das Volumen 100 cm³ haben, sein Radius ist 3 cm. Wie hoch muss er sein?", round: 2, ans: 10.61, tol: 0.01, unit: "cm",
+          hint: "Stelle V = ⅓ · πr² · h nach h um: h = 3V : (πr²).", sol: "h = 3 · 100 cm³ : (π · 9 cm²) ≈ 10,61 cm" },
+        { kind: "Vertiefung", q: "Ein kegelförmiger Sandhaufen hat unten einen Durchmesser von 4 m und ist 1,5 m hoch. Wie viel Sand liegt dort?", round: 2, ans: 6.28, tol: 0.01, unit: "m³",
+          hint: "Achtung, gegeben ist der Durchmesser. Der Radius ist 2 m.", sol: "V = ⅓ · π · 2² · 1,5 m³ = 2π m³ ≈ 6,28 m³" },
+        { kind: "Rückblick", text: true, q: "Erkläre mit dem Würfelmodell, woher das ⅓ in der Pyramidenformel kommt.",
+          sol: "Ein Würfel mit der Kantenlänge a lässt sich in drei gleiche Pyramiden zerlegen. Jede hat eine Würfelfläche als Grundfläche (G = a²) und die Höhe a. Zusammen füllen sie den Würfel mit V = a³. Also hat jede Pyramide ⅓ · a³ = ⅓ · G · h." }
+      ]
     }
   };
 
@@ -692,6 +766,8 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     if (c.anim === "sector") stopAnim = mountSector(document.getElementById("anim"));
     if (c.anim === "cylnet") stopAnim = mountCylNet(document.getElementById("anim"));
     if (c.anim === "prism") stopAnim = mountPrism(document.getElementById("anim"));
+    if (c.anim === "conenet") stopAnim = mountConeNet(document.getElementById("anim"));
+    if (c.anim === "cube3") stopAnim = mountCube3(document.getElementById("anim"));
     bindSteps(id, c);
     bindQuiz(id, c);
     bindProtocol(id, c);
@@ -1279,6 +1355,213 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     nR.addEventListener("input", draw);
     var w = watchRedraw(draw); w.ro.observe(host); draw();
     return function () { w.stop(); };
+  }
+
+  /* ---------- Animation Station 6: Netze von Pyramide und Kegel ---------- */
+  function mountConeNet(host) {
+    var mode = "pyr", raf = 0;
+    host.innerHTML =
+      '<div class="step-nav" role="group" aria-label="Körper wählen"><button class="btn" id="m-pyr" aria-pressed="true">Pyramide aufklappen</button><button class="btn ghost" id="m-cone" aria-pressed="false">Kegel abrollen</button></div>' +
+      '<div class="canvas-box"><canvas id="cv-cone" aria-label="Netz einer Pyramide oder Abrollen eines Kegels in der Draufsicht"></canvas></div>' +
+      '<div class="controls"><label for="cn-t" id="cn-lab">Aufklappen<input type="range" id="cn-t" min="0" max="100" value="0"></label>' +
+      '<label for="cn-r" id="cn-rlab" hidden>Radius r = <strong class="formula" id="cn-rv">1</strong> (s = 3)<input type="range" id="cn-r" min="0" max="2" value="1"></label>' +
+      '<button class="btn" id="cn-play">Abspielen</button></div>' +
+      '<p class="hint" id="cn-hint"></p>';
+    var cv = document.getElementById("cv-cone"), tR = document.getElementById("cn-t"), rR = document.getElementById("cn-r");
+    var RS = [0.75, 1, 1.5], S = 3;
+    function setMode(m) {
+      mode = m; cancelAnimationFrame(raf); tR.value = 0;
+      document.getElementById("m-pyr").className = "btn" + (m === "pyr" ? "" : " ghost");
+      document.getElementById("m-cone").className = "btn" + (m === "cone" ? "" : " ghost");
+      document.getElementById("m-pyr").setAttribute("aria-pressed", m === "pyr");
+      document.getElementById("m-cone").setAttribute("aria-pressed", m === "cone");
+      document.getElementById("cn-lab").firstChild.textContent = m === "pyr" ? "Aufklappen" : "Abrollen";
+      document.getElementById("cn-rlab").hidden = m !== "cone";
+      document.getElementById("cn-hint").textContent = m === "pyr"
+        ? "Draufsicht: Die vier Seitendreiecke klappen um ihre Grundkanten nach außen. Am Ende siehst du das Netz."
+        : "Draufsicht: Der Kegel liegt auf dem Tisch und rollt um seine Spitze. Die Spur ist ein Kreisausschnitt mit Radius s. Ändere r und beobachte den Winkel.";
+      draw();
+    }
+    function drawPyr(ctx, s, t) {
+      var a = 2, hs = 2.2, phi0 = Math.acos((a / 2) / hs);
+      var phi = phi0 + (Math.PI - phi0) * t;
+      var k = Math.min(s.w, s.h) / (a + 2 * hs + 0.8), cx = s.w / 2, cy = s.h / 2;
+      var d = -hs * Math.cos(phi);                         // Abstand der Spitze von der Kante, nach außen
+      var dirs = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+      // Seitendreiecke: hintere (nach innen gekippte) zuerst
+      var cols = ["--accent", "--sector2", "--accent", "--sector2"];
+      dirs.forEach(function (dv, i) {
+        var nx = dv[0], ny = dv[1], tx = -ny, ty = nx;
+        var mx = cx + nx * a / 2 * k, my = cy + ny * a / 2 * k;
+        var e1 = [mx + tx * a / 2 * k, my + ty * a / 2 * k], e2 = [mx - tx * a / 2 * k, my - ty * a / 2 * k];
+        var ap = [mx + nx * d * k, my + ny * d * k];
+        ctx.beginPath(); ctx.moveTo(e1[0], e1[1]); ctx.lineTo(e2[0], e2[1]); ctx.lineTo(ap[0], ap[1]); ctx.closePath();
+        ctx.globalAlpha = 0.85; ctx.fillStyle = col(cols[i]); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      });
+      if (t < 0.02) { // geschlossene Pyramide: Grundfläche liegt verdeckt unten
+        ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fillStyle = col("--ink"); ctx.fill();
+      } else {
+        ctx.beginPath(); ctx.rect(cx - a / 2 * k, cy - a / 2 * k, a * k, a * k);
+        ctx.fillStyle = col("--accent-soft"); ctx.globalAlpha = Math.min(1, t * 3); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      }
+      if (t > 0.98) {
+        ctx.fillStyle = col("--ink"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "center";
+        ctx.fillText("a²", cx, cy + 5);
+        ctx.fillStyle = col("--mark");
+        ctx.fillText("a", cx, cy + a / 2 * k + 18);
+        ctx.strokeStyle = col("--mark"); ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(cx, cy - a / 2 * k); ctx.lineTo(cx, cy - (a / 2 + hs) * k); ctx.stroke(); ctx.setLineDash([]);
+        ctx.textAlign = "left"; ctx.fillText("hs", cx + 6, cy - (a / 2 + hs / 2) * k);
+      }
+    }
+    function drawCone(ctx, s, t) {
+      var r = RS[+rR.value], g = Math.asin(r / S), total = 2 * Math.PI * r / S;
+      document.getElementById("cn-rv").textContent = fmt(r, r % 1 ? 2 : 0).replace(/,?0+$/, "");
+      var k = Math.min(s.w, s.h) / (2 * S + 1.7);
+      var ax = s.w / 2, ay = s.h / 2;
+      var b0 = -Math.PI / 2 - total / 2, b = b0 + total * t;
+      // ganzer Kreis mit Radius s (Hilfslinie)
+      ctx.setLineDash([4, 5]); ctx.beginPath(); ctx.arc(ax, ay, S * k, 0, 2 * Math.PI); ctx.strokeStyle = col("--line"); ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]);
+      // überstrichener Ausschnitt
+      if (t > 0) {
+        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.arc(ax, ay, S * k, b0, b); ctx.closePath();
+        ctx.fillStyle = col("--accent-soft"); ctx.fill(); ctx.strokeStyle = col("--accent"); ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.beginPath(); ctx.arc(ax, ay, S * k, b0, b); ctx.strokeStyle = col("--mark"); ctx.lineWidth = 5; ctx.stroke();
+      }
+      // liegender Kegel in Draufsicht: Achse liegt genau über der Berührlinie (Richtung b)
+      var h = S * Math.cos(g), cd = h * Math.cos(g);
+      ctx.save(); ctx.translate(ax + cd * k * Math.cos(b), ay + cd * k * Math.sin(b)); ctx.rotate(b);
+      var ra = r * Math.sin(g) * k, rb = r * k, x0 = -cd * k;
+      var xt = ra * ra / x0, yt = rb * Math.sqrt(Math.max(0, 1 - xt * xt / (ra * ra))), th = Math.acos(xt / ra);
+      ctx.beginPath(); ctx.moveTo(x0, 0); ctx.lineTo(xt, -yt); ctx.ellipse(0, 0, ra, rb, 0, -th, th, false); ctx.closePath();
+      ctx.globalAlpha = 0.8; ctx.fillStyle = col("--accent"); ctx.fill(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.ellipse(0, 0, ra, rb, 0, 0, 2 * Math.PI); ctx.fillStyle = col("--sector2"); ctx.fill(); ctx.stroke();
+      ctx.restore();
+      ctx.beginPath(); ctx.arc(ax, ay, 4, 0, 2 * Math.PI); ctx.fillStyle = col("--ink"); ctx.fill();
+      ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-body"); ctx.textAlign = "center";
+      ctx.fillText("Spitze", ax, ay + 20);
+      if (t > 0.98) {
+        var mid = b0 + total / 2;
+        ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "center";
+        ctx.fillText("Bogen = 2πr", ax + (S * k + 24) * Math.cos(mid), ay + (S * k + 24) * Math.sin(mid) + (Math.sin(mid) > 0 ? 10 : 0));
+        ctx.fillStyle = col("--ink");
+        ctx.fillText("s", ax + S * k * 0.5 * Math.cos(b0) - 10, ay + S * k * 0.5 * Math.sin(b0));
+        ctx.textAlign = "left"; ctx.fillStyle = col("--muted");
+        ctx.fillText("α = " + Math.round(360 * r / S) + "°", 10, 22);
+      }
+    }
+    function draw() {
+      var s = setupCanvas(cv, 360), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var t = +tR.value / 100;
+      if (mode === "pyr") drawPyr(ctx, s, t); else drawCone(ctx, s, t);
+    }
+    document.getElementById("m-pyr").addEventListener("click", function () { setMode("pyr"); });
+    document.getElementById("m-cone").addEventListener("click", function () { setMode("cone"); });
+    tR.addEventListener("input", function () { cancelAnimationFrame(raf); draw(); });
+    rR.addEventListener("input", draw);
+    document.getElementById("cn-play").addEventListener("click", function () {
+      cancelAnimationFrame(raf);
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { tR.value = 100; draw(); return; }
+      var from = +tR.value >= 100 ? 0 : +tR.value, start = null;
+      function frame(ts) { if (!start) start = ts; var v = Math.min(100, from + (ts - start) / 30); tR.value = v; draw(); if (v < 100) raf = requestAnimationFrame(frame); }
+      raf = requestAnimationFrame(frame);
+    });
+    var w = watchRedraw(draw); w.ro.observe(host); setMode("pyr");
+    return function () { cancelAnimationFrame(raf); w.stop(); };
+  }
+
+  /* ---------- Animation Station 7: Würfel in drei Pyramiden, Umschüttversuch ---------- */
+  function mountCube3(host) {
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-cube" aria-label="Ein Würfel wird in drei kongruente Pyramiden zerlegt"></canvas></div>' +
+      '<div class="controls"><label for="cb-t">Auseinanderziehen<input type="range" id="cb-t" min="0" max="100" value="0"></label></div>' +
+      '<p class="hint">Alle drei Pyramiden haben ihre Spitze in derselben Würfelecke. Jede hat eine Würfelfläche als Grundfläche und die Kantenlänge a als Höhe.</p>' +
+      '<h4 class="sub">Umschüttversuch: Pyramide und Prisma mit gleicher Grundfläche und Höhe</h4>' +
+      '<div class="canvas-box"><canvas id="cv-pour" aria-label="Eine Pyramide wird mehrmals in ein Prisma umgeschüttet"></canvas></div>' +
+      '<div class="controls"><button class="btn" id="pour">Einmal umschütten</button><button class="btn ghost" id="pour-reset">Leeren</button><span class="hint" id="pour-count">0-mal umgeschüttet</span></div>';
+    var cv = document.getElementById("cv-cube"), tR = document.getElementById("cb-t"), cp = document.getElementById("cv-pour");
+    var pours = 0, anim = 0, raf = 0;
+    var A = [0, 1, 0];
+    var PYR = [
+      { base: [[1, 0, 0], [1, 1, 0], [1, 1, 1], [1, 0, 1]], n: [1, 0, 0], c: "--accent" },
+      { base: [[0, 0, 0], [1, 0, 0], [1, 0, 1], [0, 0, 1]], n: [0, -1, 0], c: "--mark" },
+      { base: [[0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]], n: [0, 0, 1], c: "--sector2" }
+    ];
+    var V = [-0.5, -0.35, 1];
+    function drawCube() {
+      var s = setupCanvas(cv, 320), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var t = +tR.value / 100, sep = 0.75 * t;
+      var k = Math.min((s.w - 40) / (1.5 + 2 * sep + 0.6), (s.h - 40) / (1.35 + 2 * sep + 0.4));
+      var cx = s.w / 2 - (0.75 + 0.25) * k + 0.1 * k, by = s.h / 2 + 0.7 * k;
+      function P(p) { return [cx + (p[0] + 0.5 * p[2]) * k, by - (p[1] + 0.35 * p[2]) * k]; }
+      var faces = [];
+      PYR.forEach(function (py) {
+        var off = [py.n[0] * sep, py.n[1] * sep, py.n[2] * sep];
+        function m(p) { return [p[0] + off[0], p[1] + off[1], p[2] + off[2]]; }
+        var b = py.base.map(m), ap = m(A);
+        faces.push({ pts: b, c: py.c, base: true });
+        for (var i = 0; i < 4; i++) faces.push({ pts: [b[i], b[(i + 1) % 4], ap], c: py.c });
+      });
+      faces.forEach(function (f) {
+        var cen = [0, 0, 0]; f.pts.forEach(function (p) { cen[0] += p[0]; cen[1] += p[1]; cen[2] += p[2]; });
+        f.depth = (cen[0] * V[0] + cen[1] * V[1] + cen[2] * V[2]) / f.pts.length;
+      });
+      faces.sort(function (a, b) { return b.depth - a.depth; });
+      faces.forEach(function (f) {
+        ctx.beginPath(); f.pts.forEach(function (p, i) { var q = P(p); i ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]); }); ctx.closePath();
+        ctx.globalAlpha = f.base ? 0.95 : 0.7; ctx.fillStyle = col(f.c); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.2; ctx.stroke();
+      });
+      if (t < 0.02) {
+        var q = P(A); ctx.beginPath(); ctx.arc(q[0], q[1], 4, 0, 2 * Math.PI); ctx.fillStyle = col("--ink"); ctx.fill();
+        ctx.font = "13px " + col("--font-body"); ctx.textAlign = "right"; ctx.fillText("gemeinsame Spitze", q[0] - 8, q[1] - 6);
+      }
+    }
+    function drawPour() {
+      var s = setupCanvas(cp, 230), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var W = Math.min(150, (s.w - 80) / 2.6), H = 150, base = s.h - 30;
+      var px = s.w / 2 - W - 30, qx = s.w / 2 + 30;
+      var pyrFill = anim > 0 ? Math.max(0, 1 - anim) : (pours < 3 ? 1 : 0);
+      // Pyramide (Querschnitt als Dreieck), gefüllt
+      ctx.save(); ctx.beginPath(); ctx.moveTo(px, base); ctx.lineTo(px + W, base); ctx.lineTo(px + W / 2, base - H); ctx.closePath(); ctx.clip();
+      // Füllstand so, dass gefülltes Volumen ∝ 1 - (1 - y/H)³
+      var yLevel = H * (1 - Math.cbrt(1 - pyrFill));
+      ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.75; ctx.fillRect(px, base - yLevel, W, yLevel); ctx.globalAlpha = 1; ctx.restore();
+      ctx.beginPath(); ctx.moveTo(px, base); ctx.lineTo(px + W, base); ctx.lineTo(px + W / 2, base - H); ctx.closePath();
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2; ctx.stroke();
+      // Prisma
+      var lvl = Math.min(3, pours + (anim > 0 ? anim : 0)) / 3 * H;
+      ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.75; ctx.fillRect(qx, base - lvl, W, lvl); ctx.globalAlpha = 1;
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2; ctx.strokeRect(qx, base - H, W, H);
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1;
+      [1, 2].forEach(function (i) { ctx.beginPath(); ctx.moveTo(qx, base - H * i / 3); ctx.lineTo(qx + W, base - H * i / 3); ctx.stroke(); });
+      ctx.setLineDash([]);
+      ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-body"); ctx.textAlign = "center";
+      ctx.fillText("Pyramide", px + W / 2, base + 20); ctx.fillText("Prisma", qx + W / 2, base + 20);
+      ctx.textAlign = "left"; ctx.font = "12px " + col("--font-mono");
+      ctx.fillText("⅓", qx + W + 6, base - H / 3 + 4); ctx.fillText("⅔", qx + W + 6, base - 2 * H / 3 + 4); ctx.fillText("1", qx + W + 6, base - H + 4);
+    }
+    function draw() { drawCube(); drawPour(); }
+    tR.addEventListener("input", drawCube);
+    document.getElementById("pour").addEventListener("click", function () {
+      if (pours >= 3 || anim > 0) return;
+      var done = function () { anim = 0; pours++; drawPour(); document.getElementById("pour-count").textContent = pours + "-mal umgeschüttet" + (pours === 3 ? ": Das Prisma ist genau voll." : ""); document.getElementById("pour").disabled = pours >= 3; };
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { done(); return; }
+      var start = null;
+      function frame(ts) { if (!start) start = ts; anim = Math.min(1, (ts - start) / 1200); drawPour(); if (anim < 1) raf = requestAnimationFrame(frame); else done(); }
+      anim = 0.0001; raf = requestAnimationFrame(frame);
+    });
+    document.getElementById("pour-reset").addEventListener("click", function () {
+      cancelAnimationFrame(raf); anim = 0; pours = 0; document.getElementById("pour").disabled = false;
+      document.getElementById("pour-count").textContent = "0-mal umgeschüttet"; drawPour();
+    });
+    var w = watchRedraw(draw); w.ro.observe(host); draw();
+    return function () { cancelAnimationFrame(raf); w.stop(); };
   }
 
   /* ---------- Start ---------- */

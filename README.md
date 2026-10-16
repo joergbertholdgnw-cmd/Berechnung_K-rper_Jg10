@@ -16,7 +16,9 @@ Der Fortschritt wird nur im Browser der Schülerin oder des Schülers gespeicher
 | 3 | Kreisausschnitt und Kreisbogen | fertig |
 | 4 | Zylinder: Netz und Oberfläche | fertig |
 | 5 | Zylinder: Volumen | fertig |
-| 6–10 | Pyramide/Kegel, Kugel, zusammengesetzte Körper | Ziele hinterlegt, Inhalte folgen |
+| 6 | Pyramide und Kegel: Oberfläche | fertig |
+| 7 | Pyramide und Kegel: Volumen | fertig |
+| 8–10 | Kugel, zusammengesetzte Körper | Ziele hinterlegt, Inhalte folgen |
 
 Der vollständige Lernweg steht in [docs/lernweg.md](docs/lernweg.md).
 
