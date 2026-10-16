@@ -1,0 +1,11 @@
+#!/bin/sh
+# Baut index.html (für GitHub Pages) aus src/lernseite.html
+set -e
+cd "$(dirname "$0")"
+{
+  printf '<!doctype html>\n<html lang="de">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
+  sed -n '1,/<\/style>/p' src/lernseite.html
+  printf '</head>\n<body>\n'
+  sed '1,/<\/style>/d' src/lernseite.html
+  printf '</body>\n</html>\n'
+} > index.html

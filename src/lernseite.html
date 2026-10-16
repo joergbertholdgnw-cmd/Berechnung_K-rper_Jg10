@@ -1,0 +1,802 @@
+<title>Kreis und Körper Jg. 10</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: Kopf mit Lernweg-Karte (Linienplan nach Themen), darunter eine Station im Lesespalten-Format auf Karopapier */
+:root {
+  --paper: #F2F5F8;
+  --surface: #FFFFFF;
+  --ink: #15233A;
+  --muted: #56677A;
+  --line: #D2DBE3;
+  --accent: #1D6A8C;
+  --accent-soft: #DCEBF2;
+  --sector2: #9CC6D9;
+  --mark: #C8711C;
+  --mark-soft: #F8E6D2;
+  --ok: #2B7A4B;
+  --ok-soft: #DDF0E4;
+  --bad: #B23E2C;
+  --bad-soft: #F6DFDA;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E161F; --surface: #16212C; --ink: #E5ECF2; --muted: #93A4B5; --line: #2A3847;
+    --accent: #5DB2D5; --accent-soft: #19323F; --sector2: #2E5D72; --mark: #F0A04A; --mark-soft: #3A2A18;
+    --ok: #5CBF88; --ok-soft: #173326; --bad: #E77B69; --bad-soft: #3B1F1A; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E161F; --surface: #16212C; --ink: #E5ECF2; --muted: #93A4B5; --line: #2A3847;
+  --accent: #5DB2D5; --accent-soft: #19323F; --sector2: #2E5D72; --mark: #F0A04A; --mark-soft: #3A2A18;
+  --ok: #5CBF88; --ok-soft: #173326; --bad: #E77B69; --bad-soft: #3B1F1A; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: grid;
+  gap: 28px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.55rem; font-weight: 700; }
+h3 { font-size: 1.15rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); }
+button { font: inherit; }
+:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; border-radius: 4px; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.formula { font-family: var(--font-mono); font-weight: 500; white-space: nowrap; }
+
+/* Kopf */
+header.top { display: grid; gap: 10px; }
+.lead { color: var(--muted); max-width: 62ch; }
+
+/* Lernweg-Karte */
+.map {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  display: grid;
+  gap: 18px;
+}
+.map-head { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; justify-content: space-between; }
+.progress { display: flex; align-items: center; gap: 12px; flex: 1 1 260px; max-width: 420px; }
+.progress-bar { flex: 1; height: 8px; border-radius: 99px; background: var(--accent-soft); overflow: hidden; }
+.progress-bar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; transition: width .4s ease; }
+.progress-text { font-family: var(--font-mono); font-size: 0.85rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lines { display: flex; flex-wrap: wrap; gap: 22px 0; }
+.line-group { display: grid; gap: 30px; padding-right: 6px; align-content: start; }
+.line-group .eyebrow { padding-left: 4px; }
+.stops { display: flex; align-items: flex-start; }
+.stop {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: 78px;
+  background: none;
+  border: 0;
+  padding: 0 0 4px;
+  cursor: pointer;
+  color: var(--ink);
+}
+.stop::before {
+  content: "";
+  position: absolute;
+  top: 17px;
+  left: -50%;
+  width: 100%;
+  height: 4px;
+  background: var(--line);
+  z-index: 0;
+}
+.stop.first::before { display: none; }
+.stop.done::before, .stop.current::before { background: var(--accent); }
+.dot {
+  position: relative;
+  z-index: 1;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-weight: 500; font-size: 0.95rem;
+  background: var(--surface);
+  border: 3px solid var(--line);
+  color: var(--muted);
+  transition: transform .15s ease;
+}
+.stop:hover .dot { transform: scale(1.08); }
+.stop.done .dot { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.stop.current .dot { border-color: var(--mark); color: var(--ink); box-shadow: 0 0 0 5px var(--mark-soft); }
+.stop.viewing .dot { outline: 2px dashed var(--accent); outline-offset: 4px; }
+.stop-label { font-size: 0.78rem; line-height: 1.2; text-align: center; color: var(--muted); }
+.stop.current .stop-label, .stop.viewing .stop-label { color: var(--ink); font-weight: 600; }
+.here {
+  position: absolute; top: -24px; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: .04em; text-transform: uppercase;
+  background: var(--mark); color: var(--surface); padding: 2px 7px; border-radius: 99px; white-space: nowrap; z-index: 2;
+}
+.lines { padding-top: 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.85rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--line); display: inline-block; }
+.legend i.l-done { background: var(--accent); border-color: var(--accent); }
+.legend i.l-cur { border-color: var(--mark); }
+
+/* Station */
+.station { display: grid; gap: 22px; }
+.station-head { display: grid; gap: 8px; }
+.station-head p { color: var(--muted); max-width: 64ch; }
+.block {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.block-title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.block-title .eyebrow { color: var(--accent); }
+.goals { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.goals label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.goals input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--ok); flex: none; }
+.hint { font-size: 0.9rem; color: var(--muted); }
+
+/* Animation */
+.anim { display: grid; gap: 12px; }
+.canvas-box { width: 100%; max-width: 100%; border-radius: 10px; background: var(--paper); border: 1px solid var(--line); overflow: hidden; }
+canvas { display: block; width: 100%; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.controls label { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; flex: 1 1 240px; }
+.controls input[type="range"] { flex: 1; accent-color: var(--accent); min-width: 0; }
+.btn {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--surface);
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.readout { overflow-x: auto; }
+.readout table { border-collapse: collapse; font-family: var(--font-mono); font-size: 0.9rem; font-variant-numeric: tabular-nums; min-width: 100%; }
+.readout th, .readout td { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.readout th:first-child, .readout td:first-child { text-align: left; }
+.readout th { font-family: var(--font-body); font-weight: 600; color: var(--muted); font-size: 0.85rem; }
+.pi-row td { color: var(--mark); font-weight: 500; }
+
+/* Herleitung */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: step; }
+.steps li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: start; }
+.steps li::before {
+  counter-increment: step; content: counter(step);
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); font-family: var(--font-mono); font-weight: 500; font-size: 0.9rem;
+}
+.steps li > div { min-width: 0; display: grid; gap: 6px; padding-top: 3px; }
+.steps .result {
+  background: var(--accent-soft); border-radius: 10px; padding: 10px 14px; font-family: var(--font-mono); font-weight: 500; font-size: 1.1rem; justify-self: start;
+}
+.step-nav { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+/* Video */
+.video { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; text-decoration: none; color: inherit; border: 1px solid var(--line); border-radius: 10px; padding: 14px; background: var(--paper); }
+.video:hover { border-color: var(--accent); }
+.play { width: 46px; height: 46px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; flex: none; }
+.play::after { content: ""; border-left: 14px solid var(--surface); border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px; }
+.video-text { display: grid; gap: 2px; min-width: 0; flex: 1 1 200px; }
+.video-text strong { font-weight: 600; }
+
+/* Kernfragen */
+.quiz { display: grid; gap: 18px; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 8px; min-width: 0; }
+legend { font-weight: 600; padding: 0; margin-bottom: 4px; }
+.opt { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; cursor: pointer; background: var(--surface); }
+.opt:hover { border-color: var(--accent); }
+.opt input { margin-top: 5px; accent-color: var(--accent); flex: none; }
+.opt.right { border-color: var(--ok); background: var(--ok-soft); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-soft); }
+.fb { font-size: 0.95rem; padding-left: 4px; }
+.fb.ok { color: var(--ok); }
+.fb.no { color: var(--bad); }
+textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; resize: vertical; }
+.solution { border-left: 4px solid var(--ok); background: var(--ok-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; }
+
+.finish { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.badge { font-family: var(--font-mono); font-size: 0.8rem; padding: 3px 10px; border-radius: 99px; background: var(--ok-soft); color: var(--ok); }
+.soon { border: 1px dashed var(--line); border-radius: 10px; padding: 14px; color: var(--muted); }
+.foot { display: flex; flex-wrap: wrap; gap: 10px 20px; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.9rem; }
+.confirm { display: inline-flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+@media (max-width: 560px) {
+  .stop { width: 64px; }
+  .block, .map { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Mathematik · Jahrgang 10 · Lernbereich Kreis- und Körperberechnung</span>
+    <h1>Kreis und Körper</h1>
+    <p class="lead">Hier leitest du die Formeln für Kreis, Zylinder, Pyramide, Kegel und Kugel selbst her. Jede Station zeigt dir zuerst, was du am Ende können sollst. Die Karte zeigt, wo du gerade stehst.</p>
+  </header>
+
+  <section class="map" aria-labelledby="map-title">
+    <div class="map-head">
+      <h2 id="map-title">Dein Lernweg</h2>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-label="Fortschritt" aria-valuemin="0" aria-valuemax="11" id="pbar"><span id="pfill" style="width:0%"></span></div>
+        <span class="progress-text" id="ptext">0 von 11 Stationen</span>
+      </div>
+    </div>
+    <div class="lines" id="lines"></div>
+    <div class="legend">
+      <span><i class="l-done"></i>geschafft</span>
+      <span><i class="l-cur"></i>du bist hier</span>
+      <span><i></i>noch offen</span>
+    </div>
+  </section>
+
+  <main id="station" class="station" aria-live="polite"></main>
+
+  <footer class="foot">
+    <span>Dein Fortschritt wird nur in diesem Browser gespeichert.</span>
+    <span class="confirm" id="reset-area"><button class="btn ghost" id="reset">Fortschritt zurücksetzen</button></span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- Daten ---------- */
+  var GROUPS = [
+    { name: "Start", ids: [0] },
+    { name: "Kreis", ids: [1, 2, 3] },
+    { name: "Zylinder", ids: [4, 5] },
+    { name: "Pyramide und Kegel", ids: [6, 7] },
+    { name: "Kugel", ids: [8, 9] },
+    { name: "Anwenden", ids: [10] }
+  ];
+
+  var STATIONS = [
+    { short: "Startcheck", title: "Startcheck: Was ich schon kann", ready: true,
+      intro: "Bevor es losgeht, prüfst du kurz, ob du das Werkzeug aus den letzten Jahren parat hast. Alles davon brauchst du gleich wieder.",
+      goals: ["Ich kann Flächeninhalte von Rechteck, Dreieck und Parallelogramm berechnen.",
+              "Ich kann das Volumen eines Prismas mit V = G · h berechnen.",
+              "Ich kann den Satz des Pythagoras anwenden."] },
+    { short: "Umfang und π", title: "Kreisumfang und die Zahl π", ready: true,
+      intro: "Wie lang ist der Rand eines Kreises? Du grenzt den Umfang mit Vielecken ein, so wie Archimedes vor über 2000 Jahren.",
+      goals: ["Ich kann erklären, warum das Verhältnis u : d bei allen Kreisen gleich ist.",
+              "Ich kann beschreiben, wie man π mit Vielecken innen und außen immer genauer eingrenzt.",
+              "Ich kann u = π · d = 2πr anwenden."] },
+    { short: "Kreisfläche", title: "Flächeninhalt des Kreises", ready: true,
+      intro: "Ein Kreis hat keine geraden Seiten. Trotzdem kannst du ihn so zerschneiden und umlegen, dass fast ein Rechteck entsteht.",
+      goals: ["Ich kann erklären, wie man einen Kreis in Sektoren zerlegt und zu einem fast-Rechteck umlegt.",
+              "Ich kann begründen, warum dieses Rechteck die Seiten r und π · r hat.",
+              "Ich kann A = π · r² anwenden."] },
+    { short: "Kreisausschnitt", title: "Kreisausschnitt und Kreisbogen", ready: false,
+      goals: ["Ich kann Bogenlänge und Fläche eines Kreisausschnitts als Anteil α/360° des ganzen Kreises bestimmen."] },
+    { short: "Zylinder: Oberfläche", title: "Zylinder: Netz und Oberfläche", ready: false,
+      goals: ["Ich kann das Netz eines Zylinders zeichnen und erklären, warum eine Rechteckseite gleich dem Kreisumfang ist.",
+              "Ich kann O = 2πr² + 2πrh herleiten und anwenden."] },
+    { short: "Zylinder: Volumen", title: "Zylinder: Volumen", ready: false,
+      goals: ["Ich kann das Zylindervolumen als Grenzfall von Prismen mit n-Eck-Grundfläche erklären.",
+              "Ich kann V = πr² · h anwenden."] },
+    { short: "Pyramide, Kegel: O", title: "Pyramide und Kegel: Oberfläche", ready: false,
+      goals: ["Ich kann Netze von Pyramiden zeichnen und beurteilen.",
+              "Ich kann erklären, warum der abgewickelte Kegelmantel ein Kreisausschnitt ist, und M = π · r · s herleiten."] },
+    { short: "Pyramide, Kegel: V", title: "Pyramide und Kegel: Volumen", ready: false,
+      goals: ["Ich kann begründen, warum eine Pyramide ein Drittel des Prismas mit gleicher Grundfläche und Höhe füllt.",
+              "Ich kann V = ⅓ · G · h für Pyramide und Kegel anwenden."] },
+    { short: "Kugel: Volumen", title: "Kugel: Volumen", ready: false,
+      goals: ["Ich kann mit dem Prinzip von Cavalieri erklären, warum eine Halbkugel dasselbe Volumen hat wie Zylinder minus Kegel.",
+              "Ich kann V = 4/3 · π · r³ anwenden."] },
+    { short: "Kugel: Oberfläche", title: "Kugel: Oberfläche", ready: false,
+      goals: ["Ich kann erklären, wie man sich die Kugel aus vielen schmalen Pyramiden mit Spitze im Mittelpunkt zusammengesetzt denkt.",
+              "Ich kann aus V = ⅓ · O · r die Formel O = 4πr² gewinnen."] },
+    { short: "Zusammengesetzt", title: "Zusammengesetzte Körper und Modellieren", ready: false,
+      goals: ["Ich kann zusammengesetzte Körper zerlegen und Oberfläche und Volumen berechnen.",
+              "Ich kann ein Alltagsobjekt mit Körpern modellieren und das Modell bewerten."] }
+  ];
+
+  /* Inhalte der fertigen Stationen */
+  var CONTENT = {
+    0: {
+      quiz: [
+        { q: "Ein Rechteck ist 4 cm lang und 2,5 cm breit. Wie groß ist sein Flächeninhalt?",
+          opts: ["6,5 cm²", "10 cm²", "13 cm²"], correct: 1,
+          fb: ["Das ist die halbe Summe der Seiten, also der halbe Umfang.", "Richtig: A = a · b = 4 cm · 2,5 cm.", "13 cm ist der Umfang, kein Flächeninhalt."] },
+        { q: "Ein Dreieck hat die Grundseite g = 6 cm und die Höhe h = 4 cm. Flächeninhalt?",
+          opts: ["24 cm²", "12 cm²", "10 cm²"], correct: 1,
+          fb: ["Fast: Das wäre das Rechteck. Ein Dreieck ist die Hälfte davon.", "Richtig: A = ½ · g · h = ½ · 6 cm · 4 cm.", "Du hast addiert. Für die Fläche wird multipliziert."] },
+        { q: "Ein Parallelogramm hat g = 7 cm und h = 3 cm. Flächeninhalt?",
+          opts: ["21 cm²", "10,5 cm²", "20 cm²"], correct: 0,
+          fb: ["Richtig: A = g · h. Schneidest du ein Dreieck ab und setzt es an, entsteht ein Rechteck.", "Das wäre ein Dreieck mit diesen Maßen.", "20 cm ist der Umfang, wenn die Seiten 7 cm und 3 cm wären."] },
+        { q: "Ein Prisma hat die Grundfläche G = 12 cm² und die Höhe h = 5 cm. Volumen?",
+          opts: ["17 cm³", "60 cm³", "30 cm³"], correct: 1,
+          fb: ["Für das Volumen wird multipliziert, nicht addiert.", "Richtig: V = G · h. Diese Idee brauchst du gleich beim Zylinder.", "Das ½ gehört nicht in die Prismenformel."] },
+        { q: "In einem rechtwinkligen Dreieck sind die Katheten 6 cm und 8 cm lang. Wie lang ist die Hypotenuse?",
+          opts: ["14 cm", "10 cm", "48 cm"], correct: 1,
+          fb: ["Seitenlängen addieren sich nicht einfach. Nutze c² = a² + b².", "Richtig: c² = 36 + 64 = 100, also c = 10 cm.", "Das ist das Produkt. Gesucht ist c mit c² = a² + b²."] }
+      ]
+    },
+    1: {
+      anim: "polygon",
+      steps: [
+        "<p><strong>Alle Kreise sind ähnlich.</strong> Vergrößerst du einen Kreis mit dem Faktor k, wird der Durchmesser k-mal so groß und der Umfang auch. Das Verhältnis u : d bleibt also bei jedem Kreis gleich.</p><p>Diese feste Zahl bekommt einen Namen: <span class=\"formula\">π = u : d</span>.</p>",
+        "<p><strong>Eine erste Eingrenzung.</strong> Das Sechseck im Kreis besteht aus 6 gleichseitigen Dreiecken mit Seitenlänge r. Sein Umfang ist 6r = 3d. Es ist kürzer als der Kreisumfang, also gilt π &gt; 3.</p><p>Das Quadrat um den Kreis hat den Umfang 4d. Es ist länger als der Kreisumfang, also gilt π &lt; 4.</p>",
+        "<p><strong>Mehr Ecken, engere Grenzen.</strong> Je mehr Ecken die Vielecke haben, desto enger liegen sie am Kreis. Stelle in der Animation n = 96 ein: Genau so weit ist Archimedes gekommen und fand 3,1408 &lt; π &lt; 3,1429.</p>",
+        "<p><strong>Der Grenzprozess.</strong> Wächst n immer weiter, rücken der innere und der äußere Wert von beiden Seiten an dieselbe Zahl heran. Diese Zahl ist π = 3,14159… Sie lässt sich nicht als Bruch schreiben und hat unendlich viele Nachkommastellen ohne Muster.</p>",
+        "<p><strong>Die Formel.</strong> Aus π = u : d folgt durch Umstellen:</p><div class=\"result\">u = π · d = 2 · π · r</div>"
+      ],
+      video: { title: "Näherungsverfahren von Archimedes zur Bestimmung der Kreiszahl π", url: "https://www.youtube.com/watch?v=4c0s1A7I0pU" },
+      quiz: [
+        { q: "Warum ist das Verhältnis u : d bei allen Kreisen gleich?",
+          opts: ["Weil alle Kreise zueinander ähnlich sind: Beim Vergrößern wachsen u und d mit demselben Faktor.", "Weil π immer 3,14 ist.", "Weil der Radius halb so groß ist wie der Durchmesser."], correct: 0,
+          fb: ["Genau. Die Ähnlichkeit ist der Grund, π ist nur der Name für das Ergebnis.", "Das ist ein Zirkelschluss: π ist ja gerade als u : d festgelegt. Warum ist das Verhältnis überhaupt fest?", "Das stimmt, erklärt aber nicht, warum der Umfang immer im selben Verhältnis zum Durchmesser steht."] },
+        { q: "Was passiert mit den Umfängen der beiden Vielecke, wenn die Eckenzahl n wächst?",
+          opts: ["Beide werden größer.", "Der innere Umfang wächst, der äußere schrumpft, beide nähern sich dem Kreisumfang.", "Beide werden irgendwann genau gleich dem Kreisumfang."], correct: 1,
+          fb: ["Schau noch einmal auf die Tabelle in der Animation: Der äußere Wert wird kleiner.", "Richtig. Der Kreisumfang ist von unten und oben eingeklemmt.", "Sie kommen beliebig nah heran, ein Vieleck bleibt aber immer ein Vieleck."] },
+        { q: "Warum zeigt das Sechseck im Kreis, dass π größer als 3 ist?",
+          opts: ["Weil ein Sechseck sechs Ecken hat.", "Weil sein Umfang 6r = 3d beträgt und kürzer ist als der Kreisumfang.", "Weil das Sechseck größer ist als der Kreis."], correct: 1,
+          fb: ["Die Eckenzahl allein sagt nichts über die Länge.", "Genau: u_Sechseck = 3d &lt; u_Kreis, also ist u : d größer als 3.", "Das innere Sechseck liegt ganz im Kreis und ist kleiner."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Wenn man nur genügend viele Ecken nimmt, kann man π mit den Vielecken exakt ausrechnen.“",
+              sol: "Die Aussage ist falsch. Jedes Vieleck liefert nur eine untere oder obere Schranke für π. Mit mehr Ecken werden die Schranken enger, aber der Kreis wird nie genau erreicht. π ist irrational: Die Nachkommastellen enden nie und wiederholen sich nicht. Man kann π also beliebig genau annähern, aber nicht exakt als Dezimalzahl oder Bruch angeben." }
+    },
+    2: {
+      anim: "sectors",
+      steps: [
+        "<p><strong>Zerlegen.</strong> Teile den Kreis in n gleich große Kreisausschnitte (Sektoren), wie eine Pizza.</p>",
+        "<p><strong>Umlegen.</strong> Lege die Sektoren abwechselnd mit der Spitze nach oben und nach unten nebeneinander. Es entsteht eine Figur, die fast wie ein Parallelogramm aussieht. Der Flächeninhalt hat sich dabei nicht verändert.</p>",
+        "<p><strong>Seiten ablesen.</strong> Die Bögen unten bilden zusammen den halben Kreisumfang, also ½ · 2πr = πr. Die Seitenkanten der Sektoren sind Radien, die Höhe der Figur ist also r.</p>",
+        "<p><strong>Der Grenzprozess.</strong> Je mehr Sektoren du nimmst, desto flacher werden die Bögen und desto genauer wird die Figur ein Rechteck. Probiere es mit dem Regler aus: Bei 64 Sektoren siehst du kaum noch einen Unterschied.</p>",
+        "<p><strong>Die Formel.</strong> Für das Rechteck gilt Länge mal Breite:</p><div class=\"result\">A = π · r · r = π · r²</div>"
+      ],
+      video: { title: "Kreisfläche – Herleitung der Formel (einfach)", url: "https://www.youtube.com/watch?v=viyy0vDLJvw" },
+      quiz: [
+        { q: "Warum ist die lange Seite der umgelegten Figur π · r lang?",
+          opts: ["Weil sie aus den Bögen der halben Sektoren besteht, also dem halben Kreisumfang.", "Weil π · r der Durchmesser ist.", "Weil man das beim Abmessen so herausbekommt."], correct: 0,
+          fb: ["Richtig: Die Hälfte der Bögen liegt unten, die andere Hälfte oben. Halber Umfang = ½ · 2πr = πr.", "Der Durchmesser ist 2r, nicht πr.", "Messen liefert nur einen Näherungswert. Die Herleitung begründet es exakt."] },
+        { q: "Warum ist die Höhe der Figur gleich dem Radius r?",
+          opts: ["Weil die Figur quadratisch ist.", "Weil die Seitenkanten jedes Sektors Radien sind und die Figur bei vielen Sektoren senkrecht steht.", "Weil man den Kreis halbiert hat."], correct: 1,
+          fb: ["Die Figur ist ungefähr π-mal so lang wie hoch, also kein Quadrat.", "Genau. Jeder Sektor reicht von der Spitze (Mittelpunkt) bis zum Bogen, das ist genau r.", "Halbiert wurde nur der Umfang auf die beiden Seiten, nicht die Höhe."] },
+        { q: "Wozu braucht man immer mehr Sektoren?",
+          opts: ["Damit die Rechnung schwerer wird.", "Damit die Bögen fast gerade werden und die Figur zu einem Rechteck wird.", "Damit die Fläche größer wird."], correct: 1,
+          fb: ["Die Rechnung bleibt gleich einfach, nur die Figur wird genauer.", "Richtig. Im Grenzprozess verschwindet der Unterschied zum Rechteck.", "Die Fläche ändert sich beim Umlegen nie, es sind immer dieselben Stücke."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Wenn man den Radius eines Kreises verdoppelt, verdoppelt sich auch sein Flächeninhalt.“",
+              sol: "Die Aussage ist falsch. Bei doppeltem Radius werden in der umgelegten Figur beide Seiten doppelt so lang: Die Länge π · r wird zu π · 2r und die Höhe r zu 2r. Der Flächeninhalt wird also 2 · 2 = 4-mal so groß: π · (2r)² = 4 · π · r². Der Umfang verdoppelt sich dagegen nur." }
+    }
+  };
+
+  /* ---------- Speicher ---------- */
+  var KEY = "kreis-koerper-jg10-v1";
+  var state = { done: {}, goals: {}, answers: {}, notes: {}, shown: {}, step: {} };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) { var parsed = JSON.parse(raw); for (var k in state) if (parsed[k]) state[k] = parsed[k]; }
+  } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  function currentId() {
+    for (var i = 0; i < STATIONS.length; i++) if (!state.done[i]) return i;
+    return -1;
+  }
+  var viewing = 0;
+
+  /* ---------- Karte ---------- */
+  function renderMap() {
+    var lines = document.getElementById("lines");
+    var cur = currentId();
+    var html = "";
+    var first = true;
+    GROUPS.forEach(function (g) {
+      html += '<div class="line-group"><span class="eyebrow">' + g.name + '</span><div class="stops">';
+      g.ids.forEach(function (id) {
+        var s = STATIONS[id];
+        var cls = "stop" + (first ? " first" : "") + (state.done[id] ? " done" : "") + (id === cur ? " current" : "") + (id === viewing ? " viewing" : "");
+        var status = state.done[id] ? "geschafft" : (id === cur ? "du bist hier" : "noch offen");
+        html += '<button class="' + cls + '" data-id="' + id + '" aria-label="Station ' + id + ': ' + s.title + ' (' + status + ')"' + (id === viewing ? ' aria-current="step"' : '') + '>' +
+                (id === cur ? '<span class="here">Du bist hier</span>' : '') +
+                '<span class="dot">' + (state.done[id] ? "✓" : id) + '</span><span class="stop-label">' + s.short + '</span></button>';
+        first = false;
+      });
+      html += "</div></div>";
+    });
+    lines.innerHTML = html;
+    var n = Object.keys(state.done).filter(function (k) { return state.done[k]; }).length;
+    document.getElementById("pfill").style.width = (n / STATIONS.length * 100) + "%";
+    document.getElementById("pbar").setAttribute("aria-valuenow", n);
+    document.getElementById("ptext").textContent = n + " von " + STATIONS.length + " Stationen";
+  }
+  document.getElementById("lines").addEventListener("click", function (e) {
+    var b = e.target.closest(".stop");
+    if (b) go(+b.dataset.id, true);
+  });
+
+  /* ---------- Station ---------- */
+  var stopAnim = null;
+  function go(id, scroll) {
+    viewing = id;
+    try { history.replaceState(null, "", "#s" + id); } catch (e) {}
+    renderMap();
+    renderStation();
+    if (scroll) document.getElementById("station").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  }
+
+  function renderStation() {
+    if (stopAnim) { stopAnim(); stopAnim = null; }
+    var id = viewing, s = STATIONS[id], c = CONTENT[id];
+    var el = document.getElementById("station");
+    var h = '<div class="station-head"><span class="eyebrow">Station ' + id + ' von ' + (STATIONS.length - 1) + '</span><h2>' + s.title + '</h2>' + (s.intro ? '<p>' + s.intro + '</p>' : '') + '</div>';
+
+    h += '<section class="block"><div class="block-title"><span class="eyebrow">Ziele</span><h3>Das kannst du nach dieser Station</h3></div><ul class="goals">';
+    s.goals.forEach(function (g, i) {
+      var gid = "goal-" + id + "-" + i;
+      h += '<li><label for="' + gid + '"><input type="checkbox" id="' + gid + '" data-goal="' + id + '-' + i + '"' + (state.goals[id + "-" + i] ? " checked" : "") + '><span>' + g + '</span></label></li>';
+    });
+    h += '</ul><p class="hint">Hake ein Ziel ab, sobald du es sicher kannst.</p></section>';
+
+    if (!s.ready) {
+      h += '<section class="block"><div class="soon">Diese Station wird gerade vorbereitet. Hier kommen Animation, Herleitung, Lernvideo und Kernfragen hin.</div></section>';
+      h += navButtons(id);
+      el.innerHTML = h;
+      bindGoals();
+      return;
+    }
+
+    if (c.anim) {
+      h += '<section class="block"><div class="block-title"><span class="eyebrow">Animation</span><h3>' + (c.anim === "polygon" ? "Vielecke klemmen den Kreis ein" : "Aus dem Kreis wird ein Rechteck") + '</h3></div><div class="anim" id="anim"></div></section>';
+    }
+    if (c.steps) {
+      var shown = state.step[id] || 1;
+      h += '<section class="block"><div class="block-title"><span class="eyebrow">Herleitung</span><h3>Schritt für Schritt zur Formel</h3></div><ol class="steps" id="steps">';
+      c.steps.forEach(function (st, i) { h += '<li' + (i >= shown ? ' hidden' : '') + '><div>' + st + '</div></li>'; });
+      h += '</ol><div class="step-nav"><button class="btn" id="next-step"' + (shown >= c.steps.length ? " disabled" : "") + '>Nächster Schritt</button><button class="btn ghost" id="all-steps"' + (shown >= c.steps.length ? " hidden" : "") + '>Alle Schritte zeigen</button><span class="hint" id="step-count">Schritt ' + shown + ' von ' + c.steps.length + '</span></div></section>';
+    }
+    if (c.video) {
+      h += '<section class="block"><div class="block-title"><span class="eyebrow">Lernvideo</span><h3>Noch einmal erklärt bekommen</h3></div>' +
+           '<a class="video" href="' + c.video.url + '" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span><span class="video-text"><strong>' + c.video.title + '</strong><span class="hint">Öffnet YouTube in einem neuen Tab</span></span></a></section>';
+    }
+    if (c.quiz) {
+      h += '<section class="block"><div class="block-title"><span class="eyebrow">' + (id === 0 ? "Selbsttest" : "Kernfragen") + '</span><h3>' + (id === 0 ? "Hast du das Werkzeug parat?" : "Hast du die Idee der Herleitung verstanden?") + '</h3></div><div class="quiz" id="quiz">';
+      c.quiz.forEach(function (q, qi) {
+        var key = id + "-" + qi, ans = state.answers[key];
+        h += '<fieldset data-q="' + qi + '"><legend>' + (qi + 1) + '. ' + q.q + '</legend>';
+        q.opts.forEach(function (o, oi) {
+          var oid = "q" + id + "-" + qi + "-" + oi;
+          var cls = ans === oi ? (oi === q.correct ? " right" : " wrong") : "";
+          h += '<label class="opt' + cls + '" for="' + oid + '"><input type="radio" name="q' + id + '-' + qi + '" id="' + oid + '" value="' + oi + '"' + (ans === oi ? " checked" : "") + '><span>' + o + '</span></label>';
+        });
+        h += '<p class="fb' + (ans === undefined ? "" : (ans === q.correct ? " ok" : " no")) + '" id="fb' + id + '-' + qi + '">' + (ans === undefined ? "" : q.fb[ans]) + '</p></fieldset>';
+      });
+      if (c.open) {
+        var nid = "note-" + id;
+        h += '<fieldset><legend>' + (c.quiz.length + 1) + '. ' + c.open.q + '</legend><label class="hint" for="' + nid + '">Schreibe deine Begründung in ganzen Sätzen.</label><textarea id="' + nid + '">' + escapeHtml(state.notes[id] || "") + '</textarea>' +
+             '<div><button class="btn ghost" id="show-sol"' + (state.shown[id] ? " hidden" : "") + '>Mit Musterlösung vergleichen</button></div>' +
+             '<div class="solution" id="sol"' + (state.shown[id] ? "" : " hidden") + '>' + c.open.sol + '</div></fieldset>';
+      }
+      h += '</div></section>';
+    }
+    h += '<section class="block"><div class="finish" id="finish"></div></section>';
+    h += navButtons(id);
+    el.innerHTML = h;
+
+    bindGoals();
+    if (c.anim === "polygon") stopAnim = mountPolygon(document.getElementById("anim"));
+    if (c.anim === "sectors") stopAnim = mountSectors(document.getElementById("anim"));
+    bindSteps(id, c);
+    bindQuiz(id, c);
+    renderFinish(id, c);
+  }
+
+  function navButtons(id) {
+    var h = '<nav class="step-nav" aria-label="Stationen">';
+    if (id > 0) h += '<button class="btn ghost" data-go="' + (id - 1) + '">← Station ' + (id - 1) + '</button>';
+    if (id < STATIONS.length - 1) h += '<button class="btn ghost" data-go="' + (id + 1) + '">Station ' + (id + 1) + ' →</button>';
+    return h + '</nav>';
+  }
+  document.getElementById("station").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-go]");
+    if (b) go(+b.dataset.go, true);
+  });
+
+  function bindGoals() {
+    document.querySelectorAll("[data-goal]").forEach(function (cb) {
+      cb.addEventListener("change", function () { state.goals[cb.dataset.goal] = cb.checked; save(); });
+    });
+  }
+
+  function bindSteps(id, c) {
+    if (!c.steps) return;
+    var next = document.getElementById("next-step"), all = document.getElementById("all-steps");
+    function show(n) {
+      state.step[id] = n; save();
+      var lis = document.querySelectorAll("#steps li");
+      lis.forEach(function (li, i) { li.hidden = i >= n; });
+      next.disabled = n >= c.steps.length;
+      all.hidden = n >= c.steps.length;
+      document.getElementById("step-count").textContent = "Schritt " + n + " von " + c.steps.length;
+    }
+    next.addEventListener("click", function () { show(Math.min(c.steps.length, (state.step[id] || 1) + 1)); });
+    all.addEventListener("click", function () { show(c.steps.length); });
+  }
+
+  function bindQuiz(id, c) {
+    if (!c.quiz) return;
+    document.getElementById("quiz").addEventListener("change", function (e) {
+      var inp = e.target;
+      if (inp.type !== "radio") return;
+      var fs = inp.closest("fieldset"), qi = +fs.dataset.q, q = c.quiz[qi], oi = +inp.value;
+      state.answers[id + "-" + qi] = oi; save();
+      fs.querySelectorAll(".opt").forEach(function (l, i) { l.classList.remove("right", "wrong"); if (i === oi) l.classList.add(oi === q.correct ? "right" : "wrong"); });
+      var fb = document.getElementById("fb" + id + "-" + qi);
+      fb.className = "fb " + (oi === q.correct ? "ok" : "no");
+      fb.innerHTML = q.fb[oi];
+      renderFinish(id, c);
+    });
+    var ta = document.getElementById("note-" + id);
+    if (ta) ta.addEventListener("input", function () { state.notes[id] = ta.value; save(); });
+    var sb = document.getElementById("show-sol");
+    if (sb) sb.addEventListener("click", function () {
+      state.shown[id] = true; save();
+      document.getElementById("sol").hidden = false; sb.hidden = true;
+      renderFinish(id, c);
+    });
+  }
+
+  function renderFinish(id, c) {
+    var box = document.getElementById("finish");
+    if (!box) return;
+    var total = c.quiz ? c.quiz.length : 0, right = 0;
+    for (var i = 0; i < total; i++) if (state.answers[id + "-" + i] === c.quiz[i].correct) right++;
+    var openOk = !c.open || state.shown[id];
+    var ready = right === total && openOk;
+    if (state.done[id]) {
+      box.innerHTML = '<span class="badge">Station geschafft</span>' + (id < STATIONS.length - 1 ? '<button class="btn" data-go="' + (id + 1) + '">Weiter zu Station ' + (id + 1) + '</button>' : '');
+      return;
+    }
+    var missing = [];
+    if (right < total) missing.push((total - right) + (total - right === 1 ? " Frage" : " Fragen") + " noch nicht richtig");
+    if (!openOk) missing.push("Begründung noch nicht mit der Musterlösung verglichen");
+    box.innerHTML = '<span class="hint">' + (ready ? "Alles erledigt. Du kannst die Station abschließen." : "Noch offen: " + missing.join(", ") + ".") + '</span><button class="btn" id="complete"' + (ready ? "" : " disabled") + '>Station abschließen</button>';
+    var b = document.getElementById("complete");
+    b.addEventListener("click", function () {
+      state.done[id] = true; save();
+      renderMap(); renderFinish(id, c);
+    });
+  }
+
+  function escapeHtml(s) { return s.replace(/[&<>"]/g, function (ch) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]; }); }
+
+  /* ---------- Zurücksetzen mit Bestätigung auf der Seite ---------- */
+  var resetArea = document.getElementById("reset-area");
+  resetArea.addEventListener("click", function (e) {
+    var t = e.target;
+    if (t.id === "reset") {
+      resetArea.innerHTML = '<span>Wirklich alles löschen?</span><button class="btn" id="reset-yes">Ja, zurücksetzen</button><button class="btn ghost" id="reset-no">Abbrechen</button>';
+    } else if (t.id === "reset-yes") {
+      state = { done: {}, goals: {}, answers: {}, notes: {}, shown: {}, step: {} }; save();
+      resetArea.innerHTML = '<button class="btn ghost" id="reset">Fortschritt zurücksetzen</button>';
+      go(0, true);
+    } else if (t.id === "reset-no") {
+      resetArea.innerHTML = '<button class="btn ghost" id="reset">Fortschritt zurücksetzen</button>';
+    }
+  });
+
+  /* ---------- Zeichenhilfen ---------- */
+  function col(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function fmt(x, d) { return x.toFixed(d).replace(".", ","); }
+  function setupCanvas(canvas, cssH) {
+    var dpr = window.devicePixelRatio || 1;
+    var w = canvas.parentElement.clientWidth;
+    canvas.style.height = cssH + "px";
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    var ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { ctx: ctx, w: w, h: cssH };
+  }
+  function watchRedraw(draw) {
+    var mq = matchMedia("(prefers-color-scheme: dark)");
+    var ro = new ResizeObserver(function () { draw(); });
+    var mo = new MutationObserver(function () { draw(); });
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    mq.addEventListener("change", draw);
+    return { ro: ro, stop: function () { ro.disconnect(); mo.disconnect(); mq.removeEventListener("change", draw); } };
+  }
+
+  /* ---------- Animation Station 1: Vielecke und Abrollen ---------- */
+  function mountPolygon(host) {
+    var NS = [3, 4, 6, 8, 12, 16, 24, 48, 96];
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-poly" aria-label="Kreis mit einbeschriebenem und umbeschriebenem Vieleck"></canvas></div>' +
+      '<div class="controls"><label for="n-range">Ecken n = <strong class="formula" id="n-val">6</strong><input type="range" id="n-range" min="0" max="' + (NS.length - 1) + '" value="2"></label></div>' +
+      '<div class="readout"><table><thead><tr><th>Figur</th><th>Umfang : Durchmesser</th></tr></thead><tbody>' +
+      '<tr><td>Vieleck innen</td><td id="r-in"></td></tr><tr class="pi-row"><td>Kreis (π)</td><td>3,14159…</td></tr><tr><td>Vieleck außen</td><td id="r-out"></td></tr></tbody></table></div>' +
+      '<p class="hint">Zieh den Regler: Der innere Wert wächst, der äußere schrumpft. Beide klemmen π ein.</p>' +
+      '<div class="canvas-box"><canvas id="cv-roll" aria-label="Ein Kreis rollt einmal ab"></canvas></div>' +
+      '<div class="controls"><button class="btn" id="roll">Kreis einmal abrollen</button><span class="hint">Wie viele Durchmesser passen auf den abgerollten Umfang?</span></div>';
+    var cv = document.getElementById("cv-poly"), range = document.getElementById("n-range");
+    var cr = document.getElementById("cv-roll");
+    var t = 0, raf = 0;
+
+    function drawPoly() {
+      var s = setupCanvas(cv, 300), ctx = s.ctx;
+      var n = NS[+range.value];
+      document.getElementById("n-val").textContent = n;
+      document.getElementById("r-in").textContent = fmt(n * Math.sin(Math.PI / n), 5);
+      document.getElementById("r-out").textContent = fmt(n * Math.tan(Math.PI / n), 5);
+      ctx.clearRect(0, 0, s.w, s.h);
+      var cx = s.w / 2, cy = s.h / 2, R = Math.min(s.h * 0.36, s.w * 0.3);
+      var Ro = R / Math.cos(Math.PI / n);
+      // äußeres Vieleck
+      ctx.beginPath();
+      for (var i = 0; i <= n; i++) { var a = 2 * Math.PI * i / n - Math.PI / 2 + Math.PI / n; var x = cx + Ro * Math.cos(a), y = cy + Ro * Math.sin(a); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+      ctx.strokeStyle = col("--mark"); ctx.lineWidth = 2; ctx.stroke();
+      // Kreis
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+      ctx.fillStyle = col("--accent-soft"); ctx.fill();
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2.5; ctx.stroke();
+      // inneres Vieleck
+      ctx.beginPath();
+      for (var j = 0; j <= n; j++) { var b = 2 * Math.PI * j / n - Math.PI / 2; var x2 = cx + R * Math.cos(b), y2 = cy + R * Math.sin(b); j ? ctx.lineTo(x2, y2) : ctx.moveTo(x2, y2); }
+      ctx.strokeStyle = col("--accent"); ctx.lineWidth = 2; ctx.stroke();
+      // Durchmesser
+      ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy);
+      ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-mono"); ctx.textAlign = "center";
+      ctx.fillText("d", cx, cy - 6);
+      // Legende
+      ctx.textAlign = "left"; ctx.font = "13px " + col("--font-body");
+      var ly = 20;
+      [["--accent", "Vieleck innen"], ["--ink", "Kreis"], ["--mark", "Vieleck außen"]].forEach(function (p, k) {
+        ctx.fillStyle = col(p[0]); ctx.fillRect(12, ly + k * 20 - 9, 14, 4);
+        ctx.fillStyle = col("--muted"); ctx.fillText(p[1], 32, ly + k * 20 - 4);
+      });
+    }
+
+    function drawRoll() {
+      var s = setupCanvas(cr, 170), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var d = Math.min(56, (s.w - 40) / (Math.PI + 0.6)), r = d / 2;
+      var x0 = 20, base = s.h - 42;
+      var ang = t * 2 * Math.PI, cx = x0 + r + r * ang, cy = base - r;
+      // abgerollte Strecke
+      ctx.strokeStyle = col("--line"); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(10, base); ctx.lineTo(s.w - 10, base); ctx.stroke();
+      ctx.strokeStyle = col("--mark"); ctx.lineWidth = 5; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(x0 + r, base); ctx.lineTo(x0 + r + r * ang, base); ctx.stroke(); ctx.lineCap = "butt";
+      // Durchmesser-Teilstriche
+      ctx.fillStyle = col("--muted"); ctx.font = "12px " + col("--font-mono"); ctx.textAlign = "center";
+      for (var k = 0; k <= 3; k++) {
+        var tx = x0 + r + k * d;
+        ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(tx, base + 4); ctx.lineTo(tx, base + 14); ctx.stroke();
+        ctx.fillText(k + "d", tx, base + 30);
+      }
+      // Kreis
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+      ctx.fillStyle = col("--accent-soft"); ctx.fill(); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2; ctx.stroke();
+      // Markierungspunkt (startet unten)
+      var px = cx - r * Math.sin(ang), py = cy + r * Math.cos(ang);
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.fill();
+      if (t >= 1) {
+        ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "left";
+        var lx = Math.min(x0 + r + Math.PI * d + 10, s.w - 150);
+        ctx.fillText("u ≈ 3,14 · d", lx, base - d - 14);
+      }
+    }
+
+    function draw() { drawPoly(); drawRoll(); }
+    range.addEventListener("input", drawPoly);
+    document.getElementById("roll").addEventListener("click", function () {
+      cancelAnimationFrame(raf);
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { t = 1; drawRoll(); return; }
+      var start = null;
+      function frame(ts) { if (!start) start = ts; t = Math.min(1, (ts - start) / 3200); drawRoll(); if (t < 1) raf = requestAnimationFrame(frame); }
+      t = 0; raf = requestAnimationFrame(frame);
+    });
+    var w = watchRedraw(draw);
+    w.ro.observe(host);
+    draw();
+    return function () { cancelAnimationFrame(raf); w.stop(); };
+  }
+
+  /* ---------- Animation Station 2: Sektoren umlegen ---------- */
+  function mountSectors(host) {
+    var NS = [4, 6, 8, 12, 16, 24, 32, 48, 64];
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-sec" aria-label="Kreis wird in Sektoren zerlegt und zu einem Rechteck umgelegt"></canvas></div>' +
+      '<div class="controls">' +
+      '<label for="sec-n">Sektoren n = <strong class="formula" id="sec-val">8</strong><input type="range" id="sec-n" min="0" max="' + (NS.length - 1) + '" value="2"></label>' +
+      '<label for="sec-t">Umlegen<input type="range" id="sec-t" min="0" max="100" value="0"></label>' +
+      '<button class="btn" id="sec-play">Abspielen</button></div>' +
+      '<p class="hint">Erst umlegen, dann die Zahl der Sektoren erhöhen: Die Figur wird immer mehr zum Rechteck mit den Seiten π · r und r.</p>';
+    var cv = document.getElementById("cv-sec"), nR = document.getElementById("sec-n"), tR = document.getElementById("sec-t");
+    var raf = 0;
+    function ease(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+    function draw() {
+      var s = setupCanvas(cv, 280), ctx = s.ctx;
+      var n = NS[+nR.value], t = ease(+tR.value / 100);
+      document.getElementById("sec-val").textContent = n;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var w = 2 * Math.PI / n;
+      var r = Math.min((s.w - 48) / (Math.PI + w / 2 + 0.05), s.h * 0.36);
+      var arc = r * w;
+      var total = Math.PI * r + arc / 2;
+      var x0 = (s.w - total) / 2, top = s.h / 2 - r / 2 - 10;
+      var C = { x: s.w / 2, y: s.h / 2 - 6 };
+      for (var k = 0; k < n; k++) {
+        var j = Math.floor(k / 2), even = k % 2 === 0;
+        var startA = k * w + w / 2 - Math.PI / 2;
+        var endP = even ? { x: x0 + j * arc + arc / 2, y: top } : { x: x0 + j * arc + arc, y: top + r };
+        var endA = even ? Math.PI / 2 : -Math.PI / 2;
+        var dA = endA - startA; dA = Math.atan2(Math.sin(dA), Math.cos(dA));
+        var ax = C.x + (endP.x - C.x) * t, ay = C.y + (endP.y - C.y) * t, a = startA + dA * t;
+        ctx.beginPath(); ctx.moveTo(ax, ay); ctx.arc(ax, ay, r, a - w / 2, a + w / 2); ctx.closePath();
+        ctx.fillStyle = col(even ? "--accent" : "--sector2"); ctx.fill();
+        ctx.strokeStyle = col("--surface"); ctx.lineWidth = 1; ctx.stroke();
+      }
+      if (t > 0.98) {
+        ctx.fillStyle = col("--ink"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "center";
+        ctx.fillText("π · r  (halber Umfang)", s.w / 2, top + r + 30);
+        ctx.strokeStyle = col("--mark"); ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x0 - 10, top); ctx.lineTo(x0 - 10, top + r); ctx.stroke();
+        ctx.fillStyle = col("--mark"); ctx.textAlign = "right"; ctx.fillText("r", x0 - 16, top + r / 2 + 5);
+      } else if (t < 0.02) {
+        ctx.strokeStyle = col("--mark"); ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(C.x, C.y); ctx.lineTo(C.x + r, C.y); ctx.stroke();
+        ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "center"; ctx.fillText("r", C.x + r / 2, C.y - 6);
+      }
+    }
+    nR.addEventListener("input", draw);
+    tR.addEventListener("input", function () { cancelAnimationFrame(raf); draw(); });
+    document.getElementById("sec-play").addEventListener("click", function () {
+      cancelAnimationFrame(raf);
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { tR.value = 100; draw(); return; }
+      var from = +tR.value >= 100 ? 0 : +tR.value, start = null;
+      function frame(ts) { if (!start) start = ts; var v = Math.min(100, from + (ts - start) / 25); tR.value = v; draw(); if (v < 100) raf = requestAnimationFrame(frame); }
+      raf = requestAnimationFrame(frame);
+    });
+    var wr = watchRedraw(draw);
+    wr.ro.observe(host);
+    draw();
+    return function () { cancelAnimationFrame(raf); wr.stop(); };
+  }
+
+  /* ---------- Start ---------- */
+  var m = /^#s(\d+)$/.exec(location.hash);
+  var startId = m ? Math.min(+m[1], STATIONS.length - 1) : Math.max(0, currentId());
+  go(startId, false);
+})();
+</script>
