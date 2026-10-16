@@ -347,13 +347,16 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       intro: "Wie viel passt in eine Pyramide? Ein Würfel verrät dir die Antwort.",
       goals: ["Ich kann begründen, warum eine Pyramide ein Drittel des Prismas mit gleicher Grundfläche und Höhe füllt.",
               "Ich kann V = ⅓ · G · h für Pyramide und Kegel anwenden."] },
-    { short: "Kugel: Volumen", title: "Kugel: Volumen", ready: false,
+    { short: "Kugel: Volumen", title: "Kugel: Volumen", ready: true,
+      intro: "Eine Kugel hat weder Ecken noch Kanten. Mit einem cleveren Vergleichskörper findest du trotzdem ihr Volumen.",
       goals: ["Ich kann mit dem Prinzip von Cavalieri erklären, warum eine Halbkugel dasselbe Volumen hat wie Zylinder minus Kegel.",
               "Ich kann V = 4/3 · π · r³ anwenden."] },
-    { short: "Kugel: Oberfläche", title: "Kugel: Oberfläche", ready: false,
+    { short: "Kugel: Oberfläche", title: "Kugel: Oberfläche", ready: true,
+      intro: "Eine Kugel lässt sich nicht abwickeln. Deshalb nutzt du einen Umweg über das Volumen.",
       goals: ["Ich kann erklären, wie man sich die Kugel aus vielen schmalen Pyramiden mit Spitze im Mittelpunkt zusammengesetzt denkt.",
               "Ich kann aus V = ⅓ · O · r die Formel O = 4πr² gewinnen."] },
-    { short: "Zusammengesetzt", title: "Zusammengesetzte Körper und Modellieren", ready: false,
+    { short: "Zusammengesetzt", title: "Zusammengesetzte Körper und Modellieren", ready: true,
+      intro: "Silos, Eiswaffeln, Werkstücke: Echte Gegenstände setzen sich aus mehreren Körpern zusammen. Jetzt brauchst du alles, was du gelernt hast.",
       goals: ["Ich kann zusammengesetzte Körper zerlegen und Oberfläche und Volumen berechnen.",
               "Ich kann ein Alltagsobjekt mit Körpern modellieren und das Modell bewerten."] }
   ];
@@ -630,6 +633,114 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
         { kind: "Rückblick", text: true, q: "Erkläre mit dem Würfelmodell, woher das ⅓ in der Pyramidenformel kommt.",
           sol: "Ein Würfel mit der Kantenlänge a lässt sich in drei gleiche Pyramiden zerlegen. Jede hat eine Würfelfläche als Grundfläche (G = a²) und die Höhe a. Zusammen füllen sie den Würfel mit V = a³. Also hat jede Pyramide ⅓ · a³ = ⅓ · G · h." }
       ]
+    },
+    8: {
+      anim: "cavalieri", animTitle: "Gleiche Schnitte, gleiches Volumen",
+      steps: [
+        "<p><strong>Das Prinzip von Cavalieri.</strong> Haben zwei Körper dieselbe Höhe und sind ihre Querschnitte in jeder Höhe gleich groß, dann haben sie dasselbe Volumen. Denk an zwei Münzstapel: Ob gerade oder schief gestapelt, es sind dieselben Münzen.</p>",
+        "<p><strong>Der Vergleichskörper.</strong> Neben die Halbkugel mit Radius r stellst du einen Zylinder mit Radius r und Höhe r. Aus ihm wird ein Kegel herausgenommen, dessen Spitze unten im Mittelpunkt liegt.</p>",
+        "<p><strong>Schnitt durch die Halbkugel.</strong> In der Höhe y ist der Schnitt ein Kreis mit Radius ρ. Nach Pythagoras gilt ρ² + y² = r², also</p><div class=\"result\">A<sub>Halbkugel</sub> = π · ρ² = π · (r² − y²)</div>",
+        "<p><strong>Schnitt durch den Restkörper.</strong> In der Höhe y ist der Schnitt ein Kreisring: außen Radius r, innen der Kegelradius. Weil der Kegel so hoch wie breit ist, hat er in der Höhe y genau den Radius y:</p><div class=\"result\">A<sub>Ring</sub> = πr² − πy² = π · (r² − y²)</div><p>Die Schnitte sind in jeder Höhe gleich groß.</p>",
+        "<p><strong>Die Formel.</strong> Nach Cavalieri hat die Halbkugel das Volumen von Zylinder minus Kegel: πr² · r − ⅓ · πr² · r = ⅔ · πr³. Die ganze Kugel ist doppelt so groß:</p><div class=\"result\">V = 4/3 · π · r³</div>"
+      ],
+      video: { title: "Herleitung Volumen Kugel – Prinzip des Cavalieri", url: "https://www.youtube.com/watch?v=XNaTlyl3tNo" },
+      quiz: [
+        { q: "Was besagt das Prinzip von Cavalieri?",
+          opts: ["Körper mit gleicher Oberfläche haben gleiches Volumen.", "Körper mit gleicher Höhe und in jeder Höhe gleich großen Querschnitten haben gleiches Volumen.", "Körper mit gleicher Grundfläche haben gleiches Volumen."], correct: 1,
+          fb: ["Die Oberfläche sagt nichts über das Volumen aus.", "Genau. Es kommt auf alle Querschnitte an, nicht nur auf einen.", "Die Grundfläche ist nur ein einziger Querschnitt. Es müssen alle übereinstimmen."] },
+        { q: "Warum hat der Schnittkreis der Halbkugel in der Höhe y den Radius ρ = √(r² − y²)?",
+          opts: ["Weil ρ = r − y gilt.", "Wegen Pythagoras: Der Kugelradius r ist die Hypotenuse, y und ρ sind die Katheten.", "Weil die Kugel überall gleich rund ist."], correct: 1,
+          fb: ["Das ist ein häufiger Fehler. Prüfe mit y = r/2: Der Schnittkreis ist größer als r/2.", "Richtig. Verbinde den Mittelpunkt mit dem Rand des Schnittkreises.", "Das erklärt nicht, wie groß der Schnitt ist."] },
+        { q: "Warum hat der herausgenommene Kegel in der Höhe y genau den Radius y?",
+          opts: ["Weil er die Höhe r und den Grundradius r hat; sein Radius wächst gleichmäßig mit der Höhe.", "Weil jeder Kegel in der Höhe y den Radius y hat.", "Weil der Zylinder den Radius r hat."], correct: 0,
+          fb: ["Genau. Das Verhältnis Radius : Höhe ist 1 : 1.", "Das gilt nur für diesen besonderen Kegel, der so hoch wie breit ist.", "Der Zylinder legt nur den äußeren Rand des Rings fest."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Eine Kugel hat genau doppelt so viel Volumen wie ein Kegel mit demselben Radius und der Höhe 2r.“",
+              sol: "Die Aussage ist richtig. Der Kegel hat V = ⅓ · πr² · 2r = ⅔ · πr³, die Kugel 4/3 · πr³, also das Doppelte. Schon Archimedes fand: Kegel, Kugel und Zylinder (je mit Radius r und Höhe 2r) verhalten sich wie 1 : 2 : 3." },
+      protocol: [
+        { kind: "Aufgabe", q: "Eine Kugel hat den Radius r = 6 cm. Berechne ihr Volumen.", round: 2, ans: 904.78, tol: 0.01, unit: "cm³",
+          hint: "V = 4/3 · π · r³. Erst r³ berechnen.", sol: "V = 4/3 · π · 6³ cm³ = 288π cm³ ≈ 904,78 cm³" },
+        { kind: "Aufgabe", q: "Ein Fußball hat den Durchmesser 22 cm. Wie viele Liter Luft enthält er?", round: 2, ans: 5.58, tol: 0.01, unit: "l",
+          hint: "Radius 11 cm, Ergebnis in cm³ berechnen und durch 1000 teilen.", sol: "V = 4/3 · π · 11³ cm³ ≈ 5575,28 cm³ ≈ 5,58 l" },
+        { kind: "Umkehraufgabe", q: "Eine Kugel hat das Volumen 1000 cm³. Wie groß ist ihr Radius?", round: 2, ans: 6.20, tol: 0.01, unit: "cm",
+          hint: "r³ = 3V : (4π). Ziehe dann die dritte Wurzel.", sol: "r³ = 3000 cm³ : (4π) ≈ 238,73 cm³, r ≈ 6,20 cm" },
+        { kind: "Vertiefung", q: "Ein kugelförmiger Gastank hat innen den Durchmesser 20 m. Wie viele m³ Gas fasst er?", round: 0, ans: 4189, tol: 0.5, unit: "m³",
+          hint: "Der Radius ist 10 m.", sol: "V = 4/3 · π · 10³ m³ ≈ 4189 m³" },
+        { kind: "Rückblick", text: true, q: "Erkläre in eigenen Worten, wie man mit dem Prinzip von Cavalieri auf das Kugelvolumen kommt.",
+          sol: "Man vergleicht die Halbkugel mit einem Zylinder (Radius r, Höhe r), aus dem ein Kegel herausgenommen ist. In jeder Höhe y sind die Schnitte gleich groß: π(r² − y²). Nach Cavalieri haben beide Körper dasselbe Volumen: πr³ − ⅓πr³ = ⅔πr³. Die Kugel ist doppelt so groß: 4/3 · πr³." }
+      ]
+    },
+    9: {
+      anim: "spherepyr", animTitle: "Die Kugel aus vielen Pyramiden",
+      steps: [
+        "<p><strong>Zerlegen.</strong> Teile die Kugeloberfläche in viele kleine Flächenstücke G₁, G₂, G₃, …</p>",
+        "<p><strong>Pyramiden bilden.</strong> Verbinde jedes Flächenstück mit dem Mittelpunkt. Es entstehen viele schmale „Pyramiden“. Ihre Spitze liegt im Mittelpunkt, ihre Höhe ist ungefähr r. Je kleiner die Stücke, desto genauer stimmt das.</p>",
+        "<p><strong>Volumen addieren.</strong> Alle Pyramiden zusammen ergeben die Kugel:</p><div class=\"result\">V = ⅓ · G₁ · r + ⅓ · G₂ · r + … = ⅓ · r · (G₁ + G₂ + …) = ⅓ · O · r</div>",
+        "<p><strong>Umstellen.</strong> Setze das Kugelvolumen aus Station 8 ein: 4/3 · πr³ = ⅓ · O · r. Multipliziere mit 3 und teile durch r:</p><div class=\"result\">O = 4 · π · r²</div>",
+        "<p><strong>Probe mit der Orange.</strong> Die Schale einer Orange füllt ungefähr vier Kreise mit dem Radius der Orange. Die Kugeloberfläche ist also viermal so groß wie die Fläche eines Großkreises.</p>"
+      ],
+      video: { title: "Kugeloberfläche: Experiment zur Herleitung", url: "https://www.youtube.com/watch?v=U2J0ICV4Pa8" },
+      quiz: [
+        { q: "Warum haben die kleinen Pyramiden alle ungefähr die Höhe r?",
+          opts: ["Weil ihre Spitze im Mittelpunkt und ihre Grundfläche auf der Oberfläche liegt; dieser Abstand ist r.", "Weil die Kugel symmetrisch ist.", "Weil die Grundflächen sehr klein sind."], correct: 0,
+          fb: ["Genau. Je kleiner die Flächenstücke, desto flacher sind sie und desto genauer ist die Höhe r.", "Symmetrie allein sagt nichts über die Länge der Höhe.", "Kleine Grundflächen machen die Näherung genauer, erklären aber nicht, warum die Höhe r ist."] },
+        { q: "Wozu braucht man bei dieser Herleitung das Kugelvolumen?",
+          opts: ["Gar nicht.", "Man setzt V = 4/3 · πr³ in V = ⅓ · O · r ein und löst nach O auf.", "Um die Anzahl der Pyramiden zu bestimmen."], correct: 1,
+          fb: ["Ohne das Volumen bleibt eine Gleichung mit zwei Unbekannten.", "Richtig. Station 8 liefert das Volumen, Station 9 nutzt es.", "Die Anzahl spielt im Grenzprozess keine Rolle."] },
+        { q: "Wie oft passt die Fläche eines Großkreises (πr²) in die Kugeloberfläche?",
+          opts: ["Zweimal.", "π-mal.", "Viermal."], correct: 2,
+          fb: ["Zweimal wäre nur die Halbkugel.", "Vergleiche πr² mit 4πr².", "Richtig, wie beim Orangen-Experiment."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Verdoppelt man den Radius einer Kugel, so verdoppelt sich auch ihre Oberfläche.“",
+              sol: "Die Aussage ist falsch. In O = 4πr² steht r im Quadrat: 4π · (2r)² = 4 · 4πr². Die Oberfläche wird viermal so groß. Das Volumen wird sogar achtmal so groß, weil dort r³ steht." },
+      protocol: [
+        { kind: "Aufgabe", q: "Eine Kugel hat den Radius r = 5 cm. Berechne ihren Oberflächeninhalt.", round: 2, ans: 314.16, tol: 0.01, unit: "cm²",
+          hint: "O = 4 · π · r².", sol: "O = 4 · π · 5² cm² = 100π cm² ≈ 314,16 cm²" },
+        { kind: "Umkehraufgabe", q: "Eine Kugel hat den Oberflächeninhalt 200 cm². Wie groß ist ihr Radius?", round: 2, ans: 3.99, tol: 0.01, unit: "cm",
+          hint: "r² = O : (4π), dann die Wurzel ziehen.", sol: "r² = 200 cm² : (4π) ≈ 15,92 cm², r ≈ 3,99 cm" },
+        { kind: "Vertiefung", q: "Die Erde ist näherungsweise eine Kugel mit dem Radius 6371 km. Wie groß ist ihre Oberfläche in Millionen km²?", round: 1, ans: 510.1, tol: 0.1, unit: "Mio. km²",
+          hint: "Rechne zuerst in km² und teile dann durch 1 000 000.", sol: "O = 4 · π · 6371² km² ≈ 510 064 472 km² ≈ 510,1 Mio. km²" },
+        { kind: "Vertiefung", q: "Eine Kuppel hat die Form einer Halbkugel mit dem Durchmesser 20 m. Wie groß ist die gewölbte Dachfläche?", round: 0, ans: 628, tol: 0.5, unit: "m²",
+          hint: "Die Halbkugel hat die halbe Kugeloberfläche: 2πr².", sol: "O = 2 · π · 10² m² = 200π m² ≈ 628 m²" },
+        { kind: "Rückblick", text: true, q: "Erkläre, wie aus V = ⅓ · O · r die Formel O = 4πr² folgt.",
+          sol: "Die Kugel besteht aus vielen schmalen Pyramiden mit Höhe r, deren Grundflächen zusammen die Oberfläche O ergeben. Also V = ⅓ · O · r. Mit V = 4/3 · πr³ folgt 4/3 · πr³ = ⅓ · O · r. Mal 3 und geteilt durch r ergibt O = 4πr²." }
+      ]
+    },
+    10: {
+      anim: "composite", animTitle: "Körper-Baukasten",
+      steps: [
+        "<p><strong>Zerlegen.</strong> Zerlege den Körper in Teilkörper, die du kennst: Prisma, Zylinder, Pyramide, Kegel, Kugel oder Halbkugel.</p>",
+        "<p><strong>Maße zuordnen.</strong> Notiere für jeden Teilkörper seine Maße. Achte auf gemeinsame Maße: Sitzt eine Halbkugel auf einem Zylinder, haben beide denselben Radius.</p>",
+        "<p><strong>Volumen.</strong> Setzt sich der Körper aus Teilen zusammen, addierst du die Teilvolumen. Fehlt etwas (eine Bohrung, ein Hohlraum), ziehst du es ab.</p>",
+        "<p><strong>Oberfläche.</strong> Zähle nur die Flächen, die außen liegen. Flächen, an denen zwei Teilkörper aneinanderstoßen, gehören nicht zur Oberfläche.</p>",
+        "<p><strong>Modellieren.</strong> Bei echten Gegenständen wählst du selbst ein Modell, rechnest damit und bewertest am Ende: Ist das Ergebnis zu groß oder zu klein, und warum?</p>"
+      ],
+      video: { title: "Zusammengesetzte Körper (Quadratische Pyramide und Würfel)", url: "https://www.youtube.com/watch?v=J_LJRDN9K9I" },
+      quiz: [
+        { q: "Warum darfst du beim Volumen eines zusammengesetzten Körpers die Teilvolumen addieren?",
+          opts: ["Weil die Teilkörper sich nicht überlappen und zusammen genau den Körper füllen.", "Weil man Volumen immer addieren darf.", "Weil alle Teilkörper dieselbe Höhe haben."], correct: 0,
+          fb: ["Genau. Würden sie sich überlappen, zählte man etwas doppelt.", "Nur, wenn sich die Teile nicht überlappen.", "Die Höhen der Teile dürfen verschieden sein."] },
+        { q: "Ein Silo besteht aus einem Zylinder mit aufgesetzter Halbkugel. Welche Flächen bilden die Oberfläche?",
+          opts: ["Alle Flächen von Zylinder und Halbkugel.", "Bodenkreis, Zylindermantel und gewölbte Halbkugelfläche.", "Nur der Zylindermantel."], correct: 1,
+          fb: ["Die Deckfläche des Zylinders liegt innen, an der Halbkugel. Sie zählt nicht.", "Richtig. Die Berührfläche liegt innen.", "Boden und Kuppel gehören auch zur Außenhaut."] },
+        { q: "Ein Würfel hat eine durchgehende zylindrische Bohrung. Wie berechnest du sein Volumen?",
+          opts: ["Würfelvolumen plus Zylindervolumen.", "Würfelvolumen minus Zylindervolumen.", "Nur das Würfelvolumen, die Bohrung ist zu klein."], correct: 1,
+          fb: ["Die Bohrung fehlt im Würfel, sie kommt nicht dazu.", "Richtig.", "Auch eine kleine Bohrung verändert das Volumen."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Die Oberfläche eines zusammengesetzten Körpers ist die Summe der Oberflächen seiner Teilkörper.“",
+              sol: "Die Aussage ist falsch. Wo zwei Teilkörper aneinanderstoßen, liegen deren Berührflächen innen. Sie gehören nicht zur Oberfläche. Man muss sie also abziehen, sogar doppelt, weil jeder Teilkörper sie mitgezählt hätte." },
+      protocol: [
+        { kind: "Aufgabe", q: "Ein Silo besteht aus einem Zylinder (r = 3 m, h = 10 m) mit aufgesetzter Halbkugel. Berechne sein Volumen.", round: 2, ans: 339.29, tol: 0.01, unit: "m³",
+          hint: "Zylinder πr²h plus Halbkugel ⅔ · πr³.", sol: "V = π · 3² · 10 + ⅔ · π · 3³ = 90π + 18π = 108π ≈ 339,29 m³" },
+        { kind: "Aufgabe", q: "Berechne die Oberfläche desselben Silos einschließlich des Bodens.", round: 2, ans: 273.32, tol: 0.01, unit: "m²",
+          hint: "Bodenkreis πr² + Mantel 2πrh + Halbkugelfläche 2πr².", sol: "O = 9π + 60π + 18π = 87π ≈ 273,32 m²" },
+        { kind: "Vertiefung", q: "Eine Eiswaffel (Kegel mit r = 2,5 cm, h = 10 cm) ist bis zum Rand mit Eis gefüllt, oben sitzt eine Halbkugel Eis. Wie viel Eis ist es?", round: 2, ans: 98.17, tol: 0.01, unit: "cm³",
+          hint: "Kegel ⅓ · πr²h plus Halbkugel ⅔ · πr³ mit demselben Radius.", sol: "V = ⅓ · π · 2,5² · 10 + ⅔ · π · 2,5³ ≈ 65,45 + 32,72 ≈ 98,17 cm³" },
+        { kind: "Vertiefung", q: "Ein Würfel mit a = 10 cm hat eine durchgehende Bohrung mit 4 cm Durchmesser. Berechne das Volumen des Werkstücks.", round: 2, ans: 874.34, tol: 0.01, unit: "cm³",
+          hint: "Würfel minus Zylinder mit r = 2 cm und h = 10 cm.", sol: "V = 10³ − π · 2² · 10 = 1000 − 40π ≈ 874,34 cm³" },
+        { kind: "Modellieren", text: true, q: "Ein Rundballen Heu ist etwa 1,2 m breit und hat einen Durchmesser von etwa 1,5 m. Wähle ein Modell, berechne das Volumen und bewerte, wie gut dein Modell passt.",
+          sol: "Modell: Zylinder mit r = 0,75 m und h = 1,2 m. V = π · 0,75² · 1,2 ≈ 2,12 m³. Bewertung: Die Kanten des Ballens sind abgerundet und die Maße nur geschätzt, das wirkliche Volumen ist daher etwas kleiner. Für eine Abschätzung, zum Beispiel wie viele Ballen auf einen Anhänger passen, ist das Modell gut geeignet." }
+      ]
     }
   };
 
@@ -775,6 +886,9 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     if (c.anim === "prism") stopAnim = mountPrism(document.getElementById("anim"));
     if (c.anim === "conenet") stopAnim = mountConeNet(document.getElementById("anim"));
     if (c.anim === "cube3") stopAnim = mountCube3(document.getElementById("anim"));
+    if (c.anim === "cavalieri") stopAnim = mountCavalieri(document.getElementById("anim"));
+    if (c.anim === "spherepyr") stopAnim = mountSpherePyr(document.getElementById("anim"));
+    if (c.anim === "composite") stopAnim = mountComposite(document.getElementById("anim"));
     bindSteps(id, c);
     bindQuiz(id, c);
     bindProtocol(id, c);
@@ -1569,6 +1683,186 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     });
     var w = watchRedraw(draw); w.ro.observe(host); draw();
     return function () { cancelAnimationFrame(raf); w.stop(); };
+  }
+
+  /* ---------- Animation Station 8: Cavalieri Halbkugel / Zylinder minus Kegel ---------- */
+  function mountCavalieri(host) {
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-cav" aria-label="Halbkugel und Zylinder ohne Kegel mit gemeinsamer Schnittebene"></canvas></div>' +
+      '<div class="controls"><label for="cv-y">Schnitthöhe y = <strong class="formula" id="cv-yv">1,5</strong> cm<input type="range" id="cv-y" min="0" max="30" value="15"></label><button class="btn" id="cv-play">Schnitt hochfahren</button></div>' +
+      '<div class="readout"><table><thead><tr><th>r = 3 cm</th><th>Schnittfläche</th></tr></thead><tbody>' +
+      '<tr><td>Kreis</td><td id="cv-a1"></td></tr><tr><td>Ring</td><td id="cv-a2"></td></tr></tbody></table></div>' +
+      '<p class="hint">Oben siehst du beide Körper von vorn, darunter die Schnittflächen von oben. Fahre den Schnitt hoch: Die beiden Flächen sind in jeder Höhe gleich groß.</p>';
+    var cv = document.getElementById("cv-cav"), yR = document.getElementById("cv-y"), raf = 0, R = 3;
+    function draw() {
+      var s = setupCanvas(cv, Math.min(380, Math.max(260, host.clientWidth * 0.62 + 60))), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var y = +yR.value / 10, rho = Math.sqrt(Math.max(0, R * R - y * y));
+      var A = Math.PI * (R * R - y * y);
+      document.getElementById("cv-yv").textContent = fmt(y, 1);
+      document.getElementById("cv-a1").textContent = "π · " + fmt(rho, 2) + "² ≈ " + fmt(A, 2) + " cm²";
+      document.getElementById("cv-a2").textContent = "π(3² − " + fmt(y, 1) + "²) ≈ " + fmt(A, 2) + " cm²";
+      var k = Math.min((s.w - 48) / (4 * R + 1.2 * R), (s.h - 70) / (3 * R + 0.6 * R));
+      var gap = 1.2 * R * k, lx = (s.w - (4 * R * k + gap)) / 2 + R * k, rx = lx + 2 * R * k + gap;
+      var base = 24 + R * k, scy = base + 0.45 * R * k + R * k;
+      // Halbkugel
+      ctx.beginPath(); ctx.moveTo(lx - R * k, base); ctx.arc(lx, base, R * k, Math.PI, 2 * Math.PI); ctx.closePath();
+      ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.75; ctx.fill(); ctx.globalAlpha = 1; ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      // Zylinder minus Kegel
+      ctx.beginPath(); ctx.rect(rx - R * k, base - R * k, 2 * R * k, R * k);
+      ctx.moveTo(rx, base); ctx.lineTo(rx + R * k, base - R * k); ctx.lineTo(rx - R * k, base - R * k); ctx.closePath();
+      ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.75; ctx.fill("evenodd"); ctx.globalAlpha = 1;
+      ctx.strokeStyle = col("--ink"); ctx.stroke();
+      ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(rx, base); ctx.lineTo(rx + R * k, base - R * k); ctx.moveTo(rx, base); ctx.lineTo(rx - R * k, base - R * k); ctx.strokeStyle = col("--muted"); ctx.stroke(); ctx.setLineDash([]);
+      // Schnittebene
+      var yy = base - y * k;
+      ctx.strokeStyle = col("--mark"); ctx.lineWidth = 2.5;
+      ctx.beginPath(); ctx.moveTo(lx - R * k - 12, yy); ctx.lineTo(rx + R * k + 12, yy); ctx.stroke();
+      ctx.fillStyle = col("--mark"); ctx.font = "600 13px " + col("--font-mono"); ctx.textAlign = "left"; ctx.fillText("y", rx + R * k + 4, yy - 6);
+      // Schnittstrecken hervorheben
+      ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.moveTo(lx - rho * k, yy); ctx.lineTo(lx + rho * k, yy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(rx - R * k, yy); ctx.lineTo(rx - y * k, yy); ctx.moveTo(rx + y * k, yy); ctx.lineTo(rx + R * k, yy); ctx.stroke();
+      // Schnittflächen von oben
+      ctx.beginPath(); ctx.arc(lx, scy, R * k, 0, 2 * Math.PI); ctx.strokeStyle = col("--line"); ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.arc(lx, scy, rho * k, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.55; ctx.fill(); ctx.globalAlpha = 1; ctx.strokeStyle = col("--mark"); ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(rx, scy, R * k, 0, 2 * Math.PI); ctx.moveTo(rx + y * k, scy); ctx.arc(rx, scy, y * k, 0, 2 * Math.PI, true);
+      ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.55; ctx.fill("evenodd"); ctx.globalAlpha = 1; ctx.strokeStyle = col("--mark"); ctx.stroke();
+      ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-body"); ctx.textAlign = "center";
+      ctx.fillText("Halbkugel", lx, s.h - 8); ctx.fillText("Zylinder ohne Kegel", rx, s.h - 8);
+    }
+    yR.addEventListener("input", function () { cancelAnimationFrame(raf); draw(); });
+    document.getElementById("cv-play").addEventListener("click", function () {
+      cancelAnimationFrame(raf);
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { yR.value = 30; draw(); return; }
+      var start = null;
+      function frame(ts) { if (!start) start = ts; var v = Math.min(30, (ts - start) / 120); yR.value = v; draw(); if (v < 30) raf = requestAnimationFrame(frame); }
+      raf = requestAnimationFrame(frame);
+    });
+    var w = watchRedraw(draw); w.ro.observe(host); draw();
+    return function () { cancelAnimationFrame(raf); w.stop(); };
+  }
+
+  /* ---------- Animation Station 9: Kugel aus Pyramiden, Orangen-Experiment ---------- */
+  function mountSpherePyr(host) {
+    var NS = [8, 12, 16, 24, 32, 64];
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-sp" aria-label="Schnitt durch eine Kugel, die in schmale Pyramiden zerlegt ist"></canvas></div>' +
+      '<div class="controls"><label for="sp-n">Anzahl n = <strong class="formula" id="sp-nv">12</strong><input type="range" id="sp-n" min="0" max="' + (NS.length - 1) + '" value="1"></label>' +
+      '<label for="sp-t">Pyramide herausziehen<input type="range" id="sp-t" min="0" max="100" value="60"></label></div>' +
+      '<p class="hint">Schnitt durch die Mitte der Kugel. Je mehr Stücke, desto genauer ist jede Höhe gleich r und desto flacher die Grundfläche.</p>' +
+      '<h4 class="sub">Orangen-Experiment: Wie viele Großkreise bedeckt die Schale?</h4>' +
+      '<div class="canvas-box"><canvas id="cv-or" aria-label="Die Schale einer Orange füllt vier Kreise mit dem Radius der Orange"></canvas></div>' +
+      '<div class="controls"><label for="or-t">Schale verteilen<input type="range" id="or-t" min="0" max="100" value="0"></label></div>';
+    var cv = document.getElementById("cv-sp"), nR = document.getElementById("sp-n"), tR = document.getElementById("sp-t");
+    var co = document.getElementById("cv-or"), oR = document.getElementById("or-t");
+    function drawSp() {
+      var s = setupCanvas(cv, 320), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var n = NS[+nR.value], t = +tR.value / 100;
+      document.getElementById("sp-nv").textContent = n;
+      var R = Math.min(s.h * 0.36, s.w * 0.3), cx = s.w / 2 - 0.15 * R, cy = s.h / 2;
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.fillStyle = col("--accent-soft"); ctx.fill();
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2; ctx.stroke();
+      ctx.strokeStyle = col("--accent"); ctx.lineWidth = 1;
+      for (var i = 0; i < n; i++) {
+        var a = 2 * Math.PI * i / n;
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + R * Math.cos(a), cy + R * Math.sin(a)); ctx.stroke();
+      }
+      // herausgezogene Pyramide (Keil um Winkel 0)
+      var w = 2 * Math.PI / n, mid = -w / 2 + w / 2, off = t * 0.45 * R;
+      var px = cx + off, py = cy;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, -w / 2, w / 2); ctx.closePath();
+      ctx.fillStyle = col("--paper"); ctx.fill(); ctx.strokeStyle = col("--line"); ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.arc(px, py, R, -w / 2, w / 2); ctx.closePath();
+      ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.85; ctx.fill(); ctx.globalAlpha = 1; ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(px, py, R, -w / 2, w / 2); ctx.strokeStyle = col("--mark"); ctx.lineWidth = 4; ctx.stroke();
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(px, py + 14); ctx.lineTo(px + R, py + 14); ctx.stroke(); ctx.setLineDash([]);
+      ctx.fillStyle = col("--ink"); ctx.font = "600 13px " + col("--font-mono"); ctx.textAlign = "center";
+      ctx.fillText("Höhe ≈ r", px + R / 2, py + 30);
+      ctx.fillStyle = col("--mark"); ctx.textAlign = "right";
+      ctx.fillText("Grundfläche Gᵢ", s.w - 8, Math.max(16, py - R * Math.sin(w / 2) - 14));
+      ctx.beginPath(); ctx.arc(cx, cy, 3.5, 0, 2 * Math.PI); ctx.fillStyle = col("--ink"); ctx.fill();
+    }
+    function drawOr() {
+      var s = setupCanvas(co, Math.min(190, host.clientWidth * 0.3 + 70)), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var t = +oR.value / 100;
+      var r = Math.min((s.w - 40) / 11.5, (s.h - 50) / 2), cy = 16 + r;
+      var x0 = (s.w - 11 * r) / 2 + r;
+      // Orange
+      ctx.beginPath(); ctx.arc(x0, cy, r, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 1 - 0.75 * t; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-body"); ctx.textAlign = "center";
+      ctx.fillText("Orange", x0, cy + r + 20);
+      for (var i = 0; i < 4; i++) {
+        var x = x0 + 3 * r + i * 2.3 * r, f = Math.max(0, Math.min(1, t * 4 - i));
+        ctx.beginPath(); ctx.arc(x, cy, r, 0, 2 * Math.PI); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+        if (f > 0) { ctx.beginPath(); ctx.moveTo(x, cy); ctx.arc(x, cy, r, -Math.PI / 2, -Math.PI / 2 + 2 * Math.PI * f); ctx.closePath(); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.8; ctx.fill(); ctx.globalAlpha = 1; }
+        ctx.fillStyle = col("--muted"); ctx.fillText("πr²", x, cy + r + 20);
+      }
+      if (t > 0.99) { ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "right"; ctx.fillText("O = 4 · πr²", s.w - 12, 18); }
+    }
+    function draw() { drawSp(); drawOr(); }
+    nR.addEventListener("input", drawSp); tR.addEventListener("input", drawSp); oR.addEventListener("input", drawOr);
+    var w = watchRedraw(draw); w.ro.observe(host); draw();
+    return function () { w.stop(); };
+  }
+
+  /* ---------- Animation Station 10: Körper-Baukasten ---------- */
+  function mountComposite(host) {
+    var mode = "silo";
+    host.innerHTML =
+      '<div class="step-nav" role="group" aria-label="Körper wählen"><button class="btn" data-m="silo">Silo</button><button class="btn ghost" data-m="eis">Eiswaffel</button><button class="btn ghost" data-m="bohr">Würfel mit Bohrung</button></div>' +
+      '<div class="canvas-box"><canvas id="cv-comp" aria-label="Zusammengesetzter Körper in der Vorderansicht"></canvas></div>' +
+      '<div class="controls"><label for="cp-r">Radius r = <strong class="formula" id="cp-rv">3</strong> cm<input type="range" id="cp-r" min="2" max="8" value="6"></label>' +
+      '<label for="cp-h" id="cp-hl">Höhe h = <strong class="formula" id="cp-hv">10</strong> cm<input type="range" id="cp-h" min="4" max="14" value="10"></label></div>' +
+      '<div class="readout"><table><thead><tr><th>Teil</th><th>Volumen</th></tr></thead><tbody id="cp-tab"></tbody></table></div>' +
+      '<p class="hint" id="cp-hint"></p>';
+    var cv = document.getElementById("cv-comp"), rR = document.getElementById("cp-r"), hR = document.getElementById("cp-h");
+    var btns = host.querySelectorAll("[data-m]");
+    function f2(x) { return fmt(x, 2); }
+    function draw() {
+      var s = setupCanvas(cv, 300), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var r = +rR.value / 2, h = +hR.value, P = Math.PI, rows = [], O, Vt;
+      if (mode === "bohr") r = Math.min(r, h / 2 - 0.5);
+      document.getElementById("cp-rv").textContent = fmt(r, r % 1 ? 1 : 0);
+      document.getElementById("cp-hv").textContent = h;
+      document.getElementById("cp-hl").firstChild.textContent = mode === "bohr" ? "Kantenlänge a = " : "Höhe h = ";
+      var bw = mode === "bohr" ? h : 2 * r, bh = mode === "bohr" ? h : h + r;
+      var k = Math.min((s.w - 60) / bw, (s.h - 40) / bh);
+      var cx = s.w / 2, base = s.h - 20 - (s.h - 40 - bh * k) / 2;
+      ctx.lineWidth = 1.5; ctx.strokeStyle = col("--ink");
+      if (mode === "silo") {
+        var Vz = P * r * r * h, Vk = 2 / 3 * P * r * r * r; Vt = Vz + Vk; O = P * r * r + 2 * P * r * h + 2 * P * r * r;
+        rows = [["Zylinder πr²h", Vz, "--accent"], ["Halbkugel ⅔πr³", Vk, "--mark"]];
+        ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.8; ctx.fillRect(cx - r * k, base - h * k, 2 * r * k, h * k); ctx.globalAlpha = 1; ctx.strokeRect(cx - r * k, base - h * k, 2 * r * k, h * k);
+        ctx.beginPath(); ctx.arc(cx, base - h * k, r * k, Math.PI, 2 * Math.PI); ctx.closePath(); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.8; ctx.fill(); ctx.globalAlpha = 1; ctx.stroke();
+        document.getElementById("cp-hint").textContent = "Oberfläche: Bodenkreis + Mantel + Halbkugelfläche = πr² + 2πrh + 2πr² ≈ " + f2(O) + " cm². Die Deckfläche des Zylinders liegt innen und zählt nicht.";
+      } else if (mode === "eis") {
+        var Vc = P * r * r * h / 3, Vh = 2 / 3 * P * r * r * r, sl = Math.sqrt(h * h + r * r); Vt = Vc + Vh; O = P * r * sl + 2 * P * r * r;
+        rows = [["Kegel ⅓πr²h", Vc, "--accent"], ["Halbkugel ⅔πr³", Vh, "--mark"]];
+        ctx.beginPath(); ctx.moveTo(cx, base); ctx.lineTo(cx + r * k, base - h * k); ctx.lineTo(cx - r * k, base - h * k); ctx.closePath();
+        ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.8; ctx.fill(); ctx.globalAlpha = 1; ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, base - h * k, r * k, Math.PI, 2 * Math.PI); ctx.closePath(); ctx.fillStyle = col("--mark"); ctx.globalAlpha = 0.8; ctx.fill(); ctx.globalAlpha = 1; ctx.stroke();
+        document.getElementById("cp-hint").textContent = "Oberfläche: Kegelmantel + Halbkugelfläche = πr·s + 2πr² ≈ " + f2(O) + " cm² (s = √(h² + r²) ≈ " + f2(sl) + " cm).";
+      } else {
+        var a = h, Vw = a * a * a, Vb = P * r * r * a; Vt = Vw - Vb; O = 6 * a * a - 2 * P * r * r + 2 * P * r * a;
+        rows = [["Würfel a³", Vw, "--accent"], ["minus Bohrung πr²a", -Vb, "--mark"]];
+        ctx.fillStyle = col("--accent"); ctx.globalAlpha = 0.8; ctx.fillRect(cx - a / 2 * k, base - a * k, a * k, a * k); ctx.globalAlpha = 1; ctx.strokeRect(cx - a / 2 * k, base - a * k, a * k, a * k);
+        ctx.fillStyle = col("--paper"); ctx.fillRect(cx - r * k, base - a * k, 2 * r * k, a * k);
+        ctx.setLineDash([5, 4]); ctx.strokeStyle = col("--mark"); ctx.strokeRect(cx - r * k, base - a * k, 2 * r * k, a * k); ctx.setLineDash([]);
+        document.getElementById("cp-hint").textContent = "Oberfläche: 6a² − 2 Bohrlöcher + Innenwand der Bohrung = 6a² − 2πr² + 2πr·a ≈ " + f2(O) + " cm².";
+      }
+      document.getElementById("cp-tab").innerHTML = rows.map(function (rw) { return "<tr><td>" + rw[0] + "</td><td>" + (rw[1] < 0 ? "− " : "") + f2(Math.abs(rw[1])) + " cm³</td></tr>"; }).join("") +
+        '<tr class="pi-row"><td>Gesamt</td><td>' + f2(Vt) + " cm³</td></tr>";
+    }
+    btns.forEach(function (b) { b.addEventListener("click", function () { mode = b.dataset.m; btns.forEach(function (x) { x.className = "btn" + (x === b ? "" : " ghost"); }); draw(); }); });
+    rR.addEventListener("input", draw); hR.addEventListener("input", draw);
+    var w = watchRedraw(draw); w.ro.observe(host); draw();
+    return function () { w.stop(); };
   }
 
   /* ---------- Start ---------- */

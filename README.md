@@ -18,7 +18,9 @@ Der Fortschritt wird nur im Browser der Schülerin oder des Schülers gespeicher
 | 5 | Zylinder: Volumen | fertig |
 | 6 | Pyramide und Kegel: Oberfläche | fertig |
 | 7 | Pyramide und Kegel: Volumen | fertig |
-| 8–10 | Kugel, zusammengesetzte Körper | Ziele hinterlegt, Inhalte folgen |
+| 8 | Kugel: Volumen | fertig |
+| 9 | Kugel: Oberfläche | fertig |
+| 10 | Zusammengesetzte Körper und Modellieren | fertig |
 
 Der vollständige Lernweg steht in [docs/lernweg.md](docs/lernweg.md).
 
