@@ -1070,7 +1070,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       '<div class="canvas-box"><canvas id="cv-roll" aria-label="Ein Kreis rollt einmal auf einem Lineal ab"></canvas></div>' +
       '<div class="controls"><label for="d-range">Durchmesser d = <strong class="formula" id="d-val">1</strong> cm<input type="range" id="d-range" min="0" max="' + (DS.length - 1) + '" value="1"></label>' +
       '<button class="btn" id="roll">Abrollen und messen</button></div>' +
-      '<p class="hint">Beginne mit d = 1 cm. Wähle danach andere Durchmesser und rolle jeden Kreis einmal ab. Jede Messung landet in der Tabelle und im Koordinatensystem.</p>' +
+      '<p class="hint">Beginne mit d = 1 cm. Wähle danach andere Durchmesser und rolle jeden Kreis einmal ab. Der farbige Umfang wird dabei auf das Lineal abgewickelt. Jede Messung landet in der Tabelle und im Koordinatensystem.</p>' +
       '<div class="measure">' +
         '<div class="readout"><table><thead><tr><th>d in cm</th><th>u in cm</th><th>u : d</th></tr></thead><tbody id="meas"></tbody></table></div>' +
         '<div class="canvas-box"><canvas id="cv-plot" aria-label="Messpunkte im Koordinatensystem: Umfang u über Durchmesser d"></canvas></div>' +
@@ -1114,13 +1114,13 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     }
 
     function drawRoll() {
-      var k = Math.min((cr.parentElement.clientWidth - 40) / 10.2, 60);   // Pixel pro cm
-      var s = setupCanvas(cr, Math.round(3 * k + 80)), ctx = s.ctx;
+      var k = Math.min((cr.parentElement.clientWidth - 24) / 12.6, 60);   // Pixel pro cm
+      var s = setupCanvas(cr, Math.round(3 * k + 112)), ctx = s.ctx;
       ctx.clearRect(0, 0, s.w, s.h);
       var d = DS[+dR.value];
       document.getElementById("d-val").textContent = fmt(d, d % 1 ? 1 : 0);
-      var x0 = 20, base = s.h - 46, r = d / 2 * k;
-      var ang = t * 2 * Math.PI, cx = x0 + r * ang, cy = base - r;
+      var x0 = 1.5 * k + 12, base = s.h - 74, r = d / 2 * k;
+      var ang = t * 2 * Math.PI, cx = x0 + r * ang, cy = base - r, ux = x0 + Math.PI * d * k;
       // Lineal
       ctx.strokeStyle = col("--line"); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x0, base); ctx.lineTo(s.w - 10, base); ctx.stroke();
       ctx.fillStyle = col("--muted"); ctx.font = "11px " + col("--font-mono"); ctx.textAlign = "center";
@@ -1130,20 +1130,56 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
         if (c < 10) { ctx.beginPath(); ctx.moveTo(tx + k / 2, base + 3); ctx.lineTo(tx + k / 2, base + 8); ctx.stroke(); }
         ctx.fillText(c, tx, base + 26);
       }
-      ctx.textAlign = "right"; ctx.fillText("cm", s.w - 10, base + 40);
-      // abgerollte Strecke
+      ctx.textAlign = "left"; ctx.fillText("cm", x0 + 10 * k + 12, base + 26);
+      // Startlage als Umriss
+      if (t > 0) {
+        ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.arc(x0, cy, r, 0, 2 * Math.PI);
+        ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]);
+      }
+      // abgewickelter Umfang auf dem Lineal
       ctx.strokeStyle = col("--mark"); ctx.lineWidth = 5; ctx.lineCap = "round";
-      ctx.beginPath(); ctx.moveTo(x0, base); ctx.lineTo(x0 + r * ang, base); ctx.stroke(); ctx.lineCap = "butt";
-      // Kreis mit Durchmesser
-      ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-      ctx.fillStyle = col("--accent-soft"); ctx.fill(); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2; ctx.stroke();
+      if (t > 0) { ctx.beginPath(); ctx.moveTo(x0, base); ctx.lineTo(cx, base); ctx.stroke(); }
+      ctx.lineCap = "butt";
+      // Kreis: der noch nicht abgewickelte Teil des Umfangs ist farbig
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI); ctx.fillStyle = col("--accent-soft"); ctx.fill();
+      ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.2; ctx.stroke();
+      if (t < 1) {
+        ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI / 2 + ang, Math.PI / 2 + 2 * Math.PI);
+        ctx.strokeStyle = col("--mark"); ctx.lineWidth = 5; ctx.stroke();
+      }
+      // Durchmesser, der sich mitdreht
       var px = cx - r * Math.sin(ang), py = cy + r * Math.cos(ang);
-      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(2 * cx - px, 2 * cy - py); ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.stroke();
-      ctx.beginPath(); ctx.arc(px, py, 4.5, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(2 * cx - px, 2 * cy - py); ctx.strokeStyle = col("--accent"); ctx.lineWidth = 2; ctx.stroke();
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.fill();
+      ctx.strokeStyle = col("--surface"); ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.font = "600 13px " + col("--font-mono"); ctx.textAlign = "center";
+      if (t === 0) {
+        ctx.fillStyle = col("--accent"); ctx.fillText("d = " + fmt(d, d % 1 ? 1 : 0) + " cm", cx + Math.max(r, 0) + 40, cy - 2);
+        ctx.fillStyle = col("--muted"); ctx.font = "12px " + col("--font-body"); ctx.textAlign = "left";
+        ctx.fillText("Startpunkt bei 0", x0 + 6, base - 2 * r - 10);
+      }
       if (t >= 1) {
+        // Endmarke und Messwert
+        ctx.strokeStyle = col("--mark"); ctx.lineWidth = 1.5; ctx.setLineDash([3, 3]);
+        ctx.beginPath(); ctx.moveTo(ux, base - 2 * r - 4); ctx.lineTo(ux, base); ctx.stroke(); ctx.setLineDash([]);
         ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "left";
         var label = "u ≈ " + fmt(Math.PI * d, 2) + " cm";
-        ctx.fillText(label, Math.min(x0 + r * ang + 8, s.w - 130), Math.max(18, base - 2 * r - 10));
+        var lx = Math.min(ux + 8, s.w - 10 - ctx.measureText(label).width);
+        ctx.fillText(label, lx, Math.max(16, base - 2 * r - 10));
+        // Wie oft passt d in u?
+        var by = base + 42;
+        ctx.font = "600 12px " + col("--font-mono"); ctx.textAlign = "center";
+        for (var i = 0; i < 3; i++) {
+          var xa = x0 + i * d * k, xb = xa + d * k;
+          ctx.fillStyle = col(i % 2 ? "--accent" : "--accent-soft"); ctx.fillRect(xa, by - 6, xb - xa, 12);
+          ctx.strokeStyle = col("--accent"); ctx.lineWidth = 1; ctx.strokeRect(xa, by - 6, xb - xa, 12);
+          ctx.fillStyle = col(i % 2 ? "--accent-soft" : "--ink"); if (d * k > 16) ctx.fillText("d", (xa + xb) / 2, by + 4);
+        }
+        ctx.fillStyle = col("--mark"); ctx.fillRect(x0 + 3 * d * k, by - 6, ux - x0 - 3 * d * k, 12);
+        ctx.textAlign = "left"; ctx.fillStyle = col("--ink");
+        var txt = "u = 3 · d + ein kleines Stück ≈ 3,14 · d";
+        if (s.w < 520) txt = "u ≈ 3,14 · d";
+        ctx.fillText(txt, x0, by + 28);
       }
     }
 
