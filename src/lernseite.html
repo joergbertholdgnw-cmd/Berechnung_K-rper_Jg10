@@ -201,6 +201,7 @@ h4.sub { font-family: var(--font-display); font-size: 1rem; font-weight: 600; ma
 .task { border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; background: var(--paper); min-width: 0; }
 .task.ok { border-color: var(--ok); }
 .task-kind { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.round { font-weight: 600; color: var(--accent); }
 .answer { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .answer input { font: inherit; font-family: var(--font-mono); width: 9rem; max-width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
 .reflect { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
@@ -320,12 +321,15 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       goals: ["Ich kann erklären, wie man einen Kreis in Sektoren zerlegt und zu einem fast-Rechteck umlegt.",
               "Ich kann begründen, warum dieses Rechteck die Seiten r und π · r hat.",
               "Ich kann A = π · r² anwenden."] },
-    { short: "Kreisausschnitt", title: "Kreisausschnitt und Kreisbogen", ready: false,
+    { short: "Kreisausschnitt", title: "Kreisausschnitt und Kreisbogen", ready: true,
+      intro: "Ein Tortenstück, das Feld eines Scheibenwischers, der Weg einer Zeigerspitze: Oft brauchst du nur einen Teil des Kreises.",
       goals: ["Ich kann Bogenlänge und Fläche eines Kreisausschnitts als Anteil α/360° des ganzen Kreises bestimmen."] },
-    { short: "Zylinder: Oberfläche", title: "Zylinder: Netz und Oberfläche", ready: false,
+    { short: "Zylinder: Oberfläche", title: "Zylinder: Netz und Oberfläche", ready: true,
+      intro: "Wie viel Blech braucht man für eine Dose? Du wickelst den Zylinder ab und siehst, aus welchen Flächen er besteht.",
       goals: ["Ich kann das Netz eines Zylinders zeichnen und erklären, warum eine Rechteckseite gleich dem Kreisumfang ist.",
               "Ich kann O = 2πr² + 2πrh herleiten und anwenden."] },
-    { short: "Zylinder: Volumen", title: "Zylinder: Volumen", ready: false,
+    { short: "Zylinder: Volumen", title: "Zylinder: Volumen", ready: true,
+      intro: "Ein Zylinder ist fast ein Prisma. Wie fast, das zeigt dir ein Prisma mit immer mehr Ecken.",
       goals: ["Ich kann das Zylindervolumen als Grenzfall von Prismen mit n-Eck-Grundfläche erklären.",
               "Ich kann V = πr² · h anwenden."] },
     { short: "Pyramide, Kegel: O", title: "Pyramide und Kegel: Oberfläche", ready: false,
@@ -388,13 +392,13 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
           fb: ["Die Eckenzahl allein sagt nichts über die Länge.", "Genau: u_Sechseck = 3d &lt; u_Kreis, also ist u : d größer als 3.", "Das innere Sechseck liegt ganz im Kreis und ist kleiner."] }
       ],
       protocol: [
-        { kind: "Aufgabe", q: "Ein Kreis hat den Radius r = 4 cm. Berechne seinen Umfang.", ans: 25.13, tol: 0.06, unit: "cm",
+        { kind: "Aufgabe", q: "Ein Kreis hat den Radius r = 4 cm. Berechne seinen Umfang.", round: 2, ans: 25.13, tol: 0.01, unit: "cm",
           hint: "Nutze u = 2 · π · r.", sol: "u = 2 · π · 4 cm = 8π cm ≈ 25,13 cm" },
-        { kind: "Umkehraufgabe", q: "Ein kreisrundes Beet hat einen Umfang von 15,7 m. Wie groß ist sein Durchmesser?", ans: 5.00, tol: 0.02, unit: "m",
+        { kind: "Umkehraufgabe", q: "Ein kreisrundes Beet hat einen Umfang von 15,7 m. Wie groß ist sein Durchmesser?", round: 2, ans: 5.00, tol: 0.01, unit: "m",
           hint: "Stelle u = π · d nach d um.", sol: "d = u : π = 15,7 m : π ≈ 5,00 m" },
-        { kind: "Vertiefung", q: "Ein Fahrradreifen hat einen Durchmesser von 70 cm. Wie viele volle Umdrehungen macht das Rad auf einer Strecke von 1 km?", ans: 454.5, tol: 0.6, unit: "Umdrehungen",
-          hint: "Berechne zuerst den Umfang in cm und rechne 1 km in cm um.", sol: "u = π · 70 cm ≈ 219,9 cm. 1 km = 100 000 cm. 100 000 : 219,9 ≈ 454,7. Das Rad dreht sich also 454-mal vollständig." },
-        { kind: "Vertiefung", q: "Ein Seil liegt straff um den Äquator der Erde (Umfang etwa 40 000 km). Es wird um 1 m verlängert und rundherum gleichmäßig angehoben. Wie viele Zentimeter steht es dann über dem Boden?", ans: 15.9, tol: 0.2, unit: "cm",
+        { kind: "Vertiefung", q: "Ein Fahrradreifen hat einen Durchmesser von 70 cm. Wie viele volle Umdrehungen macht das Rad auf einer Strecke von 1 km?", round: "volle", ans: 454, tol: 0.01, unit: "Umdrehungen",
+          hint: "Berechne zuerst den Umfang in cm und rechne 1 km in cm um. Volle Umdrehungen heißt: abrunden.", sol: "u = π · 70 cm ≈ 219,9 cm. 1 km = 100 000 cm. 100 000 : 219,9 ≈ 454,7. Das Rad dreht sich also 454-mal vollständig." },
+        { kind: "Vertiefung", q: "Ein Seil liegt straff um den Äquator der Erde (Umfang etwa 40 000 km). Es wird um 1 m verlängert und rundherum gleichmäßig angehoben. Wie viele Zentimeter steht es dann über dem Boden?", round: 1, ans: 15.9, tol: 0.1, unit: "cm",
           hint: "Um wie viel wächst der Durchmesser, wenn der Umfang um 1 m wächst? Der Abstand zum Boden ist die Hälfte davon.", sol: "Wegen u = π · d wächst d um 1 m : π ≈ 0,318 m. Der Abstand ist die Hälfte: 0,159 m ≈ 15,9 cm. Erstaunlich: Die Größe der Erde spielt dabei keine Rolle." },
         { kind: "Rückblick", text: true, q: "Begründe oder widerlege: „Verdoppelt man den Durchmesser eines Kreises, so verdoppelt sich auch sein Umfang.“",
           sol: "Die Aussage stimmt. u = π · d ist eine proportionale Zuordnung mit dem Faktor π. Aus d wird 2d, also u = π · 2d = 2 · (π · d). Der Umfang verdoppelt sich. Im Koordinatensystem liegt der neue Punkt auf derselben Ursprungsgeraden." }
@@ -424,21 +428,130 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
           fb: ["Die Rechnung bleibt gleich einfach, nur die Figur wird genauer.", "Richtig. Im Grenzprozess verschwindet der Unterschied zum Rechteck.", "Die Fläche ändert sich beim Umlegen nie, es sind immer dieselben Stücke."] }
       ],
       protocol: [
-        { kind: "Aufgabe", q: "Ein Kreis hat den Radius r = 5 cm. Berechne seinen Flächeninhalt.", ans: 78.54, tol: 0.1, unit: "cm²",
+        { kind: "Aufgabe", q: "Ein Kreis hat den Radius r = 5 cm. Berechne seinen Flächeninhalt.", round: 2, ans: 78.54, tol: 0.01, unit: "cm²",
           hint: "Nutze A = π · r². Erst quadrieren, dann mit π multiplizieren.", sol: "A = π · (5 cm)² = 25π cm² ≈ 78,54 cm²" },
-        { kind: "Umkehraufgabe", q: "Ein Kreis hat den Flächeninhalt 50 cm². Berechne seinen Radius.", ans: 3.99, tol: 0.02, unit: "cm",
+        { kind: "Umkehraufgabe", q: "Ein Kreis hat den Flächeninhalt 50 cm². Berechne seinen Radius.", round: 2, ans: 3.99, tol: 0.01, unit: "cm",
           hint: "Teile durch π und ziehe dann die Wurzel.", sol: "r² = 50 cm² : π ≈ 15,92 cm², also r ≈ 3,99 cm" },
-        { kind: "Vertiefung", q: "Eine Pizza mit 30 cm Durchmesser oder zwei Pizzen mit je 20 cm Durchmesser: Um wie viel cm² ist die größere Gesamtfläche größer?", ans: 78.5, tol: 0.6, unit: "cm²",
+        { kind: "Vertiefung", q: "Eine Pizza mit 30 cm Durchmesser oder zwei Pizzen mit je 20 cm Durchmesser: Um wie viel cm² ist die größere Gesamtfläche größer?", round: 1, ans: 78.5, tol: 0.1, unit: "cm²",
           hint: "Achtung: In die Formel gehört der Radius, nicht der Durchmesser.", sol: "Große Pizza: π · 15² ≈ 706,9 cm². Zwei kleine: 2 · π · 10² ≈ 628,3 cm². Die große Pizza hat etwa 78,5 cm² mehr." },
-        { kind: "Vertiefung", q: "Ein Kreisring hat den Außenradius 6 cm und den Innenradius 4 cm. Berechne seinen Flächeninhalt.", ans: 62.83, tol: 0.1, unit: "cm²",
+        { kind: "Vertiefung", q: "Ein Kreisring hat den Außenradius 6 cm und den Innenradius 4 cm. Berechne seinen Flächeninhalt.", round: 2, ans: 62.83, tol: 0.01, unit: "cm²",
           hint: "Ziehe vom großen Kreis den kleinen Kreis ab.", sol: "A = π · 6² − π · 4² = π · (36 − 16) = 20π ≈ 62,83 cm²" },
         { kind: "Rückblick", text: true, q: "Erkläre in zwei bis drei Sätzen einer Mitschülerin, warum der Flächeninhalt eines Kreises π · r² beträgt.",
           sol: "Man zerlegt den Kreis in viele schmale Sektoren und legt sie abwechselnd nach oben und unten zusammen. Es entsteht fast ein Rechteck: Die lange Seite ist der halbe Umfang π · r, die kurze Seite der Radius r. Mit immer mehr Sektoren wird daraus ein Rechteck, also A = π · r · r = π · r²." }
       ],
       open: { q: "Begründe oder widerlege: „Wenn man den Radius eines Kreises verdoppelt, verdoppelt sich auch sein Flächeninhalt.“",
               sol: "Die Aussage ist falsch. Bei doppeltem Radius werden in der umgelegten Figur beide Seiten doppelt so lang: Die Länge π · r wird zu π · 2r und die Höhe r zu 2r. Der Flächeninhalt wird also 2 · 2 = 4-mal so groß: π · (2r)² = 4 · π · r². Der Umfang verdoppelt sich dagegen nur." }
+    },
+    3: {
+      anim: "sector", animTitle: "Der Winkel bestimmt den Anteil",
+      steps: [
+        "<p><strong>Was ist ein Kreisausschnitt?</strong> Ein Kreisausschnitt (Sektor) wird von zwei Radien und einem Kreisbogen begrenzt. Der Winkel α zwischen den Radien heißt Mittelpunktswinkel.</p>",
+        "<p><strong>Der Anteil zählt.</strong> Ein Ausschnitt mit α = 90° ist ein Viertel des Kreises, denn 90° : 360° = ¼. Allgemein ist der Ausschnitt der Anteil α/360° des ganzen Kreises.</p>",
+        "<p><strong>Proportional zum Winkel.</strong> Verdoppelst du den Winkel, verdoppeln sich auch Bogenlänge und Fläche. Du nimmst deshalb vom Umfang und von der Kreisfläche jeweils denselben Anteil α/360°.</p>",
+        "<p><strong>Die Formeln.</strong></p><div class=\"result\">b = α/360° · 2πr</div><div class=\"result\">A = α/360° · πr²</div>",
+        "<p><strong>Ein kurzer Weg.</strong> Zerlegst du den Ausschnitt in viele schmale Stücke, ist jedes fast ein Dreieck mit der Höhe r. Zusammen haben sie die Grundseite b. Das ist dieselbe Idee wie bei der Kreisfläche:</p><div class=\"result\">A = ½ · b · r</div>"
+      ],
+      video: { title: "Kreisausschnitt berechnen (Sektor) – Lehrerschmidt", url: "https://www.youtube.com/watch?v=qyAKxCAKNxo" },
+      quiz: [
+        { q: "Warum gilt für die Bogenlänge b = α/360° · 2πr?",
+          opts: ["Weil der Bogen proportional zum Winkel ist: Er ist der Anteil α/360° des ganzen Umfangs.", "Weil der Kreis einen Umfang von 360 cm hat.", "Weil man α durch 360 teilen muss, damit eine kleine Zahl herauskommt."], correct: 0,
+          fb: ["Genau. Der volle Winkel 360° gehört zum vollen Umfang 2πr.", "Der Umfang hängt vom Radius ab, 360 ist die Gradzahl des Vollwinkels.", "Der Bruch α/360° hat eine Bedeutung: Er gibt den Anteil am ganzen Kreis an."] },
+        { q: "Welchen Anteil am ganzen Kreis hat ein Ausschnitt mit α = 120°?",
+          opts: ["¼", "⅓", "1,2"], correct: 1,
+          fb: ["¼ gehört zu 90°.", "Richtig: 120° : 360° = ⅓.", "Ein Anteil am ganzen Kreis ist höchstens 1."] },
+        { q: "Warum gilt auch A = ½ · b · r?",
+          opts: ["Weil b immer halb so lang ist wie r.", "Weil viele schmale Stücke des Ausschnitts fast Dreiecke mit Grundseite (Bogen) und Höhe r sind.", "Das gilt nur für den Halbkreis."], correct: 1,
+          fb: ["b und r hängen über den Winkel zusammen, nicht über einen festen Faktor.", "Genau. Wie bei der Kreisfläche wird aus den Stücken im Grenzprozess ein Dreieck bzw. Rechteck.", "Die Formel gilt für jeden Winkel. Prüfe: ½ · (α/360° · 2πr) · r = α/360° · πr²."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Halbiert man den Mittelpunktswinkel und verdoppelt den Radius, so bleibt der Flächeninhalt des Ausschnitts gleich.“",
+              sol: "Die Aussage ist falsch. Der halbe Winkel halbiert den Anteil, der doppelte Radius vervierfacht aber πr². Insgesamt wird die Fläche ½ · 4 = 2-mal so groß. Gleich bleibt dagegen die Bogenlänge, denn dort steht r nicht im Quadrat: ½ · 2 = 1." },
+      protocol: [
+        { kind: "Aufgabe", q: "Ein Kreisausschnitt hat den Radius r = 6 cm und den Mittelpunktswinkel α = 60°. Berechne die Bogenlänge.", round: 2, ans: 6.28, tol: 0.01, unit: "cm",
+          hint: "60° sind ein Sechstel des Vollwinkels.", sol: "b = 60°/360° · 2π · 6 cm = ⅙ · 12π cm = 2π cm ≈ 6,28 cm" },
+        { kind: "Aufgabe", q: "Berechne den Flächeninhalt desselben Ausschnitts (r = 6 cm, α = 60°).", round: 2, ans: 18.85, tol: 0.01, unit: "cm²",
+          hint: "Nimm ein Sechstel der Kreisfläche π · 6².", sol: "A = ⅙ · π · (6 cm)² = 6π cm² ≈ 18,85 cm²" },
+        { kind: "Umkehraufgabe", q: "Ein Kreisbogen ist 10 cm lang, der Radius beträgt 8 cm. Wie groß ist der Mittelpunktswinkel α?", round: 1, ans: 71.6, tol: 0.1, unit: "°",
+          hint: "Berechne zuerst, welcher Anteil des Umfangs 2π · 8 cm die 10 cm sind.", sol: "Anteil = 10 cm : (2π · 8 cm) ≈ 0,199. α = 0,199 · 360° ≈ 71,6°" },
+        { kind: "Vertiefung", q: "Ein Scheibenwischer dreht sich um 110°. Sein Gummi reicht von 20 cm bis 50 cm Abstand zum Drehpunkt. Wie groß ist die gewischte Fläche?", round: 0, ans: 2016, tol: 1, unit: "cm²",
+          hint: "Die Fläche ist ein Ausschnitt eines Kreisrings: großer Ausschnitt minus kleiner Ausschnitt.", sol: "A = 110°/360° · π · (50² − 20²) cm² = 110/360 · π · 2100 cm² ≈ 2016 cm²" },
+        { kind: "Rückblick", text: true, q: "Erkläre, warum du für α = 360° wieder die Formeln für den ganzen Kreis erhältst.",
+          sol: "Bei α = 360° ist der Anteil 360°/360° = 1. Dann gilt b = 1 · 2πr = 2πr und A = 1 · πr² = πr². Der Ausschnitt ist der ganze Kreis." }
+      ]
+    },
+    4: {
+      anim: "cylnet", animTitle: "Der Zylinder wird abgewickelt",
+      steps: [
+        "<p><strong>Die Teile des Zylinders.</strong> Ein Zylinder hat zwei kongruente Kreise als Grund- und Deckfläche und eine gekrümmte Mantelfläche.</p>",
+        "<p><strong>Aufschneiden und abrollen.</strong> Schneidest du den Mantel entlang einer Höhe auf und rollst ihn ab, entsteht ein Rechteck. Die beiden Kreise klappst du an. So entsteht das Netz.</p>",
+        "<p><strong>Die Seiten des Rechtecks.</strong> Eine Seite ist die Höhe h. Die andere Seite lag vorher genau einmal um den Grundkreis herum. Sie ist also so lang wie der Kreisumfang 2πr.</p><div class=\"result\">M = 2πr · h</div>",
+        "<p><strong>Die beiden Kreise.</strong> Grund- und Deckfläche haben zusammen den Flächeninhalt 2 · πr².</p>",
+        "<p><strong>Die Formel.</strong> Die Oberfläche ist die Summe aller Flächen im Netz:</p><div class=\"result\">O = 2πr² + 2πr · h = 2πr · (r + h)</div>"
+      ],
+      video: { title: "Oberfläche Zylinder – Studyflix", url: "https://studyflix.de/mathematik/oberflaeche-zylinder-2611" },
+      quiz: [
+        { q: "Warum ist eine Seite des Mantelrechtecks 2πr lang?",
+          opts: ["Weil sie doppelt so lang ist wie der Radius.", "Weil sie vor dem Abrollen einmal ganz um den Grundkreis lag, also so lang ist wie dessen Umfang.", "Weil die Höhe immer 2πr beträgt."], correct: 1,
+          fb: ["Doppelter Radius ist der Durchmesser 2r. Hier fehlt das π.", "Genau. Abrollen verändert die Länge nicht.", "Die Höhe kann beliebig sein und ist die andere Seite des Rechtecks."] },
+        { q: "Aus welchen Flächen besteht das Netz eines Zylinders?",
+          opts: ["Aus zwei kongruenten Kreisen und einem Rechteck.", "Aus einem Kreis und einem Rechteck.", "Aus zwei Kreisen und einem Kreisausschnitt."], correct: 0,
+          fb: ["Richtig. Die beiden Kreise sind Grund- und Deckfläche.", "Grund- und Deckfläche sind zwei Kreise.", "Ein Kreisausschnitt entsteht erst beim Kegelmantel."] },
+        { q: "Ein Zylinder wird doppelt so hoch, der Radius bleibt gleich. Was passiert mit der Oberfläche?",
+          opts: ["Die ganze Oberfläche verdoppelt sich.", "Nur die Mantelfläche verdoppelt sich, die beiden Kreise bleiben gleich.", "Nichts ändert sich."], correct: 1,
+          fb: ["Die Kreise hängen nicht von h ab, sie bleiben gleich groß.", "Genau. Deshalb wird O insgesamt weniger als doppelt so groß.", "Das Rechteck wird höher, also ändert sich etwas."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Das Netz eines Zylinders besteht aus zwei Kreisen und einem Rechteck, dessen eine Seite so lang ist wie der Durchmesser der Kreise.“",
+              sol: "Die Aussage ist falsch. Die Rechteckseite ist so lang wie der Umfang des Kreises, also π · d. Sie ist damit etwa 3,14-mal so lang wie der Durchmesser. Nur so passt der Mantel einmal ganz um den Kreis herum." },
+      protocol: [
+        { kind: "Aufgabe", q: "Ein Zylinder hat den Radius r = 3 cm und die Höhe h = 10 cm. Berechne seinen Oberflächeninhalt.", round: 2, ans: 245.04, tol: 0.01, unit: "cm²",
+          hint: "O = 2πr² + 2πr · h. Berechne beide Teile einzeln.", sol: "O = 2π · 3² + 2π · 3 · 10 = 18π + 60π = 78π ≈ 245,04 cm²" },
+        { kind: "Umkehraufgabe", q: "Die Mantelfläche eines Zylinders beträgt 200 cm², sein Radius 4 cm. Wie hoch ist der Zylinder?", round: 2, ans: 7.96, tol: 0.01, unit: "cm",
+          hint: "Stelle M = 2πr · h nach h um.", sol: "h = M : (2πr) = 200 cm² : (8π cm) ≈ 7,96 cm" },
+        { kind: "Vertiefung", q: "Eine Konservendose hat den Durchmesser 7,5 cm und die Höhe 11 cm. Das Papieretikett bedeckt den Mantel und überlappt an der Klebestelle um 1 cm. Wie viel Papier braucht man?", round: 0, ans: 270, tol: 1, unit: "cm²",
+          hint: "Das Etikett ist ein Rechteck: Länge = Umfang + 1 cm, Breite = Höhe.", sol: "Länge = π · 7,5 cm + 1 cm ≈ 24,56 cm. A = 24,56 cm · 11 cm ≈ 270 cm²" },
+        { kind: "Vertiefung", q: "Eine Litfaßsäule hat den Durchmesser 1,4 m und ist 3 m hoch beklebbar. Wie groß ist die Fläche für Plakate?", round: 2, ans: 13.19, tol: 0.01, unit: "m²",
+          hint: "Plakate kommen nur auf den Mantel.", sol: "M = π · d · h = π · 1,4 m · 3 m ≈ 13,19 m²" },
+        { kind: "Rückblick", text: true, q: "Ein Mitschüler rechnet die Oberfläche eines Zylinders mit O = πr² · h. Erkläre seinen Fehler.",
+          sol: "πr² · h ist Grundfläche mal Höhe, also das Volumen des Zylinders (Einheit cm³). Für die Oberfläche addiert man die Flächen des Netzes: zwei Kreise 2πr² und das Mantelrechteck 2πr · h." }
+      ]
+    },
+    5: {
+      anim: "prism", animTitle: "Prismen werden zum Zylinder",
+      steps: [
+        "<p><strong>Was du schon weißt.</strong> Für jedes Prisma gilt V = G · h: Grundfläche mal Höhe.</p>",
+        "<p><strong>Ein Prisma im Zylinder.</strong> Lege in den Grundkreis ein regelmäßiges n-Eck. Das Prisma über diesem n-Eck steht genau im Zylinder.</p>",
+        "<p><strong>Mehr Ecken.</strong> Mit wachsender Eckenzahl füllt das n-Eck den Kreis immer besser aus. Seine Fläche nähert sich πr², bei r = 1 also π. Das zeigt die Tabelle in der Animation.</p>",
+        "<p><strong>Der Grenzprozess.</strong> Im Grenzfall wird aus dem Prisma der Zylinder und aus dem n-Eck der Kreis. Die Formel V = G · h gilt weiter, nur ist G jetzt die Kreisfläche.</p>",
+        "<p><strong>Die Formel.</strong></p><div class=\"result\">V = G · h = πr² · h</div>"
+      ],
+      video: { title: "Zylinder – Volumen berechnen – Lehrerschmidt", url: "https://www.youtube.com/watch?v=6sf_cvf4xxE" },
+      quiz: [
+        { q: "Warum darf man für den Zylinder V = G · h verwenden?",
+          opts: ["Weil der Zylinder der Grenzfall von Prismen mit immer mehr Ecken ist und für jedes Prisma V = G · h gilt.", "Weil ein Zylinder ein Prisma mit rechteckiger Grundfläche ist.", "Weil man das Volumen mit Wasser messen kann."], correct: 0,
+          fb: ["Genau. Die Formel überträgt sich vom Prisma auf den Zylinder.", "Die Grundfläche des Zylinders ist ein Kreis.", "Messen liefert nur Näherungswerte, die Herleitung begründet die Formel."] },
+        { q: "Was passiert mit der Grundfläche des n-Eck-Prismas, wenn n wächst?",
+          opts: ["Sie wird kleiner.", "Sie bleibt gleich.", "Sie wächst und nähert sich der Kreisfläche πr²."], correct: 2,
+          fb: ["Schau auf die Tabelle: Die Werte steigen.", "Mehr Ecken füllen den Kreis besser aus.", "Richtig. Sie bleibt immer knapp unter πr²."] },
+        { q: "Ein Zylinder bekommt den doppelten Radius, die Höhe bleibt gleich. Sein Volumen …",
+          opts: ["verdoppelt sich.", "wird viermal so groß.", "wird achtmal so groß."], correct: 1,
+          fb: ["Der Radius steht im Quadrat.", "Richtig: π · (2r)² · h = 4 · πr² · h.", "Achtmal so groß wird es nur, wenn sich auch die Höhe verdoppelt."] }
+      ],
+      open: { q: "Begründe oder widerlege: „Ein Zylinder mit r = 2 cm und h = 8 cm hat dasselbe Volumen wie ein Zylinder mit r = 4 cm und h = 4 cm.“",
+              sol: "Die Aussage ist falsch. V₁ = π · 2² · 8 = 32π cm³, V₂ = π · 4² · 4 = 64π cm³. Der doppelte Radius vervierfacht die Grundfläche, die halbe Höhe halbiert das Volumen nur. Der zweite Zylinder ist also doppelt so groß." },
+      protocol: [
+        { kind: "Aufgabe", q: "Ein Zylinder hat den Radius r = 5 cm und die Höhe h = 12 cm. Berechne sein Volumen.", round: 2, ans: 942.48, tol: 0.01, unit: "cm³",
+          hint: "V = π · r² · h.", sol: "V = π · (5 cm)² · 12 cm = 300π cm³ ≈ 942,48 cm³" },
+        { kind: "Umkehraufgabe", q: "Eine zylindrische Dose soll genau 1 Liter fassen und hat den Radius 4 cm. Wie hoch muss sie sein?", round: 2, ans: 19.89, tol: 0.01, unit: "cm",
+          hint: "1 l = 1000 cm³. Stelle V = πr² · h nach h um.", sol: "h = V : (πr²) = 1000 cm³ : (16π cm²) ≈ 19,89 cm" },
+        { kind: "Vertiefung", q: "Eine Regentonne hat den Durchmesser 60 cm und die Höhe 90 cm. Wie viele Liter Wasser passen hinein?", round: 1, ans: 254.5, tol: 0.1, unit: "l",
+          hint: "Rechne in cm³ und beachte 1 l = 1000 cm³. Der Radius ist 30 cm.", sol: "V = π · 30² · 90 cm³ = 81 000π cm³ ≈ 254 469 cm³ ≈ 254,5 l" },
+        { kind: "Vertiefung", q: "Ein Rohr ist 2 m lang, hat außen den Durchmesser 10 cm und innen 8 cm. Wie viel cm³ Material stecken im Rohr?", round: 0, ans: 5655, tol: 1, unit: "cm³",
+          hint: "Großer Zylinder minus kleiner Zylinder. Rechne die Länge in cm um.", sol: "V = π · (5² − 4²) · 200 cm³ = 1800π cm³ ≈ 5655 cm³" },
+        { kind: "Rückblick", text: true, q: "Erkläre, wie das Volumen des Zylinders mit dem Flächeninhalt des Kreises zusammenhängt.",
+          sol: "Die Grundfläche des Zylinders ist ein Kreis mit G = πr². Wie bei jedem Prisma ist das Volumen Grundfläche mal Höhe. Ohne die Kreisflächenformel gäbe es also keine Zylinderformel." }
+      ]
     }
   };
+
 
   /* ---------- Speicher ---------- */
   var KEY = "kreis-koerper-jg10-v1";
@@ -517,7 +630,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     }
 
     if (c.anim) {
-      h += '<section class="block"><div class="block-title"><span class="eyebrow">Animation</span><h3>' + (c.anim === "polygon" ? "Vielecke klemmen den Kreis ein" : "Aus dem Kreis wird ein Rechteck") + '</h3></div><div class="anim" id="anim"></div></section>';
+      h += '<section class="block"><div class="block-title"><span class="eyebrow">Animation</span><h3>' + (c.animTitle || (c.anim === "polygon" ? "Vielecke klemmen den Kreis ein" : "Aus dem Kreis wird ein Rechteck")) + '</h3></div><div class="anim" id="anim"></div></section>';
     }
     if (c.steps) {
       var shown = state.step[id] || 1;
@@ -527,7 +640,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     }
     if (c.video) {
       h += '<section class="block"><div class="block-title"><span class="eyebrow">Lernvideo</span><h3>Noch einmal erklärt bekommen</h3></div>' +
-           '<a class="video" href="' + c.video.url + '" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span><span class="video-text"><strong>' + c.video.title + '</strong><span class="hint">Öffnet YouTube in einem neuen Tab</span></span></a></section>';
+           '<a class="video" href="' + c.video.url + '" target="_blank" rel="noopener"><span class="play" aria-hidden="true"></span><span class="video-text"><strong>' + c.video.title + '</strong><span class="hint">Öffnet sich in einem neuen Tab</span></span></a></section>';
     }
     if (c.quiz) {
       h += '<section class="block"><div class="block-title"><span class="eyebrow">' + (id === 0 ? "Selbsttest" : "Kernfragen") + '</span><h3>' + (id === 0 ? "Hast du das Werkzeug parat?" : "Hast du die Idee der Herleitung verstanden?") + '</h3></div><div class="quiz" id="quiz">';
@@ -553,7 +666,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       h += '<section class="block"><div class="block-title"><span class="eyebrow">Lernprotokoll</span><h3>Wende an, was du gelernt hast</h3></div><ol class="proto" id="proto">';
       c.protocol.forEach(function (tk, ti) {
         var key = id + "-" + ti, st = state.proto[key], tid = "p" + id + "-" + ti;
-        h += '<li class="task' + (st === "ok" ? " ok" : "") + '" data-t="' + ti + '"><span class="task-kind">' + (ti + 1) + ' · ' + tk.kind + '</span><p>' + tk.q + '</p>';
+        h += '<li class="task' + (st === "ok" ? " ok" : "") + '" data-t="' + ti + '"><span class="task-kind">' + (ti + 1) + ' · ' + tk.kind + '</span><p>' + tk.q + (tk.round !== undefined ? ' <strong class="round">' + roundText(tk.round) + '</strong>' : '') + '</p>';
         if (tk.text) {
           h += '<label class="hint" for="' + tid + '">Deine Begründung:</label><textarea id="' + tid + '" data-note="' + tid + '">' + escapeHtml(state.notes[tid] || "") + '</textarea>' +
                '<div><button class="btn ghost" data-sol="' + ti + '"' + (st ? " hidden" : "") + '>Mit Musterlösung vergleichen</button></div>';
@@ -564,7 +677,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
         }
         h += '<div class="solution" id="psol' + id + '-' + ti + '"' + (st ? "" : " hidden") + '>' + tk.sol + '</div></li>';
       });
-      h += '</ol><div class="reflect">' +
+      h += '</ol><p class="hint">Rechne mit der π-Taste deines Taschenrechners und runde erst das Endergebnis.</p><div class="reflect">' +
            '<label for="r' + id + '-easy">Leicht gefallen ist mir:<textarea id="r' + id + '-easy" data-note="r' + id + '-easy">' + escapeHtml(state.notes["r" + id + "-easy"] || "") + '</textarea></label>' +
            '<label for="r' + id + '-help">Hilfe brauche ich bei:<textarea id="r' + id + '-help" data-note="r' + id + '-help">' + escapeHtml(state.notes["r" + id + "-help"] || "") + '</textarea></label>' +
            '</div></section>';
@@ -576,6 +689,9 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     bindGoals();
     if (c.anim === "polygon") stopAnim = mountPolygon(document.getElementById("anim"));
     if (c.anim === "sectors") stopAnim = mountSectors(document.getElementById("anim"));
+    if (c.anim === "sector") stopAnim = mountSector(document.getElementById("anim"));
+    if (c.anim === "cylnet") stopAnim = mountCylNet(document.getElementById("anim"));
+    if (c.anim === "prism") stopAnim = mountPrism(document.getElementById("anim"));
     bindSteps(id, c);
     bindQuiz(id, c);
     bindProtocol(id, c);
@@ -637,6 +753,10 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     });
   }
 
+  function roundText(r) {
+    if (r === "volle") return "Gib die Anzahl der vollen Umdrehungen an.";
+    return ["Runde auf ganze Zahlen.", "Runde auf eine Nachkommastelle.", "Runde auf zwei Nachkommastellen."][r];
+  }
   function parseNum(v) { return parseFloat(String(v).replace(/\s/g, "").replace(",", ".").replace(/[^0-9.\-]/g, "")); }
   function bindProtocol(id, c) {
     var box = document.getElementById("proto");
@@ -974,6 +1094,191 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     wr.ro.observe(host);
     draw();
     return function () { cancelAnimationFrame(raf); wr.stop(); };
+  }
+
+  /* ---------- Animation Station 3: Kreisausschnitt ---------- */
+  function mountSector(host) {
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-sector" aria-label="Kreisausschnitt mit veränderbarem Winkel und Radius"></canvas></div>' +
+      '<div class="controls">' +
+      '<label for="al-range">Winkel α = <strong class="formula" id="al-val">90°</strong><input type="range" id="al-range" min="0" max="360" step="5" value="90"></label>' +
+      '<label for="rs-range">Radius r = <strong class="formula" id="rs-val">3</strong> cm<input type="range" id="rs-range" min="1" max="5" step="1" value="3"></label></div>' +
+      '<div class="readout"><table><thead><tr><th>Größe</th><th>Wert</th></tr></thead><tbody>' +
+      '<tr><td>Anteil α/360°</td><td id="s-part"></td></tr><tr><td>Bogenlänge b</td><td id="s-b"></td></tr><tr><td>Flächeninhalt A</td><td id="s-a"></td></tr></tbody></table></div>' +
+      '<p class="hint">Stelle 90°, 180° und 270° ein: Welchen Anteil des Kreises siehst du? Bogen und Fläche wachsen im gleichen Verhältnis wie der Winkel.</p>';
+    var cv = document.getElementById("cv-sector"), aR = document.getElementById("al-range"), rR = document.getElementById("rs-range");
+    function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+    function draw() {
+      var s = setupCanvas(cv, 280), ctx = s.ctx;
+      var al = +aR.value, r = +rR.value;
+      var g = gcd(al, 360) || 360;
+      document.getElementById("al-val").textContent = al + "°";
+      document.getElementById("rs-val").textContent = r;
+      document.getElementById("s-part").textContent = (al === 0 ? "0" : al === 360 ? "1" : (al / g) + "/" + (360 / g)) + " ≈ " + fmt(al / 360, 3);
+      document.getElementById("s-b").textContent = fmt(al / 360 * 2 * Math.PI * r, 2) + " cm";
+      document.getElementById("s-a").textContent = fmt(al / 360 * Math.PI * r * r, 2) + " cm²";
+      ctx.clearRect(0, 0, s.w, s.h);
+      var cx = s.w / 2, cy = s.h / 2, Rmax = Math.min(s.h * 0.42, s.w * 0.4), R = Rmax * r / 5;
+      var a0 = -Math.PI / 2, a1 = a0 + al / 180 * Math.PI;
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI); ctx.strokeStyle = col("--line"); ctx.lineWidth = 2; ctx.stroke();
+      if (al > 0) {
+        ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, R, a0, a1); ctx.closePath();
+        ctx.fillStyle = col("--accent-soft"); ctx.fill(); ctx.strokeStyle = col("--accent"); ctx.lineWidth = 2; ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, R, a0, a1); ctx.strokeStyle = col("--mark"); ctx.lineWidth = 5; ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, Math.min(26, R * 0.35), a0, a1); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+        var am = (a0 + a1) / 2, lr = Math.min(26, R * 0.35) + 16;
+        ctx.fillStyle = col("--ink"); ctx.font = "600 13px " + col("--font-mono"); ctx.textAlign = "center";
+        ctx.fillText("α", cx + lr * Math.cos(am), cy + lr * Math.sin(am) + 4);
+        ctx.fillStyle = col("--mark");
+        ctx.fillText("b", cx + (R + 16) * Math.cos(am), cy + (R + 16) * Math.sin(am) + 4);
+      }
+      ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-mono"); ctx.textAlign = "left";
+      ctx.fillText("r", cx - 14, cy - R / 2);
+      ctx.beginPath(); ctx.arc(cx, cy, 3, 0, 2 * Math.PI); ctx.fillStyle = col("--ink"); ctx.fill();
+    }
+    aR.addEventListener("input", draw); rR.addEventListener("input", draw);
+    var w = watchRedraw(draw); w.ro.observe(host); draw();
+    return function () { w.stop(); };
+  }
+
+  /* ---------- Animation Station 4: Zylinder abwickeln ---------- */
+  function mountCylNet(host) {
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-cyl" aria-label="Ein Zylinder wird zu seinem Netz abgewickelt"></canvas></div>' +
+      '<div class="controls"><label for="cy-t">Abwickeln<input type="range" id="cy-t" min="0" max="100" value="0"></label><button class="btn" id="cy-play">Abspielen</button></div>' +
+      '<p class="hint">Der Mantel wird an der Vorderkante festgehalten und rollt nach beiden Seiten ab. Achte darauf, wie lang die lange Rechteckseite am Ende ist.</p>';
+    var cv = document.getElementById("cv-cyl"), tR = document.getElementById("cy-t"), raf = 0;
+    var R = 1, H = 1.7, N = 72;
+    function ease(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+    function draw() {
+      var s = setupCanvas(cv, 360), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var t = ease(+tR.value / 100), tm = Math.min(1, t / 0.75), tc = Math.max(0, (t - 0.55) / 0.45);
+      // Mantel als Streifen; Querschnitt: Kreisbogen mit wachsendem Krümmungsradius
+      var rho = tm < 0.999 ? R / (1 - tm) : 1e9;
+      var pts = [];
+      for (var i = 0; i <= N; i++) {
+        var sArc = -Math.PI * R + 2 * Math.PI * R * i / N, beta = sArc / rho;
+        pts.push(rho > 1e8 ? [sArc, 0] : [rho * Math.sin(beta), rho * (1 - Math.cos(beta))]);
+      }
+      // Maßstab passt sich an: erst großer Zylinder, am Ende das ganze Netz
+      var sinPsi = Math.sin(tc * Math.PI / 2), minX = 1e9, maxX = -1e9, maxZ = 0;
+      pts.forEach(function (p) { var x = p[0] + 0.42 * p[1]; minX = Math.min(minX, x, -R); maxX = Math.max(maxX, x, R + 0.84 * R * (1 - sinPsi)); maxZ = Math.max(maxZ, p[1]); });
+      var yMin = -2 * R * sinPsi, yMax = H + Math.max(2 * R * sinPsi, 0.3 * Math.max(maxZ, 2 * R * (1 - sinPsi)));
+      var k = Math.min((s.w - 48) / (maxX - minX), (s.h - 56) / (yMax - yMin), 130);
+      var cx = s.w / 2 - (minX + maxX) / 2 * k, base = s.h / 2 + (yMin + yMax) / 2 * k - 6;
+      function P(x, y, z) { return [cx + (x + 0.42 * z) * k, base - (y + 0.3 * z) * k]; }
+      var strips = [];
+      for (var j = 0; j < N; j++) strips.push({ j: j, z: (pts[j][1] + pts[j + 1][1]) / 2 });
+      strips.sort(function (a, b) { return b.z - a.z; });
+      function disc(top) {
+        var psi = tc * Math.PI / 2, out = [];
+        for (var a = 0; a <= 48; a++) {
+          var ang = 2 * Math.PI * a / 48, x = R * Math.cos(ang), dd = R + R * Math.sin(ang);
+          out.push(top ? P(x, H + dd * Math.sin(psi), dd * Math.cos(psi)) : P(x, -dd * Math.sin(psi), dd * Math.cos(psi)));
+        }
+        ctx.beginPath(); out.forEach(function (p, q) { q ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }); ctx.closePath();
+        ctx.fillStyle = col("--sector2"); ctx.fill(); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      }
+      disc(false);
+      strips.forEach(function (st) {
+        var a = pts[st.j], b = pts[st.j + 1];
+        var p1 = P(a[0], 0, a[1]), p2 = P(b[0], 0, b[1]), p3 = P(b[0], H, b[1]), p4 = P(a[0], H, a[1]);
+        ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.lineTo(p3[0], p3[1]); ctx.lineTo(p4[0], p4[1]); ctx.closePath();
+        ctx.globalAlpha = 0.55 + 0.45 * (1 - Math.min(1, st.z / (2 * R)));
+        ctx.fillStyle = col("--accent"); ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = col("--accent"); ctx.lineWidth = 0.6; ctx.stroke();
+      });
+      // Kanten des Mantels
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5;
+      [0, H].forEach(function (y) { ctx.beginPath(); pts.forEach(function (p, q) { var pp = P(p[0], y, p[1]); q ? ctx.lineTo(pp[0], pp[1]) : ctx.moveTo(pp[0], pp[1]); }); ctx.stroke(); });
+      disc(true);
+      if (t > 0.98) {
+        var L = P(-Math.PI * R, 0, 0), Rt = P(Math.PI * R, 0, 0), T = P(Math.PI * R, H, 0);
+        ctx.fillStyle = col("--surface"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "center";
+        ctx.fillText("M = 2πr · h", (L[0] + Rt[0]) / 2 + R * k * 1.6, (L[1] + T[1]) / 2 + 5);
+        ctx.fillStyle = col("--mark"); ctx.textAlign = "left";
+        ctx.fillText("u = 2πr", L[0], L[1] + 18);
+        ctx.fillText("h", Rt[0] + 6, (Rt[1] + T[1]) / 2 + 5);
+        var c1 = P(0, H + R, 0), c2 = P(0, -R, 0);
+        ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5;
+        [c1, c2].forEach(function (c) { ctx.beginPath(); ctx.moveTo(c[0], c[1]); ctx.lineTo(c[0] + R * k, c[1]); ctx.stroke(); ctx.fillStyle = col("--ink"); ctx.fillText("r", c[0] + R * k / 2 - 4, c[1] - 5); });
+      }
+    }
+    tR.addEventListener("input", function () { cancelAnimationFrame(raf); draw(); });
+    document.getElementById("cy-play").addEventListener("click", function () {
+      cancelAnimationFrame(raf);
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { tR.value = 100; draw(); return; }
+      var from = +tR.value >= 100 ? 0 : +tR.value, start = null;
+      function frame(ts) { if (!start) start = ts; var v = Math.min(100, from + (ts - start) / 35); tR.value = v; draw(); if (v < 100) raf = requestAnimationFrame(frame); }
+      raf = requestAnimationFrame(frame);
+    });
+    var w = watchRedraw(draw); w.ro.observe(host); draw();
+    return function () { cancelAnimationFrame(raf); w.stop(); };
+  }
+
+  /* ---------- Animation Station 5: n-Eck-Prisma im Zylinder ---------- */
+  function mountPrism(host) {
+    var NS = [3, 4, 5, 6, 8, 12, 16, 24, 48, 96];
+    host.innerHTML =
+      '<div class="canvas-box"><canvas id="cv-prism" aria-label="Prisma mit regelmäßigem n-Eck als Grundfläche im Zylinder"></canvas></div>' +
+      '<div class="controls"><label for="pn-range">Ecken n = <strong class="formula" id="pn-val">6</strong><input type="range" id="pn-range" min="0" max="' + (NS.length - 1) + '" value="3"></label></div>' +
+      '<div class="readout"><table><thead><tr><th>r = 1, h = 2</th><th>Grundfläche G</th><th>Volumen V = G · h</th></tr></thead><tbody>' +
+      '<tr><td>n-Eck-Prisma</td><td id="pg"></td><td id="pv"></td></tr>' +
+      '<tr class="pi-row"><td>Zylinder</td><td>π ≈ 3,14159</td><td>2π ≈ 6,28319</td></tr></tbody></table></div>' +
+      '<p class="hint">Das gestrichelte Gerüst ist der Zylinder. Erhöhe die Eckenzahl: Das Prisma füllt ihn immer besser aus.</p>';
+    var cv = document.getElementById("cv-prism"), nR = document.getElementById("pn-range");
+    var R = 1, H = 2;
+    function draw() {
+      var s = setupCanvas(cv, 320), ctx = s.ctx;
+      var n = NS[+nR.value];
+      var G = n / 2 * Math.sin(2 * Math.PI / n);
+      document.getElementById("pn-val").textContent = n;
+      document.getElementById("pg").textContent = fmt(G, 5);
+      document.getElementById("pv").textContent = fmt(G * H, 5);
+      ctx.clearRect(0, 0, s.w, s.h);
+      var k = Math.min((s.w - 40) / 2.8, (s.h - 40) / (H + 0.8));
+      var cx = s.w / 2, base = s.h - 20 - 0.35 * R * k;
+      function P(x, y, z) { return [cx + x * k, base - y * k - z * 0.35 * k]; }
+      // Zylinder-Gerüst hinten
+      function ellipse(y, dash) {
+        ctx.setLineDash(dash ? [5, 5] : []); ctx.beginPath();
+        for (var a = 0; a <= 64; a++) { var an = 2 * Math.PI * a / 64, p = P(R * Math.cos(an), y, R * Math.sin(an)); a ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }
+        ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.2; ctx.stroke(); ctx.setLineDash([]);
+      }
+      ellipse(0, true);
+      // Seitenflächen des Prismas, hintere zuerst
+      var faces = [];
+      for (var i = 0; i < n; i++) {
+        var a0 = 2 * Math.PI * i / n + Math.PI / 2, a1 = 2 * Math.PI * (i + 1) / n + Math.PI / 2;
+        faces.push({ a0: a0, a1: a1, z: (Math.sin(a0) + Math.sin(a1)) / 2 });
+      }
+      faces.sort(function (a, b) { return b.z - a.z; });
+      faces.forEach(function (f) {
+        var p1 = P(Math.cos(f.a0), 0, Math.sin(f.a0)), p2 = P(Math.cos(f.a1), 0, Math.sin(f.a1)), p3 = P(Math.cos(f.a1), H, Math.sin(f.a1)), p4 = P(Math.cos(f.a0), H, Math.sin(f.a0));
+        ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.lineTo(p3[0], p3[1]); ctx.lineTo(p4[0], p4[1]); ctx.closePath();
+        var front = (1 - f.z) / 2, side = Math.abs(Math.cos((f.a0 + f.a1) / 2));
+        ctx.globalAlpha = 0.35 + 0.45 * front * (1 - 0.4 * side);
+        ctx.fillStyle = col("--accent"); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.strokeStyle = col("--accent"); ctx.lineWidth = n > 24 ? 0.5 : 1.2; ctx.stroke();
+      });
+      // Deckfläche
+      ctx.beginPath();
+      for (var j = 0; j <= n; j++) { var an = 2 * Math.PI * j / n + Math.PI / 2, p = P(Math.cos(an), H, Math.sin(an)); j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }
+      ctx.closePath(); ctx.fillStyle = col("--sector2"); ctx.fill(); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5; ctx.stroke();
+      ellipse(H, true);
+      // Seitenlinien des Zylinders
+      ctx.setLineDash([5, 5]); ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.2;
+      [-1, 1].forEach(function (x) { var a = P(x, 0, 0), b = P(x, H, 0); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); });
+      ctx.setLineDash([]);
+      var hp = P(-R, 0, 0), ht = P(-R, H, 0);
+      ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "right";
+      ctx.fillText("h", hp[0] - 8, (hp[1] + ht[1]) / 2);
+    }
+    nR.addEventListener("input", draw);
+    var w = watchRedraw(draw); w.ro.observe(host); draw();
+    return function () { w.stop(); };
   }
 
   /* ---------- Start ---------- */

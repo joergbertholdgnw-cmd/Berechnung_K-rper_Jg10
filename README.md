@@ -13,7 +13,10 @@ Der Fortschritt wird nur im Browser der Schülerin oder des Schülers gespeicher
 | 0 | Startcheck | fertig |
 | 1 | Kreisumfang und π (mit Messreihe und Lernprotokoll) | fertig |
 | 2 | Flächeninhalt des Kreises (mit Lernprotokoll) | fertig |
-| 3–10 | Kreisausschnitt, Zylinder, Pyramide/Kegel, Kugel, zusammengesetzte Körper | Ziele hinterlegt, Inhalte folgen |
+| 3 | Kreisausschnitt und Kreisbogen | fertig |
+| 4 | Zylinder: Netz und Oberfläche | fertig |
+| 5 | Zylinder: Volumen | fertig |
+| 6–10 | Pyramide/Kegel, Kugel, zusammengesetzte Körper | Ziele hinterlegt, Inhalte folgen |
 
 Der vollständige Lernweg steht in [docs/lernweg.md](docs/lernweg.md).
 
