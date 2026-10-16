@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kreis und Körper: Einführung</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+
+/* Layout: Kopf mit Lernweg-Karte (Linienplan nach Themen), darunter eine Station im Lesespalten-Format auf Karopapier */
+:root {
+  --paper: #F2F5F8;
+  --surface: #FFFFFF;
+  --ink: #15233A;
+  --muted: #56677A;
+  --line: #D2DBE3;
+  --accent: #1D6A8C;
+  --accent-soft: #DCEBF2;
+  --sector2: #9CC6D9;
+  --mark: #C8711C;
+  --mark-soft: #F8E6D2;
+  --ok: #2B7A4B;
+  --ok-soft: #DDF0E4;
+  --bad: #B23E2C;
+  --bad-soft: #F6DFDA;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E161F; --surface: #16212C; --ink: #E5ECF2; --muted: #93A4B5; --line: #2A3847;
+    --accent: #5DB2D5; --accent-soft: #19323F; --sector2: #2E5D72; --mark: #F0A04A; --mark-soft: #3A2A18;
+    --ok: #5CBF88; --ok-soft: #173326; --bad: #E77B69; --bad-soft: #3B1F1A; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E161F; --surface: #16212C; --ink: #E5ECF2; --muted: #93A4B5; --line: #2A3847;
+  --accent: #5DB2D5; --accent-soft: #19323F; --sector2: #2E5D72; --mark: #F0A04A; --mark-soft: #3A2A18;
+  --ok: #5CBF88; --ok-soft: #173326; --bad: #E77B69; --bad-soft: #3B1F1A; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 28px 64px;
+  display: grid;
+  gap: 28px;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.15; margin: 0; }
+h1 { font-size: clamp(1.9rem, 4.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 1.55rem; font-weight: 700; }
+h3 { font-size: 1.15rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); }
+button { font: inherit; }
+:focus-visible { outline: 3px solid var(--mark); outline-offset: 2px; border-radius: 4px; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.formula { font-family: var(--font-mono); font-weight: 500; white-space: nowrap; }
+
+
+/* Einführungsseite */
+.top { display: grid; gap: 10px; }
+.lead { color: var(--muted); max-width: 64ch; }
+.hero { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 14px; }
+.hero svg { width: 100%; max-width: 620px; height: auto; justify-self: center; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 410px), 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.pic { background: var(--paper); border-bottom: 1px solid var(--line); padding: 10px 12px 4px; }
+.pic svg { display: block; width: 100%; height: auto; max-height: 230px; }
+.card-body { padding: 16px 20px 20px; display: grid; gap: 10px; align-content: start; }
+.card-body .tag { color: var(--accent); }
+.think { background: var(--mark-soft); border-left: 4px solid var(--mark); border-radius: 8px; padding: 10px 14px; display: grid; gap: 4px; }
+.think .eyebrow { color: var(--mark); }
+.go { justify-self: start; font-weight: 600; text-decoration: none; padding: 4px 0; }
+.go:hover { text-decoration: underline; }
+.section { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 14px; }
+.jobs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 10px; }
+.jobs li { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; display: grid; gap: 2px; }
+.jobs b { font-family: var(--font-display); font-weight: 600; }
+.jobs span { color: var(--muted); font-size: 0.95rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: var(--surface); border-radius: 8px; padding: 10px 18px; font-weight: 600; text-decoration: none; display: inline-block; }
+.foot { color: var(--muted); font-size: 0.9rem; }
+/* Bildfarben (folgen Hell/Dunkel) */
+svg .ln { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+svg .thick { stroke-width: 3.5; }
+svg .thin { stroke-width: 1.2; }
+svg .hair { stroke-width: 1; stroke: var(--muted); opacity: .7; }
+svg .ring { opacity: .9; }
+svg .frame { stroke: var(--accent); stroke-width: 4.5; }
+svg .ground { stroke: var(--muted); stroke-width: 1.5; }
+svg .mk { stroke: var(--mark); stroke-width: 2.5; }
+svg .dash { stroke-dasharray: 6 5; }
+svg .ar { stroke: var(--ink); stroke-width: 1.5; fill: none; }
+svg .ar.mk { stroke: var(--mark); }
+svg .hl { stroke: var(--surface); stroke-width: 4; opacity: .55; }
+svg .hl2 { stroke: var(--accent); stroke-width: 3; opacity: .7; }
+svg .f-acc { fill: var(--accent); }
+svg .f-soft { fill: var(--accent-soft); }
+svg .f-s2 { fill: var(--sector2); }
+svg .f-mark { fill: var(--mark); }
+svg .f-marks { fill: var(--mark-soft); }
+svg .f-surf { fill: var(--surface); }
+svg .f-ink { fill: var(--ink); }
+svg .f-mk { fill: var(--mark); }
+svg .sand-d { fill: color-mix(in srgb, var(--mark) 45%, var(--mark-soft)); }
+svg .crust { fill: color-mix(in srgb, var(--mark) 55%, var(--mark-soft)); stroke: var(--ink); stroke-width: 1.5; }
+svg .slice { filter: drop-shadow(0 2px 2px rgba(0,0,0,.18)); }
+svg .cheese { fill: color-mix(in srgb, #F2C94C 70%, var(--mark-soft)); }
+svg .salami { fill: var(--bad); opacity: .85; }
+svg .bark { fill: color-mix(in srgb, var(--mark) 35%, var(--muted)); }
+svg .wood { fill: color-mix(in srgb, var(--mark) 30%, var(--mark-soft)); }
+svg .waffle { fill: color-mix(in srgb, var(--mark) 50%, var(--mark-soft)); }
+svg .scoop { fill: color-mix(in srgb, var(--bad) 30%, var(--surface)); }
+svg .land { fill: color-mix(in srgb, var(--ok) 55%, var(--accent-soft)); }
+svg .bubble { fill: color-mix(in srgb, var(--accent) 12%, transparent); stroke: var(--accent); stroke-width: 2; }
+svg .lbl { font-family: var(--font-mono); font-size: 13px; fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; }
+svg .lbl.big { font-family: var(--font-display); font-size: 34px; font-weight: 700; fill: var(--mark); }
+svg .mk-t { fill: var(--mark); font-weight: 500; }
+svg .halo { paint-order: stroke; stroke: var(--accent-soft); stroke-width: 4px; }
+@media (max-width: 560px) { .card-body, .section, .hero { padding: 16px; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Mathematik · Jahrgang 10 · Einführung</span>
+    <h1>Wozu Kreise und Körper?</h1>
+    <p class="lead">Runde und spitze Formen begegnen dir jeden Tag: im Fahrradreifen, in der Pizza, in der Getränkedose und in der Eistüte. Wer ihren Umfang, ihre Fläche oder ihr Volumen berechnen kann, kann Preise vergleichen, Material sparen und Mengen planen.</p>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <svg viewBox="0 0 540 130" role="img" aria-label="Kreis, Zylinder, Pyramide, Kegel und Kugel nebeneinander"><circle class="f-soft ln" cx="60" cy="70" r="40"/><line class="ln mk" x1="60" y1="70" x2="100" y2="70"/><path class="f-s2 ln" d="M140,40 L140,104 A26,8 0 0 0 192,104 L192,40"/><ellipse class="f-soft ln" cx="166" cy="40" rx="26" ry="8"/><polygon class="f-marks ln" points="226,110 268,118 252,30"/><polygon class="sand-d ln" points="268,118 302,104 252,30"/><path class="f-mark ln" d="M332,104 L366,30 L400,104 A34,9 0 0 1 332,104 Z" opacity=".9"/><path class="ln" d="M332,104 A34,9 0 0 1 400,104" fill="none"/><circle class="f-soft ln" cx="470" cy="72" r="40"/><ellipse class="ln hair" cx="470" cy="72" rx="40" ry="11"/><line class="ln ground" x1="10" y1="122" x2="530" y2="122"/></svg>
+    <h2 id="hero-title">Fünf Formen, viele Anwendungen</h2>
+    <p>Kreis, Zylinder, Pyramide, Kegel und Kugel: Mehr brauchst du nicht, um die Beispiele unten zu verstehen. Lies die Beispiele und überlege bei jeder Frage kurz, wie du sie lösen würdest. Du musst sie jetzt noch nicht beantworten können. An der genannten Station lernst du, wie es geht.</p>
+  </section>
+
+  <section class="cards" aria-label="Anwendungen">
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Fahrrad; am Vorderrad ist der Durchmesser von etwa 71 Zentimetern eingezeichnet, darunter die Strecke einer Umdrehung"><circle class="ln thick" cx="78" cy="124" r="46"/><circle class="ln thin" cx="78" cy="124" r="40"/><line class="ln hair" x1="78" y1="124" x2="118.0" y2="124.0"/><line class="ln hair" x1="78" y1="124" x2="112.6" y2="104.0"/><line class="ln hair" x1="78" y1="124" x2="98.0" y2="89.4"/><line class="ln hair" x1="78" y1="124" x2="78.0" y2="84.0"/><line class="ln hair" x1="78" y1="124" x2="58.0" y2="89.4"/><line class="ln hair" x1="78" y1="124" x2="43.4" y2="104.0"/><line class="ln hair" x1="78" y1="124" x2="38.0" y2="124.0"/><line class="ln hair" x1="78" y1="124" x2="43.4" y2="144.0"/><line class="ln hair" x1="78" y1="124" x2="58.0" y2="158.6"/><line class="ln hair" x1="78" y1="124" x2="78.0" y2="164.0"/><line class="ln hair" x1="78" y1="124" x2="98.0" y2="158.6"/><line class="ln hair" x1="78" y1="124" x2="112.6" y2="144.0"/><circle class="ln thick" cx="240" cy="124" r="46"/><circle class="ln thin" cx="240" cy="124" r="40"/><line class="ln hair" x1="240" y1="124" x2="280.0" y2="124.0"/><line class="ln hair" x1="240" y1="124" x2="274.6" y2="104.0"/><line class="ln hair" x1="240" y1="124" x2="260.0" y2="89.4"/><line class="ln hair" x1="240" y1="124" x2="240.0" y2="84.0"/><line class="ln hair" x1="240" y1="124" x2="220.0" y2="89.4"/><line class="ln hair" x1="240" y1="124" x2="205.4" y2="104.0"/><line class="ln hair" x1="240" y1="124" x2="200.0" y2="124.0"/><line class="ln hair" x1="240" y1="124" x2="205.4" y2="144.0"/><line class="ln hair" x1="240" y1="124" x2="220.0" y2="158.6"/><line class="ln hair" x1="240" y1="124" x2="240.0" y2="164.0"/><line class="ln hair" x1="240" y1="124" x2="260.0" y2="158.6"/><line class="ln hair" x1="240" y1="124" x2="274.6" y2="144.0"/><path class="ln frame" d="M78,124 L150,126 L130,70 Z M130,70 L214,70 L150,126 M214,70 L240,124"/><path class="ln thick" d="M214,70 L208,54 L226,50"/><path class="ln thick" d="M118,66 L142,66"/><circle class="f-acc" cx="150" cy="126" r="6"/><line class="ln mk" x1="194" y1="124" x2="286" y2="124"/><text class="lbl mk-t" x="252" y="74" text-anchor="middle">d ≈ 71 cm</text><line class="ln ground" x1="10" y1="170" x2="310" y2="170"/><line class="ar mk" x1="78" y1="186" x2="300" y2="186"/><path class="ar mk head" d="M85,182 L78,186 L85,190"/><path class="ar mk head" d="M293,182 L300,186 L293,190"/><text class="lbl" x="189" y="182" text-anchor="middle" dy="-2">1 Umdrehung = u</text></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Station 1 · Kreisumfang</span>
+        <h3>Wie weit fährt das Fahrrad?</h3>
+        <p>Ein Fahrradcomputer zählt nur, wie oft sich das Rad dreht. Damit er Strecke und Tempo anzeigen kann, musst du einmal eingeben, wie weit das Rad bei einer Umdrehung rollt. Das ist genau der Umfang des Reifens.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Ein 28-Zoll-Reifen ist etwa 71 cm hoch. Rollt er bei einer Umdrehung eher 1,40 m, 2,20 m oder 3,00 m weit?</p></div>
+        <a class="go" href="index.html#s1">Zur Station 1 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Eine große Pizza mit 30 Zentimetern Durchmesser, aus der ein Stück herausgezogen ist, neben zwei kleinen Pizzen mit 20 Zentimetern"><path class="crust" d="M88,96 L142.1,58.1 A66,66 0 1 0 153.0,107.5 Z"/><path class="cheese" d="M88,96 L136.3,62.2 A59,59 0 1 0 146.1,106.2 Z"/><path class="crust slice" d="M101.7,93.0 L166.7,104.4 A66,66 0 0 0 155.7,55.1 Z"/><path class="cheese" d="M101.7,93.0 L159.8,103.2 A59,59 0 0 0 150.0,59.1 Z"/><circle class="salami" cx="53.9" cy="108.4" r="7.3"/><circle class="salami" cx="62.5" cy="65.7" r="7.3"/><circle class="salami" cx="88.0" cy="119.1" r="7.3"/><circle class="salami" cx="108.5" cy="131.4" r="7.3"/><circle class="salami" cx="91.4" cy="76.5" r="7.3"/><circle class="salami" cx="64.9" cy="136.0" r="7.3"/><circle class="salami" cx="71.8" cy="93.1" r="7.3"/><circle class="salami" cx="140.3" cy="84.4" r="7.3"/><circle class="crust" cx="252" cy="50" r="44"/><circle class="cheese" cx="252" cy="50" r="38"/><circle class="salami" cx="271.1" cy="39.0" r="6.2"/><circle class="salami" cx="231.0" cy="37.9" r="6.2"/><circle class="salami" cx="252.0" cy="72.0" r="6.2"/><circle class="salami" cx="252.0" cy="50.0" r="6.2"/><circle class="crust" cx="252" cy="142" r="44"/><circle class="cheese" cx="252" cy="142" r="38"/><circle class="salami" cx="271.1" cy="131.0" r="6.2"/><circle class="salami" cx="231.0" cy="129.9" r="6.2"/><circle class="salami" cx="252.0" cy="164.0" r="6.2"/><circle class="salami" cx="252.0" cy="142.0" r="6.2"/><text class="lbl" x="88" y="194" text-anchor="middle">1 × 30 cm</text><text class="lbl" x="252" y="198" text-anchor="middle">2 × 20 cm</text><text class="lbl big" x="190" y="108" text-anchor="middle">?</text></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Stationen 2 und 3 · Kreisfläche und Kreisausschnitt</span>
+        <h3>Eine große Pizza oder zwei kleine?</h3>
+        <p>Auf der Speisekarte steht der Durchmesser, satt wirst du aber von der Fläche. Und wer ein Stück abschneidet, hat einen Kreisausschnitt auf dem Teller.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Bekommst du bei einer Pizza mit 30 cm Durchmesser mehr oder weniger als bei zwei Pizzen mit 20 cm?</p></div>
+        <a class="go" href="index.html#s2">Zur Station 2 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Getränkedose als Zylinder und daneben ihr Netz aus einem Rechteck und zwei Kreisen"><path class="f-s2 ln" d="M41,34 L41,168 A44,12 0 0 0 129,168 L129,34 Z"/><path class="f-mark" d="M41,82 L41,126 A44,12 0 0 0 129,126 L129,82 A44,12 0 0 1 41,82 Z" opacity=".85"/><ellipse class="f-soft ln" cx="85" cy="34" rx="44" ry="12"/><ellipse class="ln thin" cx="95" cy="34" rx="9" ry="3.5"/><path class="ln" d="M41,34 L41,168 A44,12 0 0 0 129,168 L129,34"/><line class="ln hl" x1="51" y1="52" x2="51" y2="162"/><rect class="f-s2 ln" x="178" y="64" width="113.1" height="72"/><circle class="f-soft ln" cx="234.5" cy="46" r="18"/><circle class="f-soft ln" cx="234.5" cy="154" r="18"/><text class="lbl" x="234.5" y="105.0" text-anchor="middle">u = 2πr</text><text class="lbl" x="297.1" y="105.0">h</text><path class="ln mk dash" d="M140,100 L168,100"/><path class="ln mk" d="M161,95 L168,100 L161,105"/></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Stationen 4 und 5 · Zylinder</span>
+        <h3>Wie viel Blech braucht eine Dose?</h3>
+        <p>Getränkedosen, Konservendosen und Regentonnen sind Zylinder. Hersteller wollen mit möglichst wenig Material möglichst viel verpacken. Dafür brauchen sie die Oberfläche und das Volumen.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Für 330 ml braucht eine Dose am wenigsten Blech, wenn sie so hoch wie breit ist. Warum sind echte Getränkedosen trotzdem schlanker?</p></div>
+        <a class="go" href="index.html#s4">Zur Station 4 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Liegender Baumstamm mit Jahresringen; der Durchmesser in der Mitte und die Länge sind markiert"><path class="bark ln" d="M62,66 L262,72 A14,32 0 0 1 262,136 L62,142 Z"/><path class="ln hair" d="M92,82 q40,-3 90,0 t80,2"/><path class="ln hair" d="M92,98 q40,-3 90,0 t80,2"/><path class="ln hair" d="M92,116 q40,3 90,0 t80,2"/><path class="ln hair" d="M92,130 q40,3 90,0 t80,2"/><ellipse class="wood ln" cx="62" cy="104" rx="16" ry="38"/><ellipse class="ln hair ring" cx="63" cy="104" rx="12.0" ry="28.5"/><ellipse class="ln hair ring" cx="63" cy="104" rx="8.0" ry="19.0"/><ellipse class="ln hair ring" cx="63" cy="104" rx="4.5" ry="10.6"/><line class="ln mk dash" x1="162.0" y1="67" x2="162.0" y2="141"/><text class="lbl mk-t" x="162.0" y="56" text-anchor="middle">d in der Mitte</text><line class="ar" x1="62" y1="164" x2="274" y2="164"/><path class="ar head" d="M69,160 L62,164 L69,168"/><path class="ar head" d="M267,160 L274,164 L267,168"/><text class="lbl" x="162.0" y="186" text-anchor="middle">Länge L</text><line class="ln ground" x1="10" y1="146" x2="310" y2="146" opacity="0"/></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Station 5 · Volumen des Zylinders</span>
+        <h3>Wie viel Holz steckt im Baumstamm?</h3>
+        <p>Im Wald misst man einen gefällten Stamm nur an zwei Stellen: die Länge und den Durchmesser in der Mitte. Daraus wird das Holzvolumen berechnet, als wäre der Stamm ein Zylinder. Danach richtet sich der Preis.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Warum misst man den Durchmesser in der Mitte des Stammes und nicht an einem Ende?</p></div>
+        <a class="go" href="index.html#s5">Zur Station 5 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Cheops-Pyramide in der Sonne; Höhe etwa 147 Meter und Grundkante etwa 230 Meter sind eingezeichnet"><circle class="f-mark" cx="276" cy="38" r="17" opacity=".85"/><polygon class="f-marks ln" points="34.0,164.0 170.0,182.0 150.0,46.0"/><polygon class="sand-d ln" points="170.0,182.0 284.0,158.0 150.0,46.0"/><polyline class="ln hair" points="57.2,140.4 166.0,154.8 257.2,135.6"/><polyline class="ln hair" points="80.4,116.8 162.0,127.6 230.4,113.2"/><polyline class="ln hair" points="103.6,93.2 158.0,100.4 203.6,90.8"/><polyline class="ln hair" points="126.8,69.6 154.0,73.2 176.8,68.4"/><line class="ln mk dash" x1="150" y1="46" x2="159.0" y2="170.0"/><text class="lbl mk-t" x="158" y="112">h ≈ 147 m</text><text class="lbl" x="88" y="194" text-anchor="middle">a ≈ 230 m</text><line class="ln ground" x1="6" y1="176" x2="34" y2="164"/><line class="ln ground" x1="284" y1="158" x2="314" y2="160"/></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Stationen 6 und 7 · Pyramide</span>
+        <h3>Wie viel Stein steckt in der Cheops-Pyramide?</h3>
+        <p>Die Cheops-Pyramide in Ägypten war ursprünglich etwa 147 m hoch, ihre quadratische Grundfläche ist etwa 230 m lang. Mit der Volumenformel kannst du abschätzen, wie viel Stein vor 4500 Jahren bewegt wurde.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Eine Pyramide und ein Quader haben die gleiche Grundfläche und die gleiche Höhe. Wie oft passt die Pyramide in den Quader?</p></div>
+        <a class="go" href="index.html#s7">Zur Station 7 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Eistüte mit einer Kugel Eis und ein Verkehrsleitkegel mit eingezeichneter Höhe und Radius"><polygon class="waffle ln" points="52,86 128,86 90,188"/><line class="ln hair" x1="58.3" y1="103.0" x2="64.7" y2="86"/><line class="ln hair" x1="121.7" y1="103.0" x2="115.3" y2="86"/><line class="ln hair" x1="64.7" y1="120.0" x2="77.3" y2="86"/><line class="ln hair" x1="115.3" y1="120.0" x2="102.7" y2="86"/><line class="ln hair" x1="71.0" y1="137.0" x2="90.0" y2="86"/><line class="ln hair" x1="109.0" y1="137.0" x2="90.0" y2="86"/><line class="ln hair" x1="77.3" y1="154.0" x2="102.7" y2="86"/><line class="ln hair" x1="102.7" y1="154.0" x2="77.3" y2="86"/><line class="ln hair" x1="83.7" y1="171.0" x2="115.3" y2="86"/><line class="ln hair" x1="96.3" y1="171.0" x2="64.7" y2="86"/><path class="scoop ln" d="M48,88 C40,58 62,34 90,34 C118,34 140,58 132,88 C120,82 112,92 102,86 C94,92 84,84 76,90 C66,84 58,92 48,88 Z"/><circle class="f-mark" cx="80" cy="54" r="3"/><circle class="f-mark" cx="104" cy="62" r="3"/><circle class="f-mark" cx="94" cy="46" r="3"/><polygon class="f-mark ln" points="240,46 206,170 274,170"/><polygon class="f-surf" points="229.0,86 251.0,86 255.9,104 224.1,104"/><polygon class="f-surf" points="218.6,124 261.4,124 266.3,142 213.7,142"/><polygon class="ln" points="240,46 206,170 274,170" fill="none"/><rect class="f-ink ln" x="192" y="170" width="96" height="10" rx="2"/><line class="ln mk dash" x1="240" y1="46" x2="240" y2="170"/><text class="lbl mk-t" x="282" y="112">h</text><text class="lbl mk-t" x="226" y="196" text-anchor="middle">r</text><line class="ln mk" x1="240" y1="186" x2="274" y2="186"/></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Stationen 6 und 7 · Kegel</span>
+        <h3>Eistüte und Leitkegel</h3>
+        <p>Eiswaffeln, Verkehrsleitkegel, Schultüten und Streusalzhalden haben Kegelform. Bei der Waffel zählt das Volumen, beim Leitkegel die Oberfläche, denn die wird lackiert und mit Folie beklebt.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Eine Eiswaffel ist bis zur halben Höhe gefüllt. Ist sie dann halb voll?</p></div>
+        <a class="go" href="index.html#s7">Zur Station 7 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Die Erde als Kugel mit eingezeichnetem Radius und daneben Seifenblasen"><circle class="f-soft ln" cx="98" cy="104" r="76"/><path class="land" d="M60,60 C78,48 96,58 92,74 C88,90 70,84 66,100 C62,116 48,108 44,92 C40,78 46,68 60,60 Z"/><path class="land" d="M112,96 C130,88 148,98 146,118 C144,140 128,156 116,150 C106,144 112,128 106,118 C100,108 104,100 112,96 Z"/><ellipse class="ln hair" cx="98" cy="104" rx="26.6" ry="76"/><ellipse class="ln hair" cx="98" cy="104" rx="54.7" ry="76"/><ellipse class="ln hair" cx="98" cy="66" rx="65.8" ry="10.5"/><ellipse class="ln hair" cx="98" cy="104" rx="76.0" ry="12.2"/><ellipse class="ln hair" cx="98" cy="142" rx="65.8" ry="10.5"/><circle class="ln" cx="98" cy="104" r="76" fill="none"/><line class="ln mk" x1="98" y1="104" x2="174" y2="104"/><circle class="f-mk" cx="98" cy="104" r="3.5"/><text class="lbl mk-t halo" x="136.0" y="96" text-anchor="middle">r</text><circle class="bubble" cx="250" cy="82" r="44"/><path class="ln hl2" d="M222,66 A32,32 0 0 1 246,48"/><circle class="bubble" cx="282" cy="160" r="16"/><circle class="bubble" cx="226" cy="156" r="9"/><text class="lbl" x="250" y="196" text-anchor="middle">Seifenblasen</text></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Stationen 8 und 9 · Kugel</span>
+        <h3>Warum ist eine Seifenblase rund?</h3>
+        <p>Die Haut einer Seifenblase zieht sich so weit zusammen, wie es geht. Die Kugel ist die Form, die ein bestimmtes Volumen mit der kleinsten Oberfläche umschließt. Auch Planeten, Wassertropfen und Bälle sind (fast) Kugeln.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Die Erde hat einen Radius von etwa 6371 km. Wie könnte man ihre Oberfläche berechnen, ohne sie abzumessen?</p></div>
+        <a class="go" href="index.html#s8">Zur Station 8 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+    <article class="card">
+      <div class="pic"><svg viewBox="0 0 320 200" role="img" aria-label="Liegender Gastank aus Zylinder und zwei Halbkugeln und ein Getreidesilo aus Zylinder mit Kegeldach; die Trennlinien der Teilkörper sind gestrichelt"><path class="f-soft ln" d="M50,84 L150,84 A32,32 0 0 1 150,148 L50,148 A32,32 0 0 1 50,84 Z"/><line class="ln mk dash" x1="50" y1="84" x2="50" y2="148"/><line class="ln mk dash" x1="150" y1="84" x2="150" y2="148"/><path class="ln thick" d="M66,148 L58,170 M134,148 L142,170 M40,170 L80,170 M120,170 L160,170"/><rect class="f-acc" x="94" y="74" width="12" height="10" rx="2"/><text class="lbl" x="100" y="194" text-anchor="middle">Gastank</text><path class="f-s2 ln" d="M220,74 L220,170 A36,9 0 0 0 292,170 L292,74"/><polygon class="f-mark ln" points="214,76 298,76 256,30"/><line class="ln mk dash" x1="220" y1="76" x2="292" y2="76"/><path class="ln hair" d="M220,98 A36,9 0 0 0 292,98 M220,122 A36,9 0 0 0 292,122 M220,146 A36,9 0 0 0 292,146"/><text class="lbl" x="256" y="196" text-anchor="middle">Silo</text></svg></div>
+      <div class="card-body">
+        <span class="eyebrow tag">Station 10 · Zusammengesetzte Körper</span>
+        <h3>Gastank und Getreidesilo</h3>
+        <p>Viele Behälter in Technik und Landwirtschaft sind aus einfachen Körpern zusammengesetzt. Ein Gastank besteht aus einem Zylinder und zwei Halbkugeln, ein Silo aus einem Zylinder mit Kegeldach. Wer die Teile berechnen kann, kann auch das Ganze berechnen.</p>
+        <div class="think"><span class="eyebrow">Denk mal nach</span><p>Aus welchen Teilkörpern besteht der Silo, und welche Flächen muss man für den Anstrich mitrechnen?</p></div>
+        <a class="go" href="index.html#s10">Zur Station 10 <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+  </section>
+
+  <section class="section" aria-labelledby="jobs-title">
+    <h2 id="jobs-title">Wer rechnet so etwas im Beruf?</h2>
+    <ul class="jobs"><li><b>Architektur</b><span>Kuppeln, runde Dächer und Glasflächen planen</span></li><li><b>Bauingenieurwesen</b><span>Beton für runde Säulen und Schächte berechnen</span></li><li><b>Maschinenbau</b><span>Der Hubraum eines Motors ist das Volumen seiner Zylinder</span></li><li><b>Verpackungsdesign</b><span>Dosen, Tuben und Flaschen mit wenig Material entwerfen</span></li><li><b>Landwirtschaft</b><span>Silos und Futtervorräte planen</span></li><li><b>Forstwirtschaft</b><span>Holzvolumen von Baumstämmen bestimmen</span></li></ul>
+  </section>
+
+  <section class="section cta" aria-labelledby="cta-title">
+    <div style="display:grid;gap:6px;max-width:60ch">
+      <h2 id="cta-title">Bereit?</h2>
+      <p>Such dir eine Frage von dieser Seite aus und schreib sie vorne in dein Lerntagebuch. Am Ende der vierten Doppelstunde kannst du sie beantworten.</p>
+    </div>
+    <a class="btn" href="index.html#s0">Zum Lernweg: Startcheck</a>
+  </section>
+
+  <footer class="foot">Alle Bilder auf dieser Seite sind schematische Zeichnungen. Die Maße sind gerundet.</footer>
+</div>
+</body>
+</html>
