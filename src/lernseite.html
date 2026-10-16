@@ -189,6 +189,23 @@ canvas { display: block; width: 100%; }
 .readout th:first-child, .readout td:first-child { text-align: left; }
 .readout th { font-family: var(--font-body); font-weight: 600; color: var(--muted); font-size: 0.85rem; }
 .pi-row td { color: var(--mark); font-weight: 500; }
+.readout td.empty { text-align: left; color: var(--muted); font-family: var(--font-body); white-space: normal; }
+h4.sub { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin: 8px 0 0; }
+.measure { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 16px; align-items: start; }
+@media (max-width: 720px) { .measure { grid-template-columns: minmax(0, 1fr); } }
+.question { display: grid; gap: 10px; }
+.solution p + p { margin-top: 6px; }
+
+/* Lernprotokoll */
+.proto { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.task { border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; background: var(--paper); min-width: 0; }
+.task.ok { border-color: var(--ok); }
+.task-kind { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.answer { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.answer input { font: inherit; font-family: var(--font-mono); width: 9rem; max-width: 100%; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); }
+.reflect { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.reflect label { display: grid; gap: 6px; font-weight: 600; }
+.reflect textarea { min-height: 80px; font-weight: 400; }
 
 /* Herleitung */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: step; }
@@ -352,11 +369,11 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     1: {
       anim: "polygon",
       steps: [
-        "<p><strong>Alle Kreise sind ähnlich.</strong> Vergrößerst du einen Kreis mit dem Faktor k, wird der Durchmesser k-mal so groß und der Umfang auch. Das Verhältnis u : d bleibt also bei jedem Kreis gleich.</p><p>Diese feste Zahl bekommt einen Namen: <span class=\"formula\">π = u : d</span>.</p>",
-        "<p><strong>Eine erste Eingrenzung.</strong> Das Sechseck im Kreis besteht aus 6 gleichseitigen Dreiecken mit Seitenlänge r. Sein Umfang ist 6r = 3d. Es ist kürzer als der Kreisumfang, also gilt π &gt; 3.</p><p>Das Quadrat um den Kreis hat den Umfang 4d. Es ist länger als der Kreisumfang, also gilt π &lt; 4.</p>",
+        "<p><strong>Alle Kreise sind ähnlich.</strong> Vergrößerst du einen Kreis mit dem Faktor k, wird der Durchmesser k-mal so groß und der Umfang auch. Das Verhältnis u : d bleibt also bei jedem Kreis gleich.</p><p>Das zeigt auch deine Messreihe: u ist proportional zu d. Diesen festen Proportionalitätsfaktor nennt man <span class=\"formula\">π = u : d</span>.</p><p>Für den Kreis mit d = 1 gilt deshalb: Sein Umfang ist genau π.</p>",
+        "<p><strong>Eine erste Eingrenzung am Kreis mit d = 1.</strong> Das Sechseck im Kreis besteht aus 6 gleichseitigen Dreiecken mit Seitenlänge r. Bei d = 1 ist r = 0,5, das Sechseck hat also den Umfang 6 · 0,5 = 3. Es ist kürzer als der Kreisumfang, also gilt π &gt; 3.</p><p>Das Quadrat um den Kreis hat die Seitenlänge 1 und den Umfang 4. Es ist länger als der Kreisumfang, also gilt π &lt; 4.</p>",
         "<p><strong>Mehr Ecken, engere Grenzen.</strong> Je mehr Ecken die Vielecke haben, desto enger liegen sie am Kreis. Stelle in der Animation n = 96 ein: Genau so weit ist Archimedes gekommen und fand 3,1408 &lt; π &lt; 3,1429.</p>",
         "<p><strong>Der Grenzprozess.</strong> Wächst n immer weiter, rücken der innere und der äußere Wert von beiden Seiten an dieselbe Zahl heran. Diese Zahl ist π = 3,14159… Sie lässt sich nicht als Bruch schreiben und hat unendlich viele Nachkommastellen ohne Muster.</p>",
-        "<p><strong>Die Formel.</strong> Aus π = u : d folgt durch Umstellen:</p><div class=\"result\">u = π · d = 2 · π · r</div>"
+        "<p><strong>Die Formel.</strong> Weil u proportional zu d ist, gilt für jeden Kreis u = π · d. Mit d = 2r folgt:</p><div class=\"result\">u = π · d = 2 · π · r</div>"
       ],
       video: { title: "Näherungsverfahren von Archimedes zur Bestimmung der Kreiszahl π", url: "https://www.youtube.com/watch?v=4c0s1A7I0pU" },
       quiz: [
@@ -369,6 +386,18 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
         { q: "Warum zeigt das Sechseck im Kreis, dass π größer als 3 ist?",
           opts: ["Weil ein Sechseck sechs Ecken hat.", "Weil sein Umfang 6r = 3d beträgt und kürzer ist als der Kreisumfang.", "Weil das Sechseck größer ist als der Kreis."], correct: 1,
           fb: ["Die Eckenzahl allein sagt nichts über die Länge.", "Genau: u_Sechseck = 3d &lt; u_Kreis, also ist u : d größer als 3.", "Das innere Sechseck liegt ganz im Kreis und ist kleiner."] }
+      ],
+      protocol: [
+        { kind: "Aufgabe", q: "Ein Kreis hat den Radius r = 4 cm. Berechne seinen Umfang.", ans: 25.13, tol: 0.06, unit: "cm",
+          hint: "Nutze u = 2 · π · r.", sol: "u = 2 · π · 4 cm = 8π cm ≈ 25,13 cm" },
+        { kind: "Umkehraufgabe", q: "Ein kreisrundes Beet hat einen Umfang von 15,7 m. Wie groß ist sein Durchmesser?", ans: 5.00, tol: 0.02, unit: "m",
+          hint: "Stelle u = π · d nach d um.", sol: "d = u : π = 15,7 m : π ≈ 5,00 m" },
+        { kind: "Vertiefung", q: "Ein Fahrradreifen hat einen Durchmesser von 70 cm. Wie viele volle Umdrehungen macht das Rad auf einer Strecke von 1 km?", ans: 454.5, tol: 0.6, unit: "Umdrehungen",
+          hint: "Berechne zuerst den Umfang in cm und rechne 1 km in cm um.", sol: "u = π · 70 cm ≈ 219,9 cm. 1 km = 100 000 cm. 100 000 : 219,9 ≈ 454,7. Das Rad dreht sich also 454-mal vollständig." },
+        { kind: "Vertiefung", q: "Ein Seil liegt straff um den Äquator der Erde (Umfang etwa 40 000 km). Es wird um 1 m verlängert und rundherum gleichmäßig angehoben. Wie viele Zentimeter steht es dann über dem Boden?", ans: 15.9, tol: 0.2, unit: "cm",
+          hint: "Um wie viel wächst der Durchmesser, wenn der Umfang um 1 m wächst? Der Abstand zum Boden ist die Hälfte davon.", sol: "Wegen u = π · d wächst d um 1 m : π ≈ 0,318 m. Der Abstand ist die Hälfte: 0,159 m ≈ 15,9 cm. Erstaunlich: Die Größe der Erde spielt dabei keine Rolle." },
+        { kind: "Rückblick", text: true, q: "Begründe oder widerlege: „Verdoppelt man den Durchmesser eines Kreises, so verdoppelt sich auch sein Umfang.“",
+          sol: "Die Aussage stimmt. u = π · d ist eine proportionale Zuordnung mit dem Faktor π. Aus d wird 2d, also u = π · 2d = 2 · (π · d). Der Umfang verdoppelt sich. Im Koordinatensystem liegt der neue Punkt auf derselben Ursprungsgeraden." }
       ],
       open: { q: "Begründe oder widerlege: „Wenn man nur genügend viele Ecken nimmt, kann man π mit den Vielecken exakt ausrechnen.“",
               sol: "Die Aussage ist falsch. Jedes Vieleck liefert nur eine untere oder obere Schranke für π. Mit mehr Ecken werden die Schranken enger, aber der Kreis wird nie genau erreicht. π ist irrational: Die Nachkommastellen enden nie und wiederholen sich nicht. Man kann π also beliebig genau annähern, aber nicht exakt als Dezimalzahl oder Bruch angeben." }
@@ -394,6 +423,18 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
           opts: ["Damit die Rechnung schwerer wird.", "Damit die Bögen fast gerade werden und die Figur zu einem Rechteck wird.", "Damit die Fläche größer wird."], correct: 1,
           fb: ["Die Rechnung bleibt gleich einfach, nur die Figur wird genauer.", "Richtig. Im Grenzprozess verschwindet der Unterschied zum Rechteck.", "Die Fläche ändert sich beim Umlegen nie, es sind immer dieselben Stücke."] }
       ],
+      protocol: [
+        { kind: "Aufgabe", q: "Ein Kreis hat den Radius r = 5 cm. Berechne seinen Flächeninhalt.", ans: 78.54, tol: 0.1, unit: "cm²",
+          hint: "Nutze A = π · r². Erst quadrieren, dann mit π multiplizieren.", sol: "A = π · (5 cm)² = 25π cm² ≈ 78,54 cm²" },
+        { kind: "Umkehraufgabe", q: "Ein Kreis hat den Flächeninhalt 50 cm². Berechne seinen Radius.", ans: 3.99, tol: 0.02, unit: "cm",
+          hint: "Teile durch π und ziehe dann die Wurzel.", sol: "r² = 50 cm² : π ≈ 15,92 cm², also r ≈ 3,99 cm" },
+        { kind: "Vertiefung", q: "Eine Pizza mit 30 cm Durchmesser oder zwei Pizzen mit je 20 cm Durchmesser: Um wie viel cm² ist die größere Gesamtfläche größer?", ans: 78.5, tol: 0.6, unit: "cm²",
+          hint: "Achtung: In die Formel gehört der Radius, nicht der Durchmesser.", sol: "Große Pizza: π · 15² ≈ 706,9 cm². Zwei kleine: 2 · π · 10² ≈ 628,3 cm². Die große Pizza hat etwa 78,5 cm² mehr." },
+        { kind: "Vertiefung", q: "Ein Kreisring hat den Außenradius 6 cm und den Innenradius 4 cm. Berechne seinen Flächeninhalt.", ans: 62.83, tol: 0.1, unit: "cm²",
+          hint: "Ziehe vom großen Kreis den kleinen Kreis ab.", sol: "A = π · 6² − π · 4² = π · (36 − 16) = 20π ≈ 62,83 cm²" },
+        { kind: "Rückblick", text: true, q: "Erkläre in zwei bis drei Sätzen einer Mitschülerin, warum der Flächeninhalt eines Kreises π · r² beträgt.",
+          sol: "Man zerlegt den Kreis in viele schmale Sektoren und legt sie abwechselnd nach oben und unten zusammen. Es entsteht fast ein Rechteck: Die lange Seite ist der halbe Umfang π · r, die kurze Seite der Radius r. Mit immer mehr Sektoren wird daraus ein Rechteck, also A = π · r · r = π · r²." }
+      ],
       open: { q: "Begründe oder widerlege: „Wenn man den Radius eines Kreises verdoppelt, verdoppelt sich auch sein Flächeninhalt.“",
               sol: "Die Aussage ist falsch. Bei doppeltem Radius werden in der umgelegten Figur beide Seiten doppelt so lang: Die Länge π · r wird zu π · 2r und die Höhe r zu 2r. Der Flächeninhalt wird also 2 · 2 = 4-mal so groß: π · (2r)² = 4 · π · r². Der Umfang verdoppelt sich dagegen nur." }
     }
@@ -401,7 +442,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
 
   /* ---------- Speicher ---------- */
   var KEY = "kreis-koerper-jg10-v1";
-  var state = { done: {}, goals: {}, answers: {}, notes: {}, shown: {}, step: {} };
+  var state = { done: {}, goals: {}, answers: {}, notes: {}, shown: {}, step: {}, meas: [], proto: {} };
   try {
     var raw = localStorage.getItem(KEY);
     if (raw) { var parsed = JSON.parse(raw); for (var k in state) if (parsed[k]) state[k] = parsed[k]; }
@@ -508,6 +549,26 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       }
       h += '</div></section>';
     }
+    if (c.protocol) {
+      h += '<section class="block"><div class="block-title"><span class="eyebrow">Lernprotokoll</span><h3>Wende an, was du gelernt hast</h3></div><ol class="proto" id="proto">';
+      c.protocol.forEach(function (tk, ti) {
+        var key = id + "-" + ti, st = state.proto[key], tid = "p" + id + "-" + ti;
+        h += '<li class="task' + (st === "ok" ? " ok" : "") + '" data-t="' + ti + '"><span class="task-kind">' + (ti + 1) + ' · ' + tk.kind + '</span><p>' + tk.q + '</p>';
+        if (tk.text) {
+          h += '<label class="hint" for="' + tid + '">Deine Begründung:</label><textarea id="' + tid + '" data-note="' + tid + '">' + escapeHtml(state.notes[tid] || "") + '</textarea>' +
+               '<div><button class="btn ghost" data-sol="' + ti + '"' + (st ? " hidden" : "") + '>Mit Musterlösung vergleichen</button></div>';
+        } else {
+          h += '<div class="answer"><label for="' + tid + '" class="hint">Ergebnis:</label><input id="' + tid + '" inputmode="decimal" autocomplete="off" value="' + escapeHtml(state.notes[tid] || "") + '" data-note="' + tid + '"><span>' + tk.unit + '</span>' +
+               '<button class="btn" data-check="' + ti + '">Prüfen</button><button class="btn ghost" data-sol="' + ti + '"' + (st ? " hidden" : "") + '>Lösungsweg zeigen</button></div>' +
+               '<p class="fb' + (st === "ok" ? " ok" : "") + '" id="pfb' + id + '-' + ti + '">' + (st === "ok" ? "Richtig." : "") + '</p>';
+        }
+        h += '<div class="solution" id="psol' + id + '-' + ti + '"' + (st ? "" : " hidden") + '>' + tk.sol + '</div></li>';
+      });
+      h += '</ol><div class="reflect">' +
+           '<label for="r' + id + '-easy">Leicht gefallen ist mir:<textarea id="r' + id + '-easy" data-note="r' + id + '-easy">' + escapeHtml(state.notes["r" + id + "-easy"] || "") + '</textarea></label>' +
+           '<label for="r' + id + '-help">Hilfe brauche ich bei:<textarea id="r' + id + '-help" data-note="r' + id + '-help">' + escapeHtml(state.notes["r" + id + "-help"] || "") + '</textarea></label>' +
+           '</div></section>';
+    }
     h += '<section class="block"><div class="finish" id="finish"></div></section>';
     h += navButtons(id);
     el.innerHTML = h;
@@ -517,6 +578,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     if (c.anim === "sectors") stopAnim = mountSectors(document.getElementById("anim"));
     bindSteps(id, c);
     bindQuiz(id, c);
+    bindProtocol(id, c);
     renderFinish(id, c);
   }
 
@@ -575,13 +637,52 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     });
   }
 
+  function parseNum(v) { return parseFloat(String(v).replace(/\s/g, "").replace(",", ".").replace(/[^0-9.\-]/g, "")); }
+  function bindProtocol(id, c) {
+    var box = document.getElementById("proto");
+    if (!box) return;
+    var sec = box.closest("section");
+    sec.addEventListener("input", function (e) {
+      var n = e.target.dataset && e.target.dataset.note;
+      if (n) { state.notes[n] = e.target.value; save(); }
+    });
+    sec.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && e.target.tagName === "INPUT") { var b = e.target.parentElement.querySelector("[data-check]"); if (b) b.click(); }
+    });
+    box.addEventListener("click", function (e) {
+      var chk = e.target.closest("[data-check]"), sol = e.target.closest("[data-sol]");
+      if (chk) {
+        var ti = +chk.dataset.check, tk = c.protocol[ti], key = id + "-" + ti;
+        var v = parseNum(document.getElementById("p" + id + "-" + ti).value);
+        var fb = document.getElementById("pfb" + id + "-" + ti);
+        if (isNaN(v)) { fb.className = "fb no"; fb.textContent = "Gib eine Zahl ein, zum Beispiel 12,5."; return; }
+        if (Math.abs(v - tk.ans) <= tk.tol) {
+          if (state.proto[key] !== "ok") state.proto[key] = "ok";
+          fb.className = "fb ok"; fb.textContent = "Richtig.";
+          chk.closest(".task").classList.add("ok");
+        } else {
+          fb.className = "fb no"; fb.textContent = "Noch nicht. Tipp: " + tk.hint;
+        }
+        save(); renderFinish(id, c);
+      } else if (sol) {
+        var si = +sol.dataset.sol, k2 = id + "-" + si;
+        if (!state.proto[k2]) state.proto[k2] = "shown";
+        save();
+        document.getElementById("psol" + id + "-" + si).hidden = false; sol.hidden = true;
+        renderFinish(id, c);
+      }
+    });
+  }
+
   function renderFinish(id, c) {
     var box = document.getElementById("finish");
     if (!box) return;
     var total = c.quiz ? c.quiz.length : 0, right = 0;
     for (var i = 0; i < total; i++) if (state.answers[id + "-" + i] === c.quiz[i].correct) right++;
     var openOk = !c.open || state.shown[id];
-    var ready = right === total && openOk;
+    var protoLeft = 0;
+    if (c.protocol) c.protocol.forEach(function (tk, ti) { if (!state.proto[id + "-" + ti]) protoLeft++; });
+    var ready = right === total && openOk && protoLeft === 0;
     if (state.done[id]) {
       box.innerHTML = '<span class="badge">Station geschafft</span>' + (id < STATIONS.length - 1 ? '<button class="btn" data-go="' + (id + 1) + '">Weiter zu Station ' + (id + 1) + '</button>' : '');
       return;
@@ -589,6 +690,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     var missing = [];
     if (right < total) missing.push((total - right) + (total - right === 1 ? " Frage" : " Fragen") + " noch nicht richtig");
     if (!openOk) missing.push("Begründung noch nicht mit der Musterlösung verglichen");
+    if (protoLeft) missing.push(protoLeft + (protoLeft === 1 ? " Aufgabe" : " Aufgaben") + " im Lernprotokoll offen");
     box.innerHTML = '<span class="hint">' + (ready ? "Alles erledigt. Du kannst die Station abschließen." : "Noch offen: " + missing.join(", ") + ".") + '</span><button class="btn" id="complete"' + (ready ? "" : " disabled") + '>Station abschließen</button>';
     var b = document.getElementById("complete");
     b.addEventListener("click", function () {
@@ -606,7 +708,7 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     if (t.id === "reset") {
       resetArea.innerHTML = '<span>Wirklich alles löschen?</span><button class="btn" id="reset-yes">Ja, zurücksetzen</button><button class="btn ghost" id="reset-no">Abbrechen</button>';
     } else if (t.id === "reset-yes") {
-      state = { done: {}, goals: {}, answers: {}, notes: {}, shown: {}, step: {} }; save();
+      state = { done: {}, goals: {}, answers: {}, notes: {}, shown: {}, step: {}, meas: [], proto: {} }; save();
       resetArea.innerHTML = '<button class="btn ghost" id="reset">Fortschritt zurücksetzen</button>';
       go(0, true);
     } else if (t.id === "reset-no") {
@@ -636,20 +738,34 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
     return { ro: ro, stop: function () { ro.disconnect(); mo.disconnect(); mq.removeEventListener("change", draw); } };
   }
 
-  /* ---------- Animation Station 1: Vielecke und Abrollen ---------- */
+  /* ---------- Animation Station 1: Vielecke, Abrollen und Messreihe ---------- */
   function mountPolygon(host) {
     var NS = [3, 4, 6, 8, 12, 16, 24, 48, 96];
+    var DS = [0.5, 1, 1.5, 2, 2.5, 3];
     host.innerHTML =
-      '<div class="canvas-box"><canvas id="cv-poly" aria-label="Kreis mit einbeschriebenem und umbeschriebenem Vieleck"></canvas></div>' +
+      '<h4 class="sub">Teil 1: Vielecke am Kreis mit d = 1</h4>' +
+      '<div class="canvas-box"><canvas id="cv-poly" aria-label="Kreis mit Durchmesser 1 und einbeschriebenem und umbeschriebenem Vieleck"></canvas></div>' +
       '<div class="controls"><label for="n-range">Ecken n = <strong class="formula" id="n-val">6</strong><input type="range" id="n-range" min="0" max="' + (NS.length - 1) + '" value="2"></label></div>' +
-      '<div class="readout"><table><thead><tr><th>Figur</th><th>Umfang : Durchmesser</th></tr></thead><tbody>' +
+      '<div class="readout"><table><thead><tr><th>Figur (d = 1)</th><th>Umfang</th></tr></thead><tbody>' +
       '<tr><td>Vieleck innen</td><td id="r-in"></td></tr><tr class="pi-row"><td>Kreis (π)</td><td>3,14159…</td></tr><tr><td>Vieleck außen</td><td id="r-out"></td></tr></tbody></table></div>' +
-      '<p class="hint">Zieh den Regler: Der innere Wert wächst, der äußere schrumpft. Beide klemmen π ein.</p>' +
-      '<div class="canvas-box"><canvas id="cv-roll" aria-label="Ein Kreis rollt einmal ab"></canvas></div>' +
-      '<div class="controls"><button class="btn" id="roll">Kreis einmal abrollen</button><span class="hint">Wie viele Durchmesser passen auf den abgerollten Umfang?</span></div>';
+      '<p class="hint">Der Kreis hat den Durchmesser d = 1. Zieh den Regler: Der Umfang des inneren Vielecks wächst, der des äußeren schrumpft. Beide klemmen den Kreisumfang π ein.</p>' +
+      '<h4 class="sub">Teil 2: Kreise abrollen und messen</h4>' +
+      '<div class="canvas-box"><canvas id="cv-roll" aria-label="Ein Kreis rollt einmal auf einem Lineal ab"></canvas></div>' +
+      '<div class="controls"><label for="d-range">Durchmesser d = <strong class="formula" id="d-val">1</strong> cm<input type="range" id="d-range" min="0" max="' + (DS.length - 1) + '" value="1"></label>' +
+      '<button class="btn" id="roll">Abrollen und messen</button></div>' +
+      '<p class="hint">Beginne mit d = 1 cm. Wähle danach andere Durchmesser und rolle jeden Kreis einmal ab. Jede Messung landet in der Tabelle und im Koordinatensystem.</p>' +
+      '<div class="measure">' +
+        '<div class="readout"><table><thead><tr><th>d in cm</th><th>u in cm</th><th>u : d</th></tr></thead><tbody id="meas"></tbody></table></div>' +
+        '<div class="canvas-box"><canvas id="cv-plot" aria-label="Messpunkte im Koordinatensystem: Umfang u über Durchmesser d"></canvas></div>' +
+      '</div>' +
+      '<div class="question"><p><strong>Welchen Zusammenhang erkennt ihr zwischen d und u?</strong> Schaut auf die letzte Spalte der Tabelle und auf die Lage der Punkte.</p>' +
+      '<div class="step-nav"><button class="btn ghost" id="show-rel" disabled>Zusammenhang aufdecken</button><span class="hint" id="rel-hint">Miss dazu mindestens drei verschiedene Kreise.</span></div>' +
+      '<div class="solution" id="rel" hidden><p>Der Umfang ist <strong>proportional</strong> zum Durchmesser: Doppelter Durchmesser, doppelter Umfang. Der Quotient u : d ist bei jedem Kreis gleich, nämlich π ≈ 3,14.</p><p>Im Koordinatensystem liegen alle Punkte auf einer Geraden durch den Ursprung mit der Steigung π. π ist also der <strong>Proportionalitätsfaktor</strong>: <span class="formula">u = π · d</span>.</p></div></div>';
     var cv = document.getElementById("cv-poly"), range = document.getElementById("n-range");
-    var cr = document.getElementById("cv-roll");
-    var t = 0, raf = 0;
+    var cr = document.getElementById("cv-roll"), dR = document.getElementById("d-range"), cp = document.getElementById("cv-plot");
+    var t = 0, raf = 0, rolling = false;
+    if (!state.meas) state.meas = [];
+    if (!state.shown.rel1) state.shown.rel1 = false;
 
     function drawPoly() {
       var s = setupCanvas(cv, 300), ctx = s.ctx;
@@ -660,74 +776,140 @@ textarea { width: 100%; min-height: 110px; font: inherit; color: var(--ink); bac
       ctx.clearRect(0, 0, s.w, s.h);
       var cx = s.w / 2, cy = s.h / 2, R = Math.min(s.h * 0.36, s.w * 0.3);
       var Ro = R / Math.cos(Math.PI / n);
-      // äußeres Vieleck
       ctx.beginPath();
       for (var i = 0; i <= n; i++) { var a = 2 * Math.PI * i / n - Math.PI / 2 + Math.PI / n; var x = cx + Ro * Math.cos(a), y = cy + Ro * Math.sin(a); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
       ctx.strokeStyle = col("--mark"); ctx.lineWidth = 2; ctx.stroke();
-      // Kreis
       ctx.beginPath(); ctx.arc(cx, cy, R, 0, 2 * Math.PI);
       ctx.fillStyle = col("--accent-soft"); ctx.fill();
       ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2.5; ctx.stroke();
-      // inneres Vieleck
       ctx.beginPath();
       for (var j = 0; j <= n; j++) { var b = 2 * Math.PI * j / n - Math.PI / 2; var x2 = cx + R * Math.cos(b), y2 = cy + R * Math.sin(b); j ? ctx.lineTo(x2, y2) : ctx.moveTo(x2, y2); }
       ctx.strokeStyle = col("--accent"); ctx.lineWidth = 2; ctx.stroke();
-      // Durchmesser
       ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(cx - R, cy); ctx.lineTo(cx + R, cy);
       ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]);
-      ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-mono"); ctx.textAlign = "center";
-      ctx.fillText("d", cx, cy - 6);
-      // Legende
+      ctx.fillStyle = col("--ink"); ctx.font = "600 13px " + col("--font-mono"); ctx.textAlign = "center";
+      ctx.fillText("d = 1", cx, cy - 7);
       ctx.textAlign = "left"; ctx.font = "13px " + col("--font-body");
-      var ly = 20;
       [["--accent", "Vieleck innen"], ["--ink", "Kreis"], ["--mark", "Vieleck außen"]].forEach(function (p, k) {
-        ctx.fillStyle = col(p[0]); ctx.fillRect(12, ly + k * 20 - 9, 14, 4);
-        ctx.fillStyle = col("--muted"); ctx.fillText(p[1], 32, ly + k * 20 - 4);
+        ctx.fillStyle = col(p[0]); ctx.fillRect(12, 20 + k * 20 - 9, 14, 4);
+        ctx.fillStyle = col("--muted"); ctx.fillText(p[1], 32, 20 + k * 20 - 4);
       });
     }
 
     function drawRoll() {
-      var s = setupCanvas(cr, 170), ctx = s.ctx;
+      var k = Math.min((cr.parentElement.clientWidth - 40) / 10.2, 60);   // Pixel pro cm
+      var s = setupCanvas(cr, Math.round(3 * k + 80)), ctx = s.ctx;
       ctx.clearRect(0, 0, s.w, s.h);
-      var d = Math.min(56, (s.w - 40) / (Math.PI + 0.6)), r = d / 2;
-      var x0 = 20, base = s.h - 42;
-      var ang = t * 2 * Math.PI, cx = x0 + r + r * ang, cy = base - r;
-      // abgerollte Strecke
-      ctx.strokeStyle = col("--line"); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(10, base); ctx.lineTo(s.w - 10, base); ctx.stroke();
-      ctx.strokeStyle = col("--mark"); ctx.lineWidth = 5; ctx.lineCap = "round";
-      ctx.beginPath(); ctx.moveTo(x0 + r, base); ctx.lineTo(x0 + r + r * ang, base); ctx.stroke(); ctx.lineCap = "butt";
-      // Durchmesser-Teilstriche
-      ctx.fillStyle = col("--muted"); ctx.font = "12px " + col("--font-mono"); ctx.textAlign = "center";
-      for (var k = 0; k <= 3; k++) {
-        var tx = x0 + r + k * d;
-        ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(tx, base + 4); ctx.lineTo(tx, base + 14); ctx.stroke();
-        ctx.fillText(k + "d", tx, base + 30);
+      var d = DS[+dR.value];
+      document.getElementById("d-val").textContent = fmt(d, d % 1 ? 1 : 0);
+      var x0 = 20, base = s.h - 46, r = d / 2 * k;
+      var ang = t * 2 * Math.PI, cx = x0 + r * ang, cy = base - r;
+      // Lineal
+      ctx.strokeStyle = col("--line"); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x0, base); ctx.lineTo(s.w - 10, base); ctx.stroke();
+      ctx.fillStyle = col("--muted"); ctx.font = "11px " + col("--font-mono"); ctx.textAlign = "center";
+      for (var c = 0; c <= 10; c++) {
+        var tx = x0 + c * k;
+        ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(tx, base + 3); ctx.lineTo(tx, base + 12); ctx.stroke();
+        if (c < 10) { ctx.beginPath(); ctx.moveTo(tx + k / 2, base + 3); ctx.lineTo(tx + k / 2, base + 8); ctx.stroke(); }
+        ctx.fillText(c, tx, base + 26);
       }
-      // Kreis
+      ctx.textAlign = "right"; ctx.fillText("cm", s.w - 10, base + 40);
+      // abgerollte Strecke
+      ctx.strokeStyle = col("--mark"); ctx.lineWidth = 5; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(x0, base); ctx.lineTo(x0 + r * ang, base); ctx.stroke(); ctx.lineCap = "butt";
+      // Kreis mit Durchmesser
       ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
       ctx.fillStyle = col("--accent-soft"); ctx.fill(); ctx.strokeStyle = col("--ink"); ctx.lineWidth = 2; ctx.stroke();
-      // Markierungspunkt (startet unten)
       var px = cx - r * Math.sin(ang), py = cy + r * Math.cos(ang);
-      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.stroke();
-      ctx.beginPath(); ctx.arc(px, py, 5, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.fill();
+      ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(2 * cx - px, 2 * cy - py); ctx.strokeStyle = col("--muted"); ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.beginPath(); ctx.arc(px, py, 4.5, 0, 2 * Math.PI); ctx.fillStyle = col("--mark"); ctx.fill();
       if (t >= 1) {
         ctx.fillStyle = col("--mark"); ctx.font = "600 14px " + col("--font-mono"); ctx.textAlign = "left";
-        var lx = Math.min(x0 + r + Math.PI * d + 10, s.w - 150);
-        ctx.fillText("u ≈ 3,14 · d", lx, base - d - 14);
+        var label = "u ≈ " + fmt(Math.PI * d, 2) + " cm";
+        ctx.fillText(label, Math.min(x0 + r * ang + 8, s.w - 130), Math.max(18, base - 2 * r - 10));
       }
     }
 
-    function draw() { drawPoly(); drawRoll(); }
+    function renderTable() {
+      var body = document.getElementById("meas");
+      if (!state.meas.length) {
+        body.innerHTML = '<tr><td colspan="3" class="empty">Noch keine Messung. Rolle einen Kreis ab.</td></tr>';
+      } else {
+        body.innerHTML = state.meas.slice().sort(function (a, b) { return a - b; }).map(function (d) {
+          var u = Math.round(Math.PI * d * 100) / 100;
+          return "<tr><td>" + fmt(d, 1) + "</td><td>" + fmt(u, 2) + "</td><td>" + fmt(u / d, 2) + "</td></tr>";
+        }).join("");
+      }
+      var enough = state.meas.length >= 3;
+      document.getElementById("show-rel").disabled = !enough || state.shown.rel1;
+      document.getElementById("rel-hint").textContent = enough ? (state.shown.rel1 ? "" : "Formuliert zuerst eure Vermutung, dann deckt auf.") : "Miss dazu mindestens drei verschiedene Kreise (" + state.meas.length + " von 3).";
+      document.getElementById("rel").hidden = !state.shown.rel1;
+    }
+
+    function drawPlot() {
+      var s = setupCanvas(cp, 260), ctx = s.ctx;
+      ctx.clearRect(0, 0, s.w, s.h);
+      var L = 44, R = 16, T = 16, B = 40;
+      var X = function (d) { return L + d / 3.2 * (s.w - L - R); };
+      var Y = function (u) { return s.h - B - u / 10 * (s.h - T - B); };
+      ctx.font = "11px " + col("--font-mono"); ctx.fillStyle = col("--muted");
+      // Gitter
+      ctx.strokeStyle = col("--line"); ctx.lineWidth = 1;
+      for (var dx = 0; dx <= 3; dx += 0.5) { ctx.beginPath(); ctx.moveTo(X(dx), Y(0)); ctx.lineTo(X(dx), Y(10)); ctx.stroke(); }
+      for (var uy = 0; uy <= 10; uy += 2) { ctx.beginPath(); ctx.moveTo(X(0), Y(uy)); ctx.lineTo(X(3.2), Y(uy)); ctx.stroke(); }
+      // Achsen
+      ctx.strokeStyle = col("--ink"); ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(3.2), Y(0)); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(0), Y(10)); ctx.stroke();
+      ctx.textAlign = "center";
+      for (var dl = 0; dl <= 3; dl += 0.5) ctx.fillText(fmt(dl, dl % 1 ? 1 : 0), X(dl), Y(0) + 16);
+      ctx.fillText("d in cm", (X(0) + X(3.2)) / 2, s.h - 6);
+      ctx.textAlign = "right";
+      for (var ul = 0; ul <= 10; ul += 2) ctx.fillText(ul, X(0) - 6, Y(ul) + 4);
+      ctx.save(); ctx.translate(12, (Y(0) + Y(10)) / 2); ctx.rotate(-Math.PI / 2); ctx.textAlign = "center"; ctx.fillText("u in cm", 0, 0); ctx.restore();
+      // Ursprungsgerade
+      if (state.shown.rel1) {
+        ctx.strokeStyle = col("--mark"); ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(3.15), Y(Math.PI * 3.15)); ctx.stroke();
+        ctx.fillStyle = col("--mark"); ctx.font = "600 13px " + col("--font-mono"); ctx.textAlign = "left";
+        ctx.fillText("u = π · d", X(0.45), Y(Math.PI * 1.45));
+      }
+      // Messpunkte
+      state.meas.forEach(function (d) {
+        ctx.beginPath(); ctx.arc(X(d), Y(Math.PI * d), 5, 0, 2 * Math.PI);
+        ctx.fillStyle = col("--accent"); ctx.fill(); ctx.strokeStyle = col("--surface"); ctx.lineWidth = 1.5; ctx.stroke();
+      });
+      if (!state.meas.length) {
+        ctx.fillStyle = col("--muted"); ctx.font = "13px " + col("--font-body"); ctx.textAlign = "center";
+        ctx.fillText("Hier erscheinen deine Messpunkte.", (X(0) + X(3.2)) / 2, (Y(0) + Y(10)) / 2);
+      }
+    }
+
+    function record() {
+      var d = DS[+dR.value];
+      if (state.meas.indexOf(d) < 0) { state.meas.push(d); save(); }
+      renderTable(); drawPlot();
+    }
+
+    function draw() { drawPoly(); drawRoll(); drawPlot(); }
     range.addEventListener("input", drawPoly);
+    dR.addEventListener("input", function () { if (rolling) return; t = 0; drawRoll(); });
     document.getElementById("roll").addEventListener("click", function () {
       cancelAnimationFrame(raf);
-      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { t = 1; drawRoll(); return; }
-      var start = null;
-      function frame(ts) { if (!start) start = ts; t = Math.min(1, (ts - start) / 3200); drawRoll(); if (t < 1) raf = requestAnimationFrame(frame); }
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) { t = 1; drawRoll(); record(); return; }
+      var start = null; rolling = true; dR.disabled = true;
+      function frame(ts) {
+        if (!start) start = ts;
+        t = Math.min(1, (ts - start) / 2600); drawRoll();
+        if (t < 1) raf = requestAnimationFrame(frame); else { rolling = false; dR.disabled = false; record(); }
+      }
       t = 0; raf = requestAnimationFrame(frame);
+    });
+    document.getElementById("show-rel").addEventListener("click", function () {
+      state.shown.rel1 = true; save(); renderTable(); drawPlot();
     });
     var w = watchRedraw(draw);
     w.ro.observe(host);
+    renderTable();
     draw();
     return function () { cancelAnimationFrame(raf); w.stop(); };
   }

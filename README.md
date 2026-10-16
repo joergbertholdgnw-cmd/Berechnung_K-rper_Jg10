@@ -3,7 +3,7 @@
 Interaktive Lernseite zur Unterrichtsreihe „Kreis- und Körperberechnung“ in Jahrgang 10 (Gymnasium Niedersachsen, G9).
 
 Die Seite zeigt den Lernweg als Karte mit „Du bist hier“-Markierung. Jede Station hat:
-Ziele (Ich-kann-Sätze) → Animation → Herleitung Schritt für Schritt → Lernvideo → Kernfragen zur Herleitung.
+Ziele (Ich-kann-Sätze) → Animation → Herleitung Schritt für Schritt → Lernvideo → Kernfragen zur Herleitung → Lernprotokoll (Aufgabe, Umkehraufgabe, Vertiefung, Rückblick).
 Der Fortschritt wird nur im Browser der Schülerin oder des Schülers gespeichert (localStorage), ohne Anmeldung.
 
 ## Stand
@@ -11,8 +11,8 @@ Der Fortschritt wird nur im Browser der Schülerin oder des Schülers gespeicher
 | Station | Thema | Stand |
 |---|---|---|
 | 0 | Startcheck | fertig |
-| 1 | Kreisumfang und π | fertig |
-| 2 | Flächeninhalt des Kreises | fertig |
+| 1 | Kreisumfang und π (mit Messreihe und Lernprotokoll) | fertig |
+| 2 | Flächeninhalt des Kreises (mit Lernprotokoll) | fertig |
 | 3–10 | Kreisausschnitt, Zylinder, Pyramide/Kegel, Kugel, zusammengesetzte Körper | Ziele hinterlegt, Inhalte folgen |
 
 Der vollständige Lernweg steht in [docs/lernweg.md](docs/lernweg.md).
